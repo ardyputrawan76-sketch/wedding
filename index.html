@@ -213,7 +213,7 @@
             backdrop-filter: blur(14px);
             border: 1.5px solid rgba(212, 175, 55, 0.45);
             border-radius: 24px;
-            padding: 26px 22px;
+            padding: 30px 22px;
             text-align: center;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(212,175,55,0.3);
             opacity: 0;
@@ -231,26 +231,29 @@
             pointer-events: auto;
         }
 
-        /* FOTO BERSAMA PERSEGI DI STASIUN 0 (SAMBUTAN) */
-        .photo-sambutan-square {
-            width: 150px;
-            height: 150px;
-            border-radius: 16px;
+        /* KARTU SAMBUTAN FULL PHOTO + BLUR TULISAN */
+        .hud-station.card-full-photo {
+            padding: 0;
             overflow: hidden;
-            border: 2px solid var(--gold-primary);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
-            margin: 0 auto 14px auto;
-            background: #2b170c;
-            cursor: pointer;
-        }
-        .photo-sambutan-square img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 380px;
+            background: url('bg-cover.jpg') no-repeat center center/cover;
+            position: relative;
         }
 
-        .salam-arab { font-family: var(--font-script); font-size: 2.8rem; color: var(--gold-glow); margin-bottom: 6px; }
-        .salam-teks { font-size: 0.92rem; color: #ded0c1; line-height: 1.7; }
+        .full-photo-overlay {
+            background: linear-gradient(to top, rgba(13, 6, 3, 0.95) 0%, rgba(13, 6, 3, 0.7) 65%, rgba(13, 6, 3, 0.2) 100%);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            padding: 24px 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.4);
+            text-align: center;
+        }
+
+        .salam-arab { font-family: var(--font-script); font-size: 2.8rem; color: var(--gold-glow); margin-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,0.9); }
+        .salam-teks { font-size: 0.92rem; color: #fcecd7; line-height: 1.7; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
         .section-title { font-family: var(--font-script); font-size: 2.5rem; color: var(--gold-glow); margin-bottom: 12px; }
         .pembatas { border: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold-primary), transparent); margin: 24px 0; }
 
@@ -580,19 +583,16 @@
 
     <div id="hud-container">
         
-        <!-- STASIUN 0: SAMBUTAN DENGAN FOTO BERSAMA PERSEGI -->
-        <div class="hud-station active" id="stasiun-0">
-            <!-- Foto Bersama Persegi Berbingkai Emas -->
-            <div class="photo-sambutan-square" onclick="bukaModalFoto('bg-cover.jpg')">
-                <img src="bg-cover.jpg" alt="Foto Bersama Ardy & Ana" onerror="this.onerror=null; this.src='galeri1.jpg';">
-            </div>
-
-            <p class="salam-arab">Om Swastyastu</p>
-            <p class="salam-teks">
-                Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa / Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) putra-putri kami:
-            </p>
-            <div style="margin-top: 20px;">
-                <p style="font-size: 0.8rem; color: var(--gold-glow); letter-spacing: 2px;">GANTI HALAMAN VIA TOMBOL PANAH DI BAWAH ATAU KLIK MENU ATAS</p>
+        <!-- STASIUN 0: SAMBUTAN DENGAN FOTO BERSAMA FULL BG + BACKDROP BLUR TULISAN -->
+        <div class="hud-station card-full-photo active" id="stasiun-0">
+            <div class="full-photo-overlay">
+                <p class="salam-arab">Om Swastyastu</p>
+                <p class="salam-teks">
+                    Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa / Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) putra-putri kami:
+                </p>
+                <div style="margin-top: 15px;">
+                    <p style="font-size: 0.75rem; color: var(--gold-glow); letter-spacing: 1.5px; font-weight: 600;">GANTI HALAMAN VIA TOMBOL PANAH DI BAWAH ATAU KLIK MENU ATAS</p>
+                </div>
             </div>
         </div>
 
