@@ -34,7 +34,7 @@
             --gold-glow: #f5e4b8;
             --gold-dark: #8b5a2b;
             --bg-dark: #0d0603;
-            --card-glass: rgba(26, 14, 8, 0.92);
+            --card-glass: rgba(26, 14, 8, 0.95);
             --font-script: 'Great Vibes', cursive;
             --font-body: 'Montserrat', sans-serif;
             --font-title: 'Cinzel Decorative', cursive, serif;
@@ -232,7 +232,7 @@
         .hud-station.active {
             opacity: 1;
             transform: scale(1) translateZ(0);
-            pointer-events: auto; /* Mengizinkan interaksi scroll/sentuh di dalam kartu */
+            pointer-events: auto;
         }
 
         .salam-arab { font-family: var(--font-script); font-size: 2.8rem; color: var(--gold-glow); margin-bottom: 6px; }
@@ -325,14 +325,14 @@
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background: rgba(10, 5, 2, 0.92);
-            z-index: 20000;
+            background: rgba(10, 5, 2, 0.95);
+            z-index: 999999;
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
             backdrop-filter: blur(8px);
         }
         #envelope-overlay.active {
@@ -348,11 +348,11 @@
             padding: 35px 25px;
             border-radius: 16px;
             border: 2px solid var(--gold-primary);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(212,175,55,0.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(212,175,55,0.5);
             text-align: center;
             position: relative;
-            transform: translateY(40px) scale(0.9);
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(30px) scale(0.9);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         #envelope-overlay.active .letter-envelope-card {
             transform: translateY(0) scale(1);
@@ -476,13 +476,24 @@
     <!-- TOAST NOTIFIKASI -->
     <div id="toast-box">Pesan Disalin!</div>
 
-    <!-- EFEK AMPLOP SURAT PENGIRIMAN (POPUP SURAT RESTU) -->
+    <!-- EFEK AMPLOP SURAT PENGIRIMAN (POPUP SURAT RESTU DENGAN BALASAN OTOMATIS) -->
     <div id="envelope-overlay" onclick="tutupAmplopSurat(event)">
         <div class="letter-envelope-card" onclick="event.stopPropagation()">
             <div class="seal-wax">📜</div>
-            <h3 style="font-family: var(--font-script); font-size: 2.6rem; color: #5c3514; margin-bottom: 5px;">Surat Restu Terkirim</h3>
-            <p id="letter-sender-name" style="font-weight: 700; color: #8b5a2b; font-size: 1rem; margin-bottom: 12px;"></p>
-            <p id="letter-content-text" style="font-style: italic; color: #422818; font-size: 0.95rem; line-height: 1.6; padding: 0 10px; margin-bottom: 20px;"></p>
+            <h3 style="font-family: var(--font-script); font-size: 2.4rem; color: #5c3514; margin-bottom: 2px;">Terima Kasih!</h3>
+            <p id="letter-sender-name" style="font-weight: 700; color: #8b5a2b; font-size: 0.95rem; margin-bottom: 10px;"></p>
+            
+            <div style="background: rgba(139,90,43,0.08); padding: 12px; border-radius: 10px; border: 1px dashed #d4af37; margin-bottom: 15px; text-align: left;">
+                <p style="font-size: 0.72rem; color: #8b5a2b; font-weight: 700; margin-bottom: 3px;">PESAN KAMI:</p>
+                <p id="letter-content-text" style="font-style: italic; color: #422818; font-size: 0.88rem; line-height: 1.5;"></p>
+            </div>
+
+            <!-- Balasan Otomatis dari Ardy & Ana -->
+            <p style="font-size: 0.82rem; color: #5c3514; line-height: 1.5; margin-bottom: 18px;">
+                💌 <em>"Surat kebahagiaan dan konfirmasi kehadiran Anda telah resmi kami terima. Kehadiran serta doa restu Anda adalah anugerah terindah di hari bahagia kami."</em><br>
+                <strong style="display: block; margin-top: 6px; color: #8b5a2b;">— Gede Ardy & Komang Ana</strong>
+            </p>
+
             <button onclick="tutupAmplopSurat()" style="background: #8b5a2b; color: #fff; border: none; padding: 10px 25px; border-radius: 20px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">Tutup Surat</button>
         </div>
     </div>
@@ -616,7 +627,7 @@
             <hr class="pembatas">
 
             <h3 class="section-title">Konfirmasi Kehadiran</h3>
-            <form class="rsvp-form-group" onsubmit="submitRSVP(event)">
+            <form class="rsvp-form-group" id="form-rsvp" onsubmit="submitRSVP(event)">
                 <input type="text" id="rsvp-input-nama" placeholder="Nama Lengkap Anda" required>
                 <select id="rsvp-input-status" required>
                     <option value="">-- Konfirmasi Kehadiran --</option>
@@ -624,7 +635,7 @@
                     <option value="Berhalangan Hadir">Berhalangan Hadir</option>
                 </select>
                 <textarea id="rsvp-input-doa" placeholder="Tuliskan ucapan / doa restu..." rows="3" required></textarea>
-                <button type="submit" class="btn-kirim-rsvp">Kirim Surat Restu ✉️</button>
+                <button type="submit" class="btn-kirim-rsvp" id="btn-submit-rsvp">Kirim Surat Restu ✉️</button>
             </form>
         </div>
 
@@ -850,7 +861,7 @@
     }
 
     /* ==========================================================
-       3. SISTEM NAVIGASI KAMERA 3D (EKSKLUSIF VIA TOMBOL)
+       3. SISTEM NAVIGASI KAMERA 3D
        ========================================================== */
     function pindahStasiun3D(index) {
         if (index < 0 || index >= stasiunKamera.length || isNavigating) return;
@@ -862,7 +873,7 @@
 
         document.querySelectorAll('.hud-station').forEach((p, i) => {
             p.classList.toggle('active', i === index);
-            if (i === index) p.scrollTop = 0; // Kembalikan posisi scroll ke atas saat berganti stasiun
+            if (i === index) p.scrollTop = 0;
         });
 
         const target = stasiunKamera[index];
@@ -896,7 +907,7 @@
     }
 
     /* ==========================================================
-       4. AUDIO, COUNTDOWN, LIGHTBOX, SALIN & SURAT RSVP
+       4. AUDIO, COUNTDOWN, LIGHTBOX, SALIN & PENGIRIMAN KE GOOGLE SHEETS
        ========================================================== */
     function putarAudioOtomatis() {
         const audio = document.getElementById('audio-wedding');
@@ -985,23 +996,53 @@
         setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
+    // Integrasi Pengiriman Data ke Google Apps Script & Balasan Otomatis
     function submitRSVP(e) {
         e.preventDefault();
+        
         const nama = document.getElementById('rsvp-input-nama').value;
         const status = document.getElementById('rsvp-input-status').value;
         const doa = document.getElementById('rsvp-input-doa').value;
+        const submitBtn = document.getElementById('btn-submit-rsvp');
 
-        document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
-        document.getElementById('letter-content-text').innerText = `"${doa}"`;
-        document.getElementById('envelope-overlay').classList.add('active');
+        if (!nama || !status) return;
 
-        e.target.reset();
+        submitBtn.innerText = "Mengirim...";
+        submitBtn.disabled = true;
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyo0Jv7gNqmCAjrVTcNnWyaAU50AuTuDPTrxJG6pqQaU05LPFzvaUTuy7IG1QQCimqyCA/exec';
+        
+        const formData = new URLSearchParams();
+        formData.append('nama', nama);
+        formData.append('status', status);
+        formData.append('doa', doa);
+
+        fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+            .then(() => {
+                // Tampilkan Popup Surat Restu dengan pesan balasan otomatis dari Ardy & Ana
+                document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
+                document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
+                document.getElementById('envelope-overlay').classList.add('active');
+
+                submitBtn.innerText = "Kirim Surat Restu ✉️";
+                submitBtn.disabled = false;
+                document.getElementById('form-rsvp').reset();
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
+                document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
+                document.getElementById('envelope-overlay').classList.add('active');
+
+                submitBtn.innerText = "Kirim Surat Restu ✉️";
+                submitBtn.disabled = false;
+                document.getElementById('form-rsvp').reset();
+            });
     }
 
     function tutupAmplopSurat(e) {
-        if (!e || e.target.id === 'envelope-overlay' || e.target.tagName === 'BUTTON') {
-            document.getElementById('envelope-overlay').classList.remove('active');
-        }
+        const overlay = document.getElementById('envelope-overlay');
+        overlay.classList.remove('active');
     }
 
     window.addEventListener('DOMContentLoaded', () => {
