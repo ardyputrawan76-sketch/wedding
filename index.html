@@ -231,29 +231,44 @@
             pointer-events: auto;
         }
 
-        /* KARTU SAMBUTAN FULL PHOTO + BLUR TULISAN */
-        .hud-station.card-full-photo {
+        /* DESAIN MAHYA INVITED BALI (FULL PHOTO + DOWNSCALED TEXT OVERLAY) */
+        .hud-station.card-mahya-style {
             padding: 0;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            min-height: 380px;
+            height: 68vh;
+            min-height: 400px;
             background: url('bg-cover.jpg') no-repeat center center/cover;
             position: relative;
+            border-radius: 24px;
         }
 
-        .full-photo-overlay {
-            background: linear-gradient(to top, rgba(13, 6, 3, 0.95) 0%, rgba(13, 6, 3, 0.7) 65%, rgba(13, 6, 3, 0.2) 100%);
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
-            padding: 24px 20px;
-            border-top: 1px solid rgba(212, 175, 55, 0.4);
+        .mahya-overlay-bottom {
+            background: linear-gradient(to top, rgba(10, 5, 2, 0.92) 0%, rgba(10, 5, 2, 0.65) 70%, rgba(10, 5, 2, 0) 100%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            padding: 16px 18px 20px 18px;
             text-align: center;
+            width: 100%;
         }
 
-        .salam-arab { font-family: var(--font-script); font-size: 2.8rem; color: var(--gold-glow); margin-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,0.9); }
-        .salam-teks { font-size: 0.92rem; color: #fcecd7; line-height: 1.7; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
+        .salam-arab-small { 
+            font-family: var(--font-script); 
+            font-size: 2rem; 
+            color: var(--gold-glow); 
+            margin-bottom: 2px; 
+            text-shadow: 0 2px 6px rgba(0,0,0,0.9); 
+        }
+        .salam-teks-small { 
+            font-size: 0.78rem; 
+            color: #fcecd7; 
+            line-height: 1.5; 
+            text-shadow: 0 1px 4px rgba(0,0,0,0.9); 
+            font-weight: 400;
+        }
+
         .section-title { font-family: var(--font-script); font-size: 2.5rem; color: var(--gold-glow); margin-bottom: 12px; }
         .pembatas { border: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold-primary), transparent); margin: 24px 0; }
 
@@ -583,15 +598,15 @@
 
     <div id="hud-container">
         
-        <!-- STASIUN 0: SAMBUTAN DENGAN FOTO BERSAMA FULL BG + BACKDROP BLUR TULISAN -->
-        <div class="hud-station card-full-photo active" id="stasiun-0">
-            <div class="full-photo-overlay">
-                <p class="salam-arab">Om Swastyastu</p>
-                <p class="salam-teks">
-                    Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa / Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) putra-putri kami:
+        <!-- STASIUN 0: STYLE MAHYA INVITED BALI (FULL PHOTO + MINIMALIS OVERLAY BOTTOM) -->
+        <div class="hud-station card-mahya-style active" id="stasiun-0">
+            <div class="mahya-overlay-bottom">
+                <p class="salam-arab-small">Om Swastyastu</p>
+                <p class="salam-teks-small">
+                    Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa, kami bermaksud menyelenggarakan Upacara Pawiwahan kami.
                 </p>
-                <div style="margin-top: 15px;">
-                    <p style="font-size: 0.75rem; color: var(--gold-glow); letter-spacing: 1.5px; font-weight: 600;">GANTI HALAMAN VIA TOMBOL PANAH DI BAWAH ATAU KLIK MENU ATAS</p>
+                <div style="margin-top: 10px;">
+                    <p style="font-size: 0.68rem; color: var(--gold-glow); letter-spacing: 1.5px; font-weight: 600;">GESER KE KANAN ATAU GEUS BANTUAN MENU ATAS</p>
                 </div>
             </div>
         </div>
