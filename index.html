@@ -80,13 +80,14 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 9999;
-            background: linear-gradient(rgba(13, 6, 3, 0.75), rgba(13, 6, 3, 0.85)), url('bg-cover.jpg') no-repeat center center/cover;
+            background: linear-gradient(rgba(13, 6, 3, 0.8), rgba(13, 6, 3, 0.9)), url('bg-cover.jpg') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 24px;
+            padding: 20px;
+            overflow-y: auto;
             transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
@@ -98,35 +99,60 @@
 
         .royal-badge {
             letter-spacing: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--gold-primary);
             text-transform: uppercase;
             font-weight: 700;
-            padding: 4px 14px;
+            padding: 3px 12px;
             border-top: 1px solid var(--gold-primary);
             border-bottom: 1px solid var(--gold-primary);
             display: inline-block;
             margin-bottom: 10px;
         }
 
+        /* FOTO BERSAMA DI COVER */
+        .cover-photo-wrapper {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--gold-primary);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+            margin: 6px auto 10px auto;
+            background: #2b170c;
+        }
+        .cover-photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cover-salam {
+            font-family: var(--font-script);
+            font-size: 2.2rem;
+            color: var(--gold-glow);
+            margin-bottom: 2px;
+            text-shadow: 0 0 10px rgba(212,175,55,0.4);
+        }
+
         .cover-title {
             font-family: var(--font-script);
-            font-size: clamp(3.2rem, 11vw, 5.2rem);
+            font-size: clamp(2.8rem, 9vw, 4.4rem);
             color: var(--gold-glow);
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.6), 2px 4px 10px rgba(0,0,0,0.9);
-            margin: 10px 0 20px 0;
+            margin: 2px 0 12px 0;
             line-height: 1.1;
         }
 
         .guest-card {
-            background: rgba(43, 24, 13, 0.65);
+            background: rgba(43, 24, 13, 0.75);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 16px;
-            padding: 16px 28px;
-            margin: 10px auto 25px auto;
+            border-radius: 14px;
+            padding: 12px 22px;
+            margin: 6px auto 18px auto;
             box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-            max-width: 420px;
+            max-width: 380px;
             width: 100%;
         }
 
@@ -137,8 +163,8 @@
             background: linear-gradient(135deg, #a36c34, #663e1d);
             color: #ffffff;
             border: 2px solid var(--gold-primary);
-            padding: 15px 36px;
-            font-size: 0.95rem;
+            padding: 13px 32px;
+            font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -538,11 +564,19 @@
 
     <div id="cover-screen">
         <span class="royal-badge">PAWIWAHAN BALI</span>
+        
+        <!-- FOTO BERSAMA MEMPELAI DI COVER -->
+        <div class="cover-photo-wrapper">
+            <img src="galeri1.jpg" alt="Ardy & Ana" onerror="this.onerror=null; this.src='bg-cover.jpg';">
+        </div>
+
+        <!-- SALAM OM SWASTYASTU DI BAWAH FOTO -->
+        <p class="cover-salam">Om Swastyastu</p>
         <h1 class="cover-title">Ardy & Ana</h1>
         
         <div class="guest-card">
-            <p style="font-size: 0.82rem; color: #d1c0b0; font-style: italic;">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
-            <h2 id="guest-name" style="font-size: 1.45rem; font-weight: 700; color: #fff; margin-top: 5px;">Tamu Undangan</h2>
+            <p style="font-size: 0.8rem; color: #d1c0b0; font-style: italic;">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+            <h2 id="guest-name" style="font-size: 1.35rem; font-weight: 700; color: #fff; margin-top: 4px;">Tamu Undangan</h2>
         </div>
 
         <button class="btn-open-3d" onclick="bukaDunia3D()">
@@ -655,6 +689,7 @@
             </div>
         </div>
 
+        <!-- STASIUN 5: RSVP, RIWAYAT KOSONG AWAL & OM SHANTI -->
         <div class="hud-station" id="stasiun-5">
             <h3 class="section-title">Konfirmasi Kehadiran</h3>
             <p style="font-size: 0.82rem; color: #cbbba9; margin-bottom: 5px;">Sampaikan konfirmasi kehadiran dan doa restu Anda</p>
@@ -672,10 +707,10 @@
 
             <div style="margin-top: 15px; text-align: left;">
                 <p style="font-size: 0.78rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 6px;">✨ Ucapan & Doa Tamu Lain:</p>
-                <div class="riwayat-container" id="riwayatUcapanContainer">                   
-                    </div>
-             </div>
-                        
+                <div class="riwayat-container" id="riwayatUcapanContainer">
+                    <!-- Kosong terlebih dahulu, akan terisi otomatis saat tamu mengirim ucapan -->
+                </div>
+            </div>
 
             <hr class="pembatas">
 
@@ -1038,7 +1073,6 @@
         setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
-    // Fungsi Submit RSVP dan Menampilkan Riwayat Komentar Secara Lokal (Model Geser)
     function submitRSVP(e) {
         e.preventDefault();
         
@@ -1060,7 +1094,6 @@
             doa: doa
         };
 
-        // Kirim data ke Google Sheets di background
         fetch(scriptURL, { 
             method: 'POST', 
             body: JSON.stringify(dataPayload), 
@@ -1070,7 +1103,6 @@
             }
         }).catch(err => console.log(err));
 
-        // Tampilkan langsung secara instan di kotak riwayat geser di bawah komentar
         const container = document.getElementById('riwayatUcapanContainer');
         const newItem = document.createElement('div');
         newItem.className = 'riwayat-item';
@@ -1083,7 +1115,6 @@
         `;
         container.prepend(newItem);
 
-        // Tampilkan Popup Surat Balasan Otomatis
         document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
         document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
         document.getElementById('envelope-overlay').classList.add('active');
