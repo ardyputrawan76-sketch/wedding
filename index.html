@@ -1047,31 +1047,40 @@
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyo0Jv7gNqmCAjrVTcNnWyaAU50AuTuDPTrxJG6pqQaU05LPFzvaUTuy7IG1QQCimqyCA/exec';
         
-        const formData = new URLSearchParams();
-        formData.append('nama', nama);
-        formData.append('status', status);
-        formData.append('doa', doa);
+        // Mengirim data dalam bentuk JSON agar terbaca melewati batasan CORS
+        const dataPayload = {
+            nama: nama,
+            status: status,
+            doa: doa
+        };
 
-        fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
-            .then(() => {
-                document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
-                document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
-                document.getElementById('envelope-overlay').classList.add('active');
+        fetch(scriptURL, { 
+            method: 'POST', 
+            body: JSON.stringify(dataPayload), 
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(() => {
+            document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
+            document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
+            document.getElementById('envelope-overlay').classList.add('active');
 
-                submitBtn.innerText = "Kirim Surat Restu ✉️";
-                submitBtn.disabled = false;
-                document.getElementById('form-rsvp').reset();
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
-                document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
-                document.getElementById('envelope-overlay').classList.add('active');
+            submitBtn.innerText = "Kirim Surat Restu ✉️";
+            submitBtn.disabled = false;
+            document.getElementById('form-rsvp').reset();
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
+            document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
+            document.getElementById('envelope-overlay').classList.add('active');
 
-                submitBtn.innerText = "Kirim Surat Restu ✉️";
-                submitBtn.disabled = false;
-                document.getElementById('form-rsvp').reset();
-            });
+            submitBtn.innerText = "Kirim Surat Restu ✉️";
+            submitBtn.disabled = false;
+            document.getElementById('form-rsvp').reset();
+        });
     }
 
     function tutupAmplopSurat(e) {
