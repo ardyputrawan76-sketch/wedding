@@ -513,13 +513,14 @@
         </button>
     </div>
 
-    <!-- FLOATING 3D TOP NAVBAR -->
+    <!-- FLOATING 3D TOP NAVBAR (6 STASIUN) -->
     <div class="top-3d-nav" id="topNav3D">
         <button class="nav-btn-3d active" onclick="pindahStasiun3D(0)">✨ Sambutan</button>
         <button class="nav-btn-3d" onclick="pindahStasiun3D(1)">👩‍❤️‍👨 Mempelai</button>
         <button class="nav-btn-3d" onclick="pindahStasiun3D(2)">📅 Acara</button>
         <button class="nav-btn-3d" onclick="pindahStasiun3D(3)">🖼️ Galeri</button>
-        <button class="nav-btn-3d" onclick="pindahStasiun3D(4)">🎁 Kado & RSVP</button>
+        <button class="nav-btn-3d" onclick="pindahStasiun3D(4)">🎁 Kado</button>
+        <button class="nav-btn-3d" onclick="pindahStasiun3D(5)">💌 RSVP & Doa</button>
     </div>
 
     <!-- HUD PANELS TERTEMPEL DI PERSPEKTIF 3D -->
@@ -602,7 +603,7 @@
             </div>
         </div>
 
-        <!-- STASIUN 4: KADO DIGITAL & RSVP -->
+        <!-- STASIUN 4: KADO DIGITAL -->
         <div class="hud-station" id="stasiun-4">
             <h3 class="section-title">Kado Digital</h3>
             <p style="font-size: 0.85rem; color: #ded0c1; line-height: 1.6;">
@@ -623,10 +624,13 @@
                 <p style="margin: 0; font-size: 0.6rem; color: #a5c3a2; font-weight: 700;">NAMA PENERIMA</p>
                 <p class="teks-timbul-atm" style="margin-top: 2px; font-size: 0.85rem; text-transform: uppercase;">GEDE ARDY PUTRAWAN</p>
             </div>
+        </div>
 
-            <hr class="pembatas">
-
+        <!-- STASIUN 5: KONFIRMASI KEHADIRAN (RSVP) & UCAPAN TERIMA KASIH (OM SHANTI) -->
+        <div class="hud-station" id="stasiun-5">
             <h3 class="section-title">Konfirmasi Kehadiran</h3>
+            <p style="font-size: 0.82rem; color: #cbbba9; margin-bottom: 5px;">Sampaikan konfirmasi kehadiran dan doa restu Anda</p>
+            
             <form class="rsvp-form-group" id="form-rsvp" onsubmit="submitRSVP(event)">
                 <input type="text" id="rsvp-input-nama" placeholder="Nama Lengkap Anda" required>
                 <select id="rsvp-input-status" required>
@@ -637,6 +641,23 @@
                 <textarea id="rsvp-input-doa" placeholder="Tuliskan ucapan / doa restu..." rows="3" required></textarea>
                 <button type="submit" class="btn-kirim-rsvp" id="btn-submit-rsvp">Kirim Surat Restu ✉️</button>
             </form>
+
+            <hr class="pembatas">
+
+            <!-- GIF & UCAPAN PENUTUP OM SHANTI -->
+            <div style="text-align: center; margin-top: 10px;">
+                <div style="width: 70px; height: 70px; margin: 0 auto 10px auto; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold-primary); background: rgba(212,175,55,0.1); display: flex; justify-content: center; align-items: center;">
+                    <!-- GIF/Animasi Bunga atau Simbol Suci -->
+                    <span style="font-size: 2rem;">🌸</span>
+                </div>
+                <h3 class="salam-arab" style="font-size: 2.2rem; margin-bottom: 2px;">Om Shanti, Shanti, Shanti Om</h3>
+                <p style="font-size: 0.82rem; color: #ded0c1; line-height: 1.6; margin-top: 5px;">
+                    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kedua mempelai.
+                </p>
+                <p style="font-family: var(--font-script); font-size: 2rem; color: var(--gold-glow); margin-top: 15px;">
+                    Gede Ardy & Komang Ana
+                </p>
+            </div>
         </div>
 
     </div>
@@ -644,12 +665,13 @@
     <!-- 3D NAVIGATION ARROWS DI BAWAH -->
     <div class="bottom-3d-controller" id="bottomNav3D">
         <button class="btn-arrow-3d" onclick="geserStasiunRelatif(-1)">❮</button>
-        <div class="indicator-dots">
+        <div class="indicator-dots" id="indicatorDotsContainer">
             <span class="dot-3d active" onclick="pindahStasiun3D(0)"></span>
             <span class="dot-3d" onclick="pindahStasiun3D(1)"></span>
             <span class="dot-3d" onclick="pindahStasiun3D(2)"></span>
             <span class="dot-3d" onclick="pindahStasiun3D(3)"></span>
             <span class="dot-3d" onclick="pindahStasiun3D(4)"></span>
+            <span class="dot-3d" onclick="pindahStasiun3D(5)"></span>
         </div>
         <button class="btn-arrow-3d" onclick="geserStasiunRelatif(1)">❯</button>
     </div>
@@ -672,19 +694,21 @@
     let isNavigating = false;
     let mouseX = 0, mouseY = 0;
 
+    // Diperbarui menjadi 6 Stasiun Kamera (0 sampai 5)
     const stasiunKamera = [
         { x: 0,   y: 1.6, z: 12.0, rotY: 0 },       // Stasiun 0: Sambutan Utama
         { x: -1.2, y: 1.9, z: 4.8,  rotY: 0.15 },    // Stasiun 1: Mempelai
         { x: 1.2,  y: 1.7, z: -2.0, rotY: -0.15 },   // Stasiun 2: Pawiwahan & Acara
         { x: 0,   y: 1.6, z: -8.5, rotY: 0 },       // Stasiun 3: Galeri 3D
-        { x: 0,   y: 1.4, z: -15.0, rotY: 0 }       // Stasiun 4: Kado & RSVP
+        { x: -1.0, y: 1.4, z: -14.0, rotY: 0.1 },   // Stasiun 4: Kado Digital
+        { x: 1.0,  y: 1.4, z: -20.0, rotY: -0.1 }   // Stasiun 5: RSVP & Om Shanti
     ];
 
     function init3DWorld() {
         const canvas = document.getElementById('webgl-canvas');
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0d0603);
-        scene.fog = new THREE.FogExp2(0x0d0603, 0.055);
+        scene.fog = new THREE.FogExp2(0x0d0603, 0.045);
 
         camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 1.8, 19.5);
@@ -735,10 +759,10 @@
     }
 
     function buatLorongPanggung3D() {
-        const floorGeo = new THREE.BoxGeometry(9, 0.3, 42);
+        const floorGeo = new THREE.BoxGeometry(9, 0.3, 50);
         const floorMat = new THREE.MeshStandardMaterial({ color: 0x24130a, roughness: 0.4 });
         const floor = new THREE.Mesh(floorGeo, floorMat);
-        floor.position.set(0, -0.15, -2);
+        floor.position.set(0, -0.15, -4);
         scene.add(floor);
 
         goldRingsGroup = new THREE.Group();
@@ -758,7 +782,7 @@
         goldRingsGroup.position.set(0, 0, 3.5);
         scene.add(goldRingsGroup);
 
-        for (let z = 10; z >= -18; z -= 7) {
+        for (let z = 10; z >= -22; z -= 7) {
             buatTedungBali(-3.8, z);
             buatTedungBali(3.8, z);
         }
@@ -791,7 +815,7 @@
         for(let i=0; i<count*3; i+=3) {
             pos[i] = (Math.random() - 0.5) * 16;
             pos[i+1] = Math.random() * 6;
-            pos[i+2] = (Math.random() - 0.5) * 45;
+            pos[i+2] = (Math.random() - 0.5) * 50;
         }
         geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
         const mat = new THREE.PointsMaterial({ color: 0xfcecd7, size: 0.075, transparent: true, opacity: 0.85 });
@@ -861,7 +885,7 @@
     }
 
     /* ==========================================================
-       3. SISTEM NAVIGASI KAMERA 3D
+       3. SISTEM NAVIGASI KAMERA 3D (6 STASIUN)
        ========================================================== */
     function pindahStasiun3D(index) {
         if (index < 0 || index >= stasiunKamera.length || isNavigating) return;
@@ -996,7 +1020,6 @@
         setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
-    // Integrasi Pengiriman Data ke Google Apps Script & Balasan Otomatis
     function submitRSVP(e) {
         e.preventDefault();
         
@@ -1019,7 +1042,6 @@
 
         fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
             .then(() => {
-                // Tampilkan Popup Surat Restu dengan pesan balasan otomatis dari Ardy & Ana
                 document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
                 document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
                 document.getElementById('envelope-overlay').classList.add('active');
@@ -1046,6 +1068,16 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+        // Dinamis membuat dot indicator sebanyak stasiun kamera (6 buah)
+        const dotContainer = document.getElementById('indicatorDotsContainer');
+        dotContainer.innerHTML = '';
+        stasiunKamera.forEach((_, idx) => {
+            const span = document.createElement('span');
+            span.className = `dot-3d ${idx === 0 ? 'active' : ''}`;
+            span.onclick = () => pindahStasiun3D(idx);
+            dotContainer.appendChild(span);
+        });
+
         const params = new URLSearchParams(window.location.search);
         const to = params.get('to');
         if (to) {
