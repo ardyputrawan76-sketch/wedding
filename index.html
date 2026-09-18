@@ -34,7 +34,7 @@
             --gold-glow: #f5e4b8;
             --gold-dark: #8b5a2b;
             --bg-dark: #0d0603;
-            --card-glass: rgba(26, 14, 8, 0.88);
+            --card-glass: rgba(26, 14, 8, 0.92);
             --font-script: 'Great Vibes', cursive;
             --font-body: 'Montserrat', sans-serif;
             --font-title: 'Cinzel Decorative', cursive, serif;
@@ -212,6 +212,7 @@
             max-width: 540px;
             max-height: 72vh;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             background: var(--card-glass);
             backdrop-filter: blur(14px);
             border: 1.5px solid rgba(212, 175, 55, 0.45);
@@ -231,7 +232,7 @@
         .hud-station.active {
             opacity: 1;
             transform: scale(1) translateZ(0);
-            pointer-events: auto;
+            pointer-events: auto; /* Mengizinkan interaksi scroll/sentuh di dalam kartu */
         }
 
         .salam-arab { font-family: var(--font-script); font-size: 2.8rem; color: var(--gold-glow); margin-bottom: 6px; }
@@ -520,7 +521,7 @@
                 Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa / Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) putra-putri kami:
             </p>
             <div style="margin-top: 20px;">
-                <p style="font-size: 0.78rem; color: var(--gold-glow); letter-spacing: 2px;">GESER LAYAR / KLIK TOMBOL UNTUK MENELUSURI PANGGUNG 3D</p>
+                <p style="font-size: 0.78rem; color: var(--gold-glow); letter-spacing: 2px;">GANTI HALAMAN VIA TOMBOL PANAH DI BAWAH ATAU KLIK MENU ATAS</p>
             </div>
         </div>
 
@@ -691,7 +692,7 @@
         buatGerbangCandiBentar();
         buatLorongPanggung3D();
         buatPartikelEmas();
-        setupNavigationEvents();
+        setupMouseParallax();
 
         window.addEventListener('resize', onResize);
         renderLoop();
@@ -849,7 +850,7 @@
     }
 
     /* ==========================================================
-       3. SISTEM NAVIGASI KAMERA 3D
+       3. SISTEM NAVIGASI KAMERA 3D (EKSKLUSIF VIA TOMBOL)
        ========================================================== */
     function pindahStasiun3D(index) {
         if (index < 0 || index >= stasiunKamera.length || isNavigating) return;
@@ -861,6 +862,7 @@
 
         document.querySelectorAll('.hud-station').forEach((p, i) => {
             p.classList.toggle('active', i === index);
+            if (i === index) p.scrollTop = 0; // Kembalikan posisi scroll ke atas saat berganti stasiun
         });
 
         const target = stasiunKamera[index];
@@ -886,35 +888,11 @@
         pindahStasiun3D(stationIndex + delta);
     }
 
-    function setupNavigationEvents() {
+    function setupMouseParallax() {
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth) * 2 - 1;
             mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
         });
-
-        let wheelTimeout;
-        window.addEventListener('wheel', (e) => {
-            clearTimeout(wheelTimeout);
-            wheelTimeout = setTimeout(() => {
-                if (e.deltaY > 40) geserStasiunRelatif(1);
-                else if (e.deltaY < -40) geserStasiunRelatif(-1);
-            }, 50);
-        }, { passive: true });
-
-        let touchStartY = 0;
-        window.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        window.addEventListener('touchend', (e) => {
-            const touchEndY = e.changedTouches[0].clientY;
-            const selisih = touchStartY - touchEndY;
-            if (selisih > 60) {
-                geserStasiunRelatif(1);
-            } else if (selisih < -60) {
-                geserStasiunRelatif(-1);
-            }
-        }, { passive: true });
     }
 
     /* ==========================================================
@@ -1013,7 +991,6 @@
         const status = document.getElementById('rsvp-input-status').value;
         const doa = document.getElementById('rsvp-input-doa').value;
 
-        // Munculkan Efek Surat Pengiriman / Kartu Amplop Surat Restu
         document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
         document.getElementById('letter-content-text').innerText = `"${doa}"`;
         document.getElementById('envelope-overlay').classList.add('active');
