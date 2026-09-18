@@ -86,8 +86,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px 24px;
-            overflow-y: auto;
+            padding: 24px;
             transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
@@ -99,59 +98,35 @@
 
         .royal-badge {
             letter-spacing: 4px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--gold-primary);
             text-transform: uppercase;
             font-weight: 700;
-            padding: 4px 12px;
+            padding: 4px 14px;
             border-top: 1px solid var(--gold-primary);
             border-bottom: 1px solid var(--gold-primary);
             display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        /* FOTO BERSAMA COVER PERSEGI */
-        .cover-photo-wrapper {
-            width: 120px;
-            height: 120px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 2px solid var(--gold-primary);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
-            margin: 6px auto;
-            background: #2b170c;
-        }
-        .cover-photo-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            margin-bottom: 10px;
         }
 
         .cover-title {
             font-family: var(--font-script);
-            font-size: clamp(2.8rem, 9vw, 4.5rem);
+            font-size: clamp(3.2rem, 11vw, 5.2rem);
             color: var(--gold-glow);
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.6), 2px 4px 10px rgba(0,0,0,0.9);
-            margin: 4px 0 2px 0;
+            margin: 10px 0 20px 0;
             line-height: 1.1;
-        }
-
-        .cover-om {
-            font-family: var(--font-script);
-            font-size: 1.8rem;
-            color: var(--gold-glow);
-            margin-bottom: 8px;
         }
 
         .guest-card {
             background: rgba(43, 24, 13, 0.65);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 14px;
-            padding: 12px 22px;
-            margin: 8px auto 18px auto;
+            border-radius: 16px;
+            padding: 16px 28px;
+            margin: 10px auto 25px auto;
             box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-            max-width: 380px;
+            max-width: 420px;
             width: 100%;
         }
 
@@ -162,8 +137,8 @@
             background: linear-gradient(135deg, #a36c34, #663e1d);
             color: #ffffff;
             border: 2px solid var(--gold-primary);
-            padding: 13px 32px;
-            font-size: 0.9rem;
+            padding: 15px 36px;
+            font-size: 0.95rem;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -238,7 +213,7 @@
             backdrop-filter: blur(14px);
             border: 1.5px solid rgba(212, 175, 55, 0.45);
             border-radius: 24px;
-            padding: 30px 22px;
+            padding: 26px 22px;
             text-align: center;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(212,175,55,0.3);
             opacity: 0;
@@ -254,6 +229,24 @@
             opacity: 1;
             transform: scale(1) translateZ(0);
             pointer-events: auto;
+        }
+
+        /* FOTO BERSAMA PERSEGI DI STASIUN 0 (SAMBUTAN) */
+        .photo-sambutan-square {
+            width: 150px;
+            height: 150px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+            margin: 0 auto 14px auto;
+            background: #2b170c;
+            cursor: pointer;
+        }
+        .photo-sambutan-square img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .salam-arab { font-family: var(--font-script); font-size: 2.8rem; color: var(--gold-glow); margin-bottom: 6px; }
@@ -341,7 +334,7 @@
             width: 100%; padding: 12px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
         }
 
-        /* WADAH RIWAYAT KOMENTAR MODEL GESER (SCROLLABLE) */
+        /* WADAH RIWAYAT KOMENTAR MODEL GESER (SCROLLABLE CARDS) */
         .riwayat-container {
             margin-top: 16px;
             background: rgba(18, 9, 4, 0.7);
@@ -561,21 +554,14 @@
         </div>
     </div>
 
-    <!-- COVER SCREEN DENGAN FOTO BERSAMA PERSEGI & OM SWASTYASTU DI BAWAHNYA -->
+    <!-- COVER SCREEN PEMBUKA AWAL -->
     <div id="cover-screen">
         <span class="royal-badge">PAWIWAHAN BALI</span>
-        
-        <!-- Foto Bersama Persegi -->
-        <div class="cover-photo-wrapper" onclick="bukaModalFoto('bg-cover.jpg')">
-            <img src="bg-cover.jpg" alt="Ardy & Ana" onerror="this.onerror=null; this.src='galeri1.jpg';">
-        </div>
-
         <h1 class="cover-title">Ardy & Ana</h1>
-        <p class="cover-om">Om Swastyastu</p>
         
         <div class="guest-card">
-            <p style="font-size: 0.8rem; color: #d1c0b0; font-style: italic;">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
-            <h2 id="guest-name" style="font-size: 1.35rem; font-weight: 700; color: #fff; margin-top: 4px;">Tamu Undangan</h2>
+            <p style="font-size: 0.82rem; color: #d1c0b0; font-style: italic;">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+            <h2 id="guest-name" style="font-size: 1.45rem; font-weight: 700; color: #fff; margin-top: 5px;">Tamu Undangan</h2>
         </div>
 
         <button class="btn-open-3d" onclick="bukaDunia3D()">
@@ -594,7 +580,13 @@
 
     <div id="hud-container">
         
+        <!-- STASIUN 0: SAMBUTAN DENGAN FOTO BERSAMA PERSEGI -->
         <div class="hud-station active" id="stasiun-0">
+            <!-- Foto Bersama Persegi Berbingkai Emas -->
+            <div class="photo-sambutan-square" onclick="bukaModalFoto('bg-cover.jpg')">
+                <img src="bg-cover.jpg" alt="Foto Bersama Ardy & Ana" onerror="this.onerror=null; this.src='galeri1.jpg';">
+            </div>
+
             <p class="salam-arab">Om Swastyastu</p>
             <p class="salam-teks">
                 Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa / Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) putra-putri kami:
@@ -688,7 +680,7 @@
             </div>
         </div>
 
-        <!-- STASIUN 5: RSVP, RIWAYAT UCAPAN KOSONG & OM SHANTI -->
+        <!-- STASIUN 5: RSVP & OM SHANTI -->
         <div class="hud-station" id="stasiun-5">
             <h3 class="section-title">Konfirmasi Kehadiran</h3>
             <p style="font-size: 0.82rem; color: #cbbba9; margin-bottom: 5px;">Sampaikan konfirmasi kehadiran dan doa restu Anda</p>
@@ -708,7 +700,7 @@
             <div style="margin-top: 15px; text-align: left;">
                 <p style="font-size: 0.78rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 6px;">✨ Ucapan & Doa Tamu Lain:</p>
                 <div class="riwayat-container" id="riwayatUcapanContainer">
-                    <!-- Kotak kosong terlebih dahulu, akan terisi otomatis saat tamu mengirim ucapan -->
+                    <!-- Kotak kosong terlebih dahulu -->
                 </div>
             </div>
 
