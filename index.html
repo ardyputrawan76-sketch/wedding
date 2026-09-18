@@ -1,459 +1,1042 @@
-<!-- FAVICON -->
-<link rel="icon" type="image/png" href="favicon.png?v=2">
-<link rel="apple-touch-icon" href="favicon.png?v=2">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Wedding Of Ardy & Ana (3D Cinematic)</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="favicon.png?v=2">
+    <link rel="apple-touch-icon" href="favicon.png?v=2">
+    
+    <!-- META TAGS PREVIEW WHATSAPP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Wedding Of Ardy & Ana" />
+    <meta property="og:description" content="Pawiwahan Ardy & Ana - Kamis, 31 Desember 2026, Tabanan, Bali" />
+    <meta property="og:image" content="https://ardyputrawan76-sketch.github.io/wedding/bgt-cover.jpg" />
+    <meta property="og:image:secure_url" content="https://ardyputrawan76-sketch.github.io/wedding/bgt-cover.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="400" />
 
-<!-- META TAGS PREVIEW WHATSAPP -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="The Wedding Of Ardy & Ana" />
-<meta property="og:description" content="Untuk detail acara silahkan akses pada link berikut" />
-<meta property="og:image" content="https://ardyputrawan76-sketch.github.io/wedding/bgt-cover.jpg" />
-<meta property="og:image:secure_url" content="https://ardyputrawan76-sketch.github.io/wedding/bgt-cover.jpg" />
-<meta property="og:image:type" content="image/jpeg" />
-<meta property="og:image:width" content="600" />
-<meta property="og:image:height" content="400" />
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- FONTS -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- THREE.JS & GSAP ANIMATION LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-<!-- THREE.JS & GSAP LIBRARIES -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --gold-primary: #d4af37;
+            --gold-glow: #f5e4b8;
+            --gold-dark: #8b5a2b;
+            --bg-dark: #0d0603;
+            --card-glass: rgba(26, 14, 8, 0.88);
+            --font-script: 'Great Vibes', cursive;
+            --font-body: 'Montserrat', sans-serif;
+            --font-title: 'Cinzel Decorative', cursive, serif;
+        }
 
-<style>
-    * { box-sizing: border-box; }
-    html, body { 
-        margin: 0; padding: 0; 
-        width: 100%; height: 100%; 
-        overflow-x: hidden;
-        font-family: 'Montserrat', sans-serif; 
-        background-color: #120904;
-        color: #fcecd7;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0; padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
 
-    /* THREE.JS CANVAS 3D BACKGROUND */
-    #webgl-canvas {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        z-index: 1;
-        pointer-events: auto;
-    }
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+            font-family: var(--font-body);
+            color: #fcecd7;
+            position: relative;
+        }
 
-    /* OVERLAY ORNAMEN UKIRAN BALI SVG PAWANG KANAN & KIRI */
-    .ukiran-overlay {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        pointer-events: none;
-        z-index: 5;
-        overflow: hidden;
-    }
+        /* CANVAS THREE.JS 3D */
+        #webgl-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 1;
+            display: block;
+        }
 
-    .ukiran-svg {
-        position: absolute;
-        width: clamp(180px, 35vw, 300px);
-        opacity: 0.65;
-        filter: drop-shadow(2px 4px 10px rgba(0, 0, 0, 0.7));
-        transition: transform 0.1s ease-out;
-    }
-    .ub-top-left { top: -20px; left: -20px; }
-    .ub-top-right { top: -20px; right: -20px; transform: scaleX(-1); }
+        /* ORNAMEN SUDUT UKIRAN BALI */
+        .corner-ornament {
+            position: fixed;
+            width: clamp(140px, 28vw, 240px);
+            z-index: 6;
+            pointer-events: none;
+            opacity: 0.75;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.8));
+            transition: transform 0.2s ease-out;
+        }
+        .co-top-left { top: -15px; left: -15px; }
+        .co-top-right { top: -15px; right: -15px; transform: scaleX(-1); }
 
-    /* COVER OVERLAY HASIL BUKA UNDANGAN */
-    #cover {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-        background: linear-gradient(rgba(18, 9, 4, 0.82), rgba(18, 9, 4, 0.85)), url('bg-cover.jpg') no-repeat center center/cover;
-        display: flex; flex-direction: column; justify-content: center; align-items: center;
-        color: #fff; text-align: center; z-index: 9999; padding: 20px;
-        transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease;
-    }
+        /* COVER SCREEN PEMBUKA */
+        #cover-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 9999;
+            background: linear-gradient(rgba(13, 6, 3, 0.75), rgba(13, 6, 3, 0.85)), url('bg-cover.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+            transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
 
-    #cover.opened {
-        transform: translateY(-100vh);
-        opacity: 0;
-        pointer-events: none;
-    }
+        #cover-screen.opened {
+            opacity: 0;
+            transform: scale(1.15);
+            pointer-events: none;
+        }
 
-    .wedding-title {
-        font-family: 'Great Vibes', cursive;
-        font-size: clamp(3.2rem, 9vw, 5rem);
-        color: #e5c188;
-        margin: 15px 0;
-        text-shadow: 2px 3px 10px rgba(0,0,0,0.9), 0 0 20px rgba(212, 175, 55, 0.4);
-    }
+        .royal-badge {
+            letter-spacing: 4px;
+            font-size: 0.75rem;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-top: 1px solid var(--gold-primary);
+            border-bottom: 1px solid var(--gold-primary);
+            display: inline-block;
+            margin-bottom: 10px;
+        }
 
-    .guest-box {
-        background: rgba(92, 64, 51, 0.45);
-        backdrop-filter: blur(8px);
-        padding: 16px 30px;
-        border-radius: 14px;
-        border: 1px solid rgba(229, 193, 136, 0.4);
-        margin: 20px 0;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-    }
+        .cover-title {
+            font-family: var(--font-script);
+            font-size: clamp(3.2rem, 11vw, 5.2rem);
+            color: var(--gold-glow);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6), 2px 4px 10px rgba(0,0,0,0.9);
+            margin: 10px 0 20px 0;
+            line-height: 1.1;
+        }
 
-    .guest-name { font-size: 1.5rem; font-weight: 600; color: #fff; margin-top: 5px; }
+        .guest-card {
+            background: rgba(43, 24, 13, 0.65);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 16px;
+            padding: 16px 28px;
+            margin: 10px auto 25px auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            max-width: 420px;
+            width: 100%;
+        }
 
-    .btn-open {
-        background: linear-gradient(135deg, #8b5a2b, #5c4033);
-        color: white; border: 1px solid #d4af37;
-        padding: 14px 38px; font-size: 1rem; font-weight: 600;
-        border-radius: 30px; cursor: pointer;
-        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3); transition: 0.3s;
-        letter-spacing: 1px;
-    }
-    .btn-open:hover { transform: scale(1.06); background: #8b5a2b; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5); }
+        .btn-open-3d {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #a36c34, #663e1d);
+            color: #ffffff;
+            border: 2px solid var(--gold-primary);
+            padding: 15px 36px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 35px;
+            cursor: pointer;
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.45);
+            transition: all 0.3s ease;
+        }
+        .btn-open-3d:active { transform: scale(0.95); }
 
-    /* NAVBAR INTERAKSI KAMERA 3D (TOP FIXED) */
-    .nav-3d-container {
-        position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-        display: flex; gap: 6px; z-index: 50;
-        background: rgba(25, 14, 8, 0.75); backdrop-filter: blur(10px);
-        padding: 6px 10px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.3);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-        opacity: 0; pointer-events: none; transition: opacity 1s ease 0.5s;
-    }
-    .nav-3d-container.active { opacity: 1; pointer-events: auto; }
+        /* FLOATING 3D NAVIGATION HEADER */
+        .top-3d-nav {
+            position: fixed;
+            top: 18px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 6px;
+            background: rgba(22, 11, 5, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 6px 10px;
+            border-radius: 35px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+            max-width: 95vw;
+            overflow-x: auto;
+        }
+        .top-3d-nav.active { opacity: 1; pointer-events: auto; }
 
-    .nav-btn {
-        background: transparent; color: #dfcbaf; border: none;
-        padding: 8px 14px; font-size: 0.75rem; font-weight: 600;
-        border-radius: 20px; cursor: pointer; transition: 0.3s;
-        white-space: nowrap;
-    }
-    .nav-btn.active, .nav-btn:hover { background: linear-gradient(135deg, #8b5a2b, #5c4033); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+        .nav-btn-3d {
+            background: transparent;
+            color: #dfcbaf;
+            border: none;
+            padding: 7px 14px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .nav-btn-3d.active, .nav-btn-3d:hover {
+            background: linear-gradient(135deg, var(--gold-dark), #5c3514);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
 
-    /* MAIN SCROLLABLE CONTENT CONTAINER DI ATAS CANVAS 3D */
-    #main-content {
-        position: relative;
-        z-index: 10;
-        max-width: 650px;
-        margin: 0 auto;
-        padding: 80vh 20px 60px 20px; /* Spacer agar stage 3D terlihat pertama kali */
-        pointer-events: none; /* Agar klik di luar kartu tetap bisa memutar 3D */
-    }
+        /* 3D FLOATING HUD PANELS */
+        #hud-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
 
-    .section-card {
-        pointer-events: auto;
-        background: rgba(28, 16, 9, 0.85);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(212, 175, 55, 0.35);
-        border-radius: 20px;
-        padding: 35px 25px;
-        margin-bottom: 45px;
-        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
-        text-align: center;
-        opacity: 0; transform: translateY(40px);
-        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
+        .hud-station {
+            position: absolute;
+            width: 92%;
+            max-width: 540px;
+            max-height: 72vh;
+            overflow-y: auto;
+            background: var(--card-glass);
+            backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+            border-radius: 24px;
+            padding: 30px 22px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(212,175,55,0.3);
+            opacity: 0;
+            transform: scale(0.85) translateZ(-80px);
+            pointer-events: none;
+            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
 
-    .section-card.visible {
-        opacity: 1; transform: translateY(0);
-    }
+        .hud-station::-webkit-scrollbar { width: 4px; }
+        .hud-station::-webkit-scrollbar-thumb { background: var(--gold-primary); border-radius: 4px; }
 
-    .salam-arab { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: #e5c188; margin-bottom: 5px; }
-    .salam-teks { font-size: 0.9rem; color: #ded0c1; line-height: 1.7; }
+        .hud-station.active {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
+            pointer-events: auto;
+        }
 
-    .pembatas { 
-        border: 0; height: 1px; 
-        background: linear-gradient(to right, transparent, #d4af37, transparent); 
-        margin: 30px 0; 
-    }
+        .salam-arab { font-family: var(--font-script); font-size: 2.8rem; color: var(--gold-glow); margin-bottom: 6px; }
+        .salam-teks { font-size: 0.92rem; color: #ded0c1; line-height: 1.7; }
+        .section-title { font-family: var(--font-script); font-size: 2.5rem; color: var(--gold-glow); margin-bottom: 12px; }
+        .pembatas { border: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold-primary), transparent); margin: 24px 0; }
 
-    /* MEMPELAI CARDS */
-    .mempelai-flex {
-        display: flex; flex-direction: column; gap: 25px; align-items: center; margin-top: 25px;
-    }
-    .mempelai-card {
-        width: 100%; max-width: 320px; background: rgba(45, 27, 16, 0.6);
-        padding: 22px; border-radius: 16px; border: 1px solid rgba(229, 193, 136, 0.25);
-        backdrop-filter: blur(5px);
-    }
-    .avatar-frame {
-        width: 150px; height: 150px; margin: 0 auto 15px;
-        border-radius: 50%; overflow: hidden;
-        border: 3px solid #d4af37; box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-        cursor: pointer; transition: transform 0.3s ease;
-    }
-    .avatar-frame:hover { transform: scale(1.05); }
-    .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
-    .nama-lengkap { font-size: 1.15rem; font-weight: 700; color: #fff; margin: 10px 0 5px; }
-    .info-ortu { font-size: 0.8rem; color: #cbbba9; line-height: 1.5; }
+        /* MEMPELAI PROFILES */
+        .mempelai-grid { display: flex; flex-direction: column; gap: 20px; align-items: center; margin-top: 15px; }
+        .mempelai-profile {
+            width: 100%; max-width: 320px; background: rgba(43, 24, 13, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 18px; padding: 20px;
+        }
+        .avatar-circle {
+            width: 140px; height: 140px; margin: 0 auto 12px;
+            border-radius: 50%; overflow: hidden;
+            border: 3px solid var(--gold-primary); box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+            background: #2b170c; cursor: pointer;
+        }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .nama-mempelai { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .ortu-info { font-size: 0.8rem; color: #cbb9a7; line-height: 1.5; }
 
-    /* COUNTDOWN */
-    .timer-container { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
-    .timer-box { 
-        background: rgba(45, 27, 16, 0.8); width: 68px; padding: 12px 5px; 
-        border-radius: 10px; border: 1px solid #d4af37; box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
-    }
-    .timer-box span { font-size: 1.4rem; font-weight: 700; color: #e5c188; display: block; }
-    .timer-box p { font-size: 0.7rem; color: #cbbba9; margin: 3px 0 0; }
+        /* TIMER */
+        .timer-flex { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+        .timer-unit {
+            background: rgba(43, 24, 13, 0.85); width: 66px; padding: 12px 4px;
+            border-radius: 12px; border: 1px solid var(--gold-primary);
+        }
+        .timer-unit span { font-size: 1.4rem; font-weight: 700; color: var(--gold-glow); display: block; }
+        .timer-unit p { font-size: 0.7rem; color: #cbbba9; margin-top: 2px; }
 
-    /* BUTTON MAPS */
-    .btn-maps { 
-        display: inline-block; background: linear-gradient(135deg, #1d976c, #25d366); 
-        color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 25px; 
-        font-size: 0.88rem; margin-top: 20px; transition: 0.3s; font-weight: 600; 
-        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); 
-    }
-    .btn-maps:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); }
+        .btn-maps-action {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #1d976c, #25d366); color: #fff;
+            text-decoration: none; padding: 12px 28px; border-radius: 30px;
+            font-size: 0.88rem; font-weight: 700; margin-top: 15px;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+        }
 
-    /* GALERI SLIDER & LIGHTBOX */
-    .galeri-wrapper { position: relative; margin-top: 20px; display: flex; align-items: center; }
-    .galeri-slider { display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 10px 5px; }
-    .galeri-slider::-webkit-scrollbar { display: none; }
-    .galeri-item { 
-        flex: 0 0 85%; scroll-snap-align: center; height: 320px; 
-        overflow: hidden; border-radius: 14px; border: 2px solid rgba(212, 175, 55, 0.5); 
-        box-shadow: 0 6px 20px rgba(0,0,0,0.5); cursor: pointer; 
-    }
-    .galeri-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .galeri-item:hover img { transform: scale(1.08); }
+        /* GALERI SLIDER */
+        .gallery-container { position: relative; margin-top: 15px; display: flex; align-items: center; }
+        .gallery-track {
+            display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
+            scroll-behavior: smooth; padding: 10px 2px;
+        }
+        .gallery-track::-webkit-scrollbar { display: none; }
+        .gallery-card {
+            flex: 0 0 85%; scroll-snap-align: center; height: 260px;
+            border-radius: 14px; overflow: hidden; border: 2px solid rgba(212, 175, 55, 0.5);
+            cursor: pointer; background: #24130a;
+        }
+        .gallery-card img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(139, 90, 43, 0.95); color: #fff; border: 1px solid var(--gold-primary);
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; z-index: 10;
+        }
+        .g-btn-left { left: -8px; }
+        .g-btn-right { right: -8px; }
 
-    .slide-btn { 
-        position: absolute; top: 50%; transform: translateY(-50%); 
-        background: rgba(139, 90, 43, 0.9); color: white; border: 1px solid #d4af37; 
-        width: 38px; height: 38px; border-radius: 50%; font-size: 1rem; cursor: pointer; z-index: 10; 
-        display: flex; justify-content: center; align-items: center; 
-    }
-    .btn-left { left: -10px; }
-    .btn-right { right: -10px; }
+        /* ATM BPD BALI */
+        .atm-bpd-wrapper {
+            background: linear-gradient(135deg, #053b23 0%, #075c35 50%, #0c7a47 100%);
+            color: white; padding: 18px; border-radius: 16px;
+            max-width: 320px; margin: 18px auto; text-align: left;
+            border: 1px solid rgba(212, 175, 55, 0.5); box-shadow: 0 10px 30px rgba(5, 68, 41, 0.5);
+        }
+        .teks-timbul-atm {
+            color: #ebd197 !important; font-family: 'Courier New', monospace; font-weight: bold;
+            text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.9), 1px 1px 1px rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px !important;
+        }
 
-    /* LIGHTBOX OVERLAY */
-    #lightbox-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(10, 5, 2, 0.95); z-index: 10000;
-        display: flex; justify-content: center; align-items: center;
-        opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-    }
-    #lightbox-overlay.active { opacity: 1; pointer-events: auto; }
-    .lightbox-container { position: relative; width: 90%; max-width: 550px; display: flex; flex-direction: column; align-items: center; }
-    #lightbox-img { max-width: 100%; max-height: 75vh; border-radius: 10px; border: 1px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-    .lightbox-close { position: absolute; top: -45px; right: 0; color: white; font-size: 2.2rem; background: none; border: none; cursor: pointer; }
+        /* RSVP FORM */
+        .rsvp-form-group { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; text-align: left; }
+        .rsvp-form-group input, .rsvp-form-group select, .rsvp-form-group textarea {
+            width: 100%; padding: 12px; border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 12px; font-family: inherit; font-size: 0.9rem;
+            background-color: rgba(18, 9, 4, 0.85); color: #fff;
+        }
+        .btn-kirim-rsvp {
+            background: linear-gradient(135deg, var(--gold-dark), #5c3514);
+            color: #fff; border: 1px solid var(--gold-primary);
+            width: 100%; padding: 12px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+        }
 
-    /* ATM CARD BPD BALI */
-    .teks-timbul-atm {
-        color: #ebd197 !important;
-        font-family: 'Courier New', Courier, monospace;
-        font-weight: bold;
-        text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.9), 1px 1px 1px rgba(255, 255, 255, 0.3);
-        letter-spacing: 2px !important;
-    }
+        /* EFEK SURAT / AMPLOP PENGIRIMAN (ENVELOPE / LETTER POPUP) */
+        #envelope-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(10, 5, 2, 0.92);
+            z-index: 20000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(8px);
+        }
+        #envelope-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    .logo-bpd-bali { display: flex; align-items: center; gap: 6px; }
-    .icon-bpd {
-        position: relative; width: 16px; height: 16px; background-color: #d4af37; border-radius: 50%;
-        display: flex; justify-content: center; align-items: center;
-    }
-    .icon-bpd::after {
-        content: ""; width: 0; height: 0;
-        border-left: 5px solid transparent; border-right: 5px solid transparent;
-        border-bottom: 9px solid #054429; position: absolute; top: 3px;
-    }
+        .letter-envelope-card {
+            background: linear-gradient(135deg, #fdf8ed 0%, #f4e8c1 100%);
+            color: #2b170c;
+            width: 90%;
+            max-width: 440px;
+            padding: 35px 25px;
+            border-radius: 16px;
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(212,175,55,0.4);
+            text-align: center;
+            position: relative;
+            transform: translateY(40px) scale(0.9);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #envelope-overlay.active .letter-envelope-card {
+            transform: translateY(0) scale(1);
+        }
 
-    /* RSVP FORM */
-    .rsvp-inputs { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; text-align: left; }
-    .rsvp-inputs input, .rsvp-inputs select, .rsvp-inputs textarea { 
-        width: 100%; padding: 13px; border: 1px solid rgba(212, 175, 55, 0.4); 
-        border-radius: 10px; font-family: inherit; font-size: 0.9rem; 
-        background-color: rgba(18, 9, 4, 0.8); color: #fff; box-sizing: border-box; 
-    }
-    .btn-submit { 
-        background: linear-gradient(135deg, #8b5a2b, #5c4033); color: #fff; border: 1px solid #d4af37; 
-        width: 100%; padding: 13px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; 
-    }
-    .btn-submit:hover { opacity: 0.9; transform: translateY(-2px); }
+        .seal-wax {
+            width: 55px; height: 55px;
+            background: radial-gradient(circle, #b82b2b 0%, #7a1515 100%);
+            border-radius: 50%;
+            margin: -50px auto 15px auto;
+            border: 3px solid #fcecd7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            display: flex; justify-content: center; align-items: center;
+            color: var(--gold-glow);
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
 
-    /* MUSIC CONTROL */
-    #music-control { 
-        position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; 
-        background-color: rgba(139, 90, 43, 0.9); color: white; border-radius: 50%; 
-        display: flex; justify-content: center; align-items: center; z-index: 999; 
-        cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.6); border: 1px solid #d4af37; 
-        font-size: 1.2rem; animation: putarMusik 4s linear infinite; animation-play-state: paused; 
-        pointer-events: auto;
-    }
-    @keyframes putarMusik { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* BOTTOM 3D CONTROLLER & ARROWS */
+        .bottom-3d-controller {
+            position: fixed;
+            bottom: 22px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+        .bottom-3d-controller.active { opacity: 1; pointer-events: auto; }
 
-    @media (min-width: 768px) {
-        .mempelai-flex { flex-direction: row; justify-content: center; gap: 20px; }
-        .galeri-item { flex: 0 0 48%; height: 320px; }
-    }
-</style>
+        .btn-arrow-3d {
+            background: rgba(26, 14, 8, 0.85);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-glow);
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            transition: transform 0.2s;
+        }
+        .btn-arrow-3d:active { transform: scale(0.92); }
 
+        .indicator-dots { display: flex; gap: 8px; }
+        .dot-3d {
+            width: 10px; height: 10px;
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .dot-3d.active {
+            background: var(--gold-primary);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
 
-<!-- THREE.JS CANVAS 3D INTERAKTIF -->
-<canvas id="webgl-canvas"></canvas>
+        /* FLOATING MUSIC & TOAST */
+        #music-pill {
+            position: fixed; bottom: 22px; right: 20px; width: 45px; height: 45px;
+            background-color: rgba(139, 90, 43, 0.9); color: white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; z-index: 999;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.6); border: 1.5px solid var(--gold-primary);
+            font-size: 1.1rem; animation: spinMusic 4s linear infinite; animation-play-state: paused;
+        }
+        @keyframes spinMusic { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-<!-- OVERLAY ORNAMEN SVG BALI -->
-<div class="ukiran-overlay">
-    <svg class="ukiran-svg ub-top-left" viewBox="0 0 220 220" fill="none">
+        #toast-box {
+            position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: rgba(15, 80, 45, 0.95); color: #fff; border: 1px solid var(--gold-primary);
+            padding: 9px 24px; border-radius: 30px; font-size: 0.85rem; font-weight: 600;
+            z-index: 10001; opacity: 0; pointer-events: none; transition: all 0.3s ease;
+        }
+        #toast-box.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* LIGHTBOX */
+        #lightbox-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10, 5, 2, 0.96); z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        #lightbox-overlay.active { opacity: 1; pointer-events: auto; }
+        .lightbox-content { position: relative; width: 90%; max-width: 520px; text-align: center; }
+        #lightbox-img { max-width: 100%; max-height: 75vh; border-radius: 12px; border: 2px solid var(--gold-primary); }
+        .lightbox-close { position: absolute; top: -45px; right: 0; color: white; font-size: 2.2rem; background: none; border: none; cursor: pointer; }
+
+        @media (min-width: 768px) {
+            .mempelai-grid { flex-direction: row; justify-content: center; gap: 20px; }
+            .gallery-card { flex: 0 0 48%; height: 280px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 3D WEBGL ENGINE -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- ORNAMEN BALI SUDUT -->
+    <svg class="corner-ornament co-top-left" viewBox="0 0 220 220" fill="none">
         <path d="M10 10 C60 10 120 40 140 90 C160 140 120 180 70 190 C30 195 10 170 25 145 C40 120 80 130 75 100 C70 70 30 50 10 10 Z" fill="#6d421d"/>
-        <path d="M10 10 Q50 60 90 40 Q130 20 150 70 Q170 120 120 130 Q70 140 40 100 Z" fill="#d4af37" opacity="0.8"/>
+        <path d="M10 10 Q50 60 90 40 Q130 20 150 70 Q170 120 120 130 Q70 140 40 100 Z" fill="#d4af37" opacity="0.85"/>
         <circle cx="75" cy="75" r="14" fill="#523013"/>
         <circle cx="75" cy="75" r="8" fill="#f3e5ab"/>
     </svg>
-    <svg class="ukiran-svg ub-top-right" viewBox="0 0 220 220" fill="none">
+    <svg class="corner-ornament co-top-right" viewBox="0 0 220 220" fill="none">
         <path d="M10 10 C60 10 120 40 140 90 C160 140 120 180 70 190 C30 195 10 170 25 145 C40 120 80 130 75 100 C70 70 30 50 10 10 Z" fill="#6d421d"/>
-        <path d="M10 10 Q50 60 90 40 Q130 20 150 70 Q170 120 120 130 Q70 140 40 100 Z" fill="#d4af37" opacity="0.8"/>
+        <path d="M10 10 Q50 60 90 40 Q130 20 150 70 Q170 120 120 130 Q70 140 40 100 Z" fill="#d4af37" opacity="0.85"/>
         <circle cx="75" cy="75" r="14" fill="#523013"/>
         <circle cx="75" cy="75" r="8" fill="#f3e5ab"/>
     </svg>
-</div>
 
-<!-- AUDIO PLAYER -->
-<audio id="bg-music" src="musik-pernikahan.mp3" loop></audio>
-<div id="music-control" onclick="toggleMusik()">🎵</div>
+    <!-- PEMUTAR MUSIK -->
+    <audio id="audio-wedding" src="musik-pernikahan.mp3" loop preload="auto"></audio>
+    <div id="music-pill" onclick="toggleAudio()">🎵</div>
 
-<!-- COVER SCREEN -->
-<div id="cover">
-    <p style="letter-spacing: 3px; font-size: 0.85rem; font-weight:600; color:#e5c188;">THE WEDDING OF</p>
-    <h1 class="wedding-title">Ardy & Ana</h1>
-    <div class="guest-box">
-        <p style="font-size: 0.85rem; font-style: italic; margin:0; color:#eee;">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
-        <h2 id="nama-tamu" class="guest-name">Tamu Undangan</h2>
-    </div>
-    <button class="btn-open" onclick="bukaUndangan()">Buka Undangan 3D</button>
-</div>
+    <!-- TOAST NOTIFIKASI -->
+    <div id="toast-box">Pesan Disalin!</div>
 
-<!-- 3D NAVIGATION TOOLBAR -->
-<div class="nav-3d-container" id="nav3d">
-    <button class="nav-btn active" onclick="fokusKamera3D(0)">✨ Panggung 3D</button>
-    <button class="nav-btn" onclick="fokusKamera3D(1)">👩‍❤️‍👨 Mempelai</button>
-    <button class="nav-btn" onclick="fokusKamera3D(2)">📅 Acara</button>
-    <button class="nav-btn" onclick="fokusKamera3D(3)">🖼️ Galeri</button>
-    <button class="nav-btn" onclick="fokusKamera3D(4)">🎁 Kado & RSVP</button>
-</div>
-
-<!-- LIGHTBOX OVERLAY -->
-<div id="lightbox-overlay" onclick="tutupFotoLuar(event)">
-    <div class="lightbox-container">
-        <button class="lightbox-close" onclick="tutupFoto()">&times;</button>
-        <img id="lightbox-img" src="" alt="Foto Large">
-    </div>
-</div>
-
-<!-- MAIN KONTEN UNDANGAN -->
-<div id="main-content">
-
-    <!-- SECTION 1: SALAM -->
-    <div class="section-card" id="sec-salam">
-        <p class="salam-arab">Om Swastyastu</p>
-        <p class="salam-teks">Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri Acara Pernikahan kami:</p>
+    <!-- EFEK AMPLOP SURAT PENGIRIMAN (POPUP SURAT RESTU) -->
+    <div id="envelope-overlay" onclick="tutupAmplopSurat(event)">
+        <div class="letter-envelope-card" onclick="event.stopPropagation()">
+            <div class="seal-wax">📜</div>
+            <h3 style="font-family: var(--font-script); font-size: 2.6rem; color: #5c3514; margin-bottom: 5px;">Surat Restu Terkirim</h3>
+            <p id="letter-sender-name" style="font-weight: 700; color: #8b5a2b; font-size: 1rem; margin-bottom: 12px;"></p>
+            <p id="letter-content-text" style="font-style: italic; color: #422818; font-size: 0.95rem; line-height: 1.6; padding: 0 10px; margin-bottom: 20px;"></p>
+            <button onclick="tutupAmplopSurat()" style="background: #8b5a2b; color: #fff; border: none; padding: 10px 25px; border-radius: 20px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">Tutup Surat</button>
+        </div>
     </div>
 
-    <!-- SECTION 2: MEMPELAI -->
-    <div class="section-card" id="sec-mempelai">
-        <h3 style="font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #e5c188; margin: 0;">Pasangan Mempelai</h3>
-        <div class="mempelai-flex">
-            <div class="mempelai-card">
-                <div class="avatar-frame" onclick="bukaSingleLightbox('ardy.png')">
-                    <img src="ardy.png" alt="Foto Ardy">
+    <!-- COVER SCREEN AWAL -->
+    <div id="cover-screen">
+        <span class="royal-badge">PAWIWAHAN BALI</span>
+        <h1 class="cover-title">Ardy & Ana</h1>
+        
+        <div class="guest-card">
+            <p style="font-size: 0.82rem; color: #d1c0b0; font-style: italic;">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+            <h2 id="guest-name" style="font-size: 1.45rem; font-weight: 700; color: #fff; margin-top: 5px;">Tamu Undangan</h2>
+        </div>
+
+        <button class="btn-open-3d" onclick="bukaDunia3D()">
+            <span>Buka Undangan 3D</span> 🌺
+        </button>
+    </div>
+
+    <!-- FLOATING 3D TOP NAVBAR -->
+    <div class="top-3d-nav" id="topNav3D">
+        <button class="nav-btn-3d active" onclick="pindahStasiun3D(0)">✨ Sambutan</button>
+        <button class="nav-btn-3d" onclick="pindahStasiun3D(1)">👩‍❤️‍👨 Mempelai</button>
+        <button class="nav-btn-3d" onclick="pindahStasiun3D(2)">📅 Acara</button>
+        <button class="nav-btn-3d" onclick="pindahStasiun3D(3)">🖼️ Galeri</button>
+        <button class="nav-btn-3d" onclick="pindahStasiun3D(4)">🎁 Kado & RSVP</button>
+    </div>
+
+    <!-- HUD PANELS TERTEMPEL DI PERSPEKTIF 3D -->
+    <div id="hud-container">
+        
+        <!-- STASIUN 0: SALAM PEMBUKA -->
+        <div class="hud-station active" id="stasiun-0">
+            <p class="salam-arab">Om Swastyastu</p>
+            <p class="salam-teks">
+                Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa / Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) putra-putri kami:
+            </p>
+            <div style="margin-top: 20px;">
+                <p style="font-size: 0.78rem; color: var(--gold-glow); letter-spacing: 2px;">GESER LAYAR / KLIK TOMBOL UNTUK MENELUSURI PANGGUNG 3D</p>
+            </div>
+        </div>
+
+        <!-- STASIUN 1: MEMPELAI -->
+        <div class="hud-station" id="stasiun-1">
+            <h3 class="section-title">Pasangan Mempelai</h3>
+            <div class="mempelai-grid">
+                <div class="mempelai-profile">
+                    <div class="avatar-circle" onclick="bukaModalFoto('ardy.png')">
+                        <img src="ardy.png" alt="Gede Ardy Putrawan" onerror="this.onerror=null; this.src='bg-cover.jpg';">
+                    </div>
+                    <h4 class="nama-mempelai">Gede Ardy Putrawan</h4>
+                    <p class="ortu-info">Putra dari Pasangan:<br><strong>Bapak Ketut Sariana (Alm.)</strong><br>& <strong>Ibu Ketut Arsih</strong></p>
                 </div>
-                <h3 class="nama-lengkap">Gede Ardy Putrawan</h3>
-                <p class="info-ortu">Putra dari Pasangan:<br>Bapak Ketut Sariana (Alm.)<br>& Ibu Ketut Arsih</p>
-            </div>
-            <div style="font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: #d4af37;">&</div>
-            <div class="mempelai-card">
-                <div class="avatar-frame" onclick="bukaSingleLightbox('ana.png')">
-                    <img src="ana.png" alt="Foto Ana">
+                <div style="font-family: var(--font-script); font-size: 2.4rem; color: var(--gold-primary);">&</div>
+                <div class="mempelai-profile">
+                    <div class="avatar-circle" onclick="bukaModalFoto('ana.png')">
+                        <img src="ana.png" alt="Ni Komang Ana Oktaviani" onerror="this.onerror=null; this.src='bg-cover.jpg';">
+                    </div>
+                    <h4 class="nama-mempelai">Ni Komang Ana Oktaviani</h4>
+                    <p class="ortu-info">Putri dari Pasangan:<br><strong>Bapak I Wayan Sugiantara</strong><br>& <strong>Ibu Ni Ketut Wartini</strong></p>
                 </div>
-                <h3 class="nama-lengkap">Ni Komang Ana Oktaviani</h3>
-                <p class="info-ortu">Putri dari Pasangan:<br>Bapak I Wayan Sugiantara<br>& Ibu Ni Ketut Wartini</p>
             </div>
         </div>
-    </div>
 
-    <!-- SECTION 3: COUNTDOWN & ACARA -->
-    <div class="section-card" id="sec-acara">
-        <h4 style="font-size: 0.85rem; letter-spacing: 2px; color: #d4af37; font-weight:600; margin-top:0;">MENUJU HARI BAHAGIA</h4>
-        <div class="timer-container">
-            <div class="timer-box"><span id="days">00</span><p>Hari</p></div>
-            <div class="timer-box"><span id="hours">00</span><p>Jam</p></div>
-            <div class="timer-box"><span id="minutes">00</span><p>Menit</p></div>
-            <div class="timer-box"><span id="seconds">00</span><p>Detik</p></div>
-        </div>
-
-        <hr class="pembatas">
-
-        <h2 style="font-family: 'Great Vibes', cursive; font-size: 2.6rem; color: #e5c188; margin: 10px 0 15px 0;">Pawiwahan / Acara</h2>
-        <p style="font-weight: 600; margin: 0 0 5px 0; color: #fff;">Hari, Tanggal</p>
-        <p style="color: #ded0c1; font-size: 0.95rem; margin: 0 0 20px 0;">Kamis, 31 Desember 2026</p>
-        <p style="font-weight: 600; margin: 0 0 5px 0; color: #fff;">Waktu</p>
-        <p style="color: #ded0c1; font-size: 0.95rem; margin: 0 0 20px 0;">09.00 WITA - Selesai</p>
-        <p style="font-weight: 600; margin: 0 0 5px 0; color: #fff;">Tempat / Lokasi</p>
-        <p style="color: #ded0c1; font-size: 0.95rem; margin: 0 0 15px 0;">Kediaman Mempelai Pria, Tabanan, Bali</p>
-        <a href="https://goo.gl/maps/bz8HRTQSsVTxnEum9" target="_blank" class="btn-maps">📍 Buka Google Maps Lokasi Acara</a>
-    </div>
-
-    <!-- SECTION 4: GALERI -->
-    <div class="section-card" id="sec-galeri">
-        <h3 style="font-family: 'Great Vibes', cursive; font-size: 2.6rem; color: #e5c188; margin: 0 0 5px 0;">Galeri Kebersamaan</h3>
-        <p style="font-size: 0.8rem; color: #cbbba9; margin: 0 0 15px 0;">Kisah cinta dalam bingkai potret kebahagiaan kami</p>
-
-        <div class="galeri-wrapper">
-            <button class="slide-btn btn-left" onclick="geserGaleri(-1)">❮</button>
-            <div class="galeri-slider" id="sliderGaleri">
-                <div class="galeri-item" onclick="bukaSingleLightbox('galeri1.jpg')"><img src="galeri1.jpg" alt="Foto Wedding 1"></div>
-                <div class="galeri-item" onclick="bukaSingleLightbox('galeri2.jpg')"><img src="galeri2.jpg" alt="Foto Wedding 2"></div>
-                <div class="galeri-item" onclick="bukaSingleLightbox('galeri3.jpg')"><img src="galeri3.jpg" alt="Foto Wedding 3"></div>
-                <div class="galeri-item" onclick="bukaSingleLightbox('galeri4.jpg')"><img src="galeri4.jpg" alt="Foto Wedding 4"></div>
+        <!-- STASIUN 2: ACARA & COUNTDOWN -->
+        <div class="hud-station" id="stasiun-2">
+            <p style="font-size: 0.8rem; letter-spacing: 3px; color: var(--gold-primary); font-weight: 700;">MENUJU HARI BAHAGIA</p>
+            <div class="timer-flex">
+                <div class="timer-unit"><span id="t-days">00</span><p>Hari</p></div>
+                <div class="timer-unit"><span id="t-hours">00</span><p>Jam</p></div>
+                <div class="timer-unit"><span id="t-minutes">00</span><p>Menit</p></div>
+                <div class="timer-unit"><span id="t-seconds">00</span><p>Detik</p></div>
             </div>
-            <button class="slide-btn btn-right" onclick="geserGaleri(1)">❯</button>
+
+            <hr class="pembatas">
+
+            <h3 class="section-title" style="margin-bottom: 5px;">Pawiwahan / Acara</h3>
+            <p style="font-weight: 700; margin: 10px 0 2px 0; color: #fff;">Hari, Tanggal</p>
+            <p style="color: #ded0c1; font-size: 0.95rem; margin-bottom: 10px;">Kamis, 31 Desember 2026</p>
+
+            <p style="font-weight: 700; margin: 0 0 2px 0; color: #fff;">Waktu</p>
+            <p style="color: #ded0c1; font-size: 0.95rem; margin-bottom: 10px;">09.00 WITA - Selesai</p>
+
+            <p style="font-weight: 700; margin: 0 0 2px 0; color: #fff;">Tempat / Lokasi Acara</p>
+            <p style="color: #ded0c1; font-size: 0.95rem; margin-bottom: 8px;">Kediaman Mempelai Pria, Tabanan, Bali</p>
+
+            <a href="https://goo.gl/maps/bz8HRTQSsVTxnEum9" target="_blank" class="btn-maps-action">
+                <span>📍 Buka Google Maps Lokasi</span>
+            </a>
         </div>
-    </div>
 
-    <!-- SECTION 5: KADO DIGITAL BPD BALI & RSVP -->
-    <div class="section-card" id="sec-kado">
-        <h3 style="font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #e5c188; margin: 0;">Kado Digital</h3>
-        <p style="font-size: 0.85rem; color: #ded0c1; line-height: 1.6; margin-top: 10px;">
-            Doa restu Anda merupakan karunia terindah bagi kami. Namun jika ingin memberikan tanda kasih, Anda dapat mentransfer melalui rekening di bawah ini:
-        </p>
+        <!-- STASIUN 3: GALERI KEBERSAMAAN -->
+        <div class="hud-station" id="stasiun-3">
+            <h3 class="section-title">Galeri Kebersamaan</h3>
+            <p style="font-size: 0.82rem; color: #cbbba9; margin-bottom: 10px;">Potret langkah kasih menuju pelaminan suci</p>
 
-        <!-- ATM CARD BPD BALI -->
-        <div style="
-            background: linear-gradient(135deg, #043a22 0%, #065430 50%, #0b7545 100%);
-            color: white; padding: 18px; border-radius: 14px;
-            max-width: 320px; margin: 20px auto; text-align: left;
-            box-shadow: 0 8px 25px rgba(5, 68, 41, 0.4);
-            border: 1px solid rgba(212, 175, 55, 0.4); position: relative; overflow: hidden;
-        ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <div class="logo-bpd-bali">
-                    <div class="icon-bpd"></div>
-                    <span style="font-weight:800; font-size: 0.95rem; letter-spacing: 0.5px; color: #fff;">BPD BALI</span>
+            <div class="gallery-container">
+                <button class="gallery-btn g-btn-left" onclick="geserSlider(-1)">❮</button>
+                <div class="gallery-track" id="gallerySlider">
+                    <div class="gallery-card" onclick="bukaModalFoto('galeri1.jpg')"><img src="galeri1.jpg" alt="Galeri 1" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
+                    <div class="gallery-card" onclick="bukaModalFoto('galeri2.jpg')"><img src="galeri2.jpg" alt="Galeri 2" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
+                    <div class="gallery-card" onclick="bukaModalFoto('galeri3.jpg')"><img src="galeri3.jpg" alt="Galeri 3" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
+                    <div class="gallery-card" onclick="bukaModalFoto('galeri4.jpg')"><img src="galeri4.jpg" alt="Galeri 4" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
                 </div>
-                <div style="width: 34px; height: 24px; background: linear-gradient(135deg, #f3e5ab, #d4af37); border-radius: 4px;"></div>
+                <button class="gallery-btn g-btn-right" onclick="geserSlider(1)">❯</button>
             </div>
-
-            <p style="margin: 0; font-size: 0.6rem; color: #a3b899; font-weight: 600;">NOMOR REKENING</p>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin: 4px 0 14px 0;">
-                <span class="teks-timbul-atm" style="font-size: 1.05rem;">057 0205 00004 1</span>
-                <button onclick="copyNoRek()" style="background: rgba(212, 175, 55, 0.3); border: 1px solid #d4af37; color: #f3e5ab; padding: 3px 8px; font-size: 0.65rem; border-radius: 6px; cursor: pointer;">Salin</button>
-            </div>
-
-            <p style="margin: 0; font-size: 0.6rem; color: #a3b899; font-weight: 600;">CARD HOLDER</p>
-            <p class="teks-timbul-atm" style="margin: 3px 0 0 0; font-size: 0.88rem; text-transform: uppercase;">Gede Ardy Putrawan</p>
         </div>
 
-        <hr class="pembatas">
+        <!-- STASIUN 4: KADO DIGITAL & RSVP -->
+        <div class="hud-station" id="stasiun-4">
+            <h3 class="section-title">Kado Digital</h3>
+            <p style="font-size: 0.85rem; color: #ded0c1; line-height: 1.6;">
+                Doa restu Anda merupakan karunia terindah bagi kami. Jika hendak memberikan tanda kasih:
+            </p>
 
-        <h3 style="font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #e5c188; margin: 0;">Konfirmasi Kehadiran</h3>
-        <form id="rsvp-form" onsubmit="kirimRSVP(event)">
-            <div class="rsvp-inputs">
-                <input type="text" id="rsvp-nama" placeholder="Nama Anda" required>
-                <select id="rsvp-status" required>
-                    <option value="">-- Pilih Kehadiran --</option>
-                    <option value="Hadir">Hadir</option>
-                    <option value="Tidak Hadir">Tidak Hadir</option>
+            <!-- KARTU BPD BALI -->
+            <div class="atm-bpd-wrapper">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <span style="font-weight: 800; font-size: 0.95rem; color: #fff;">BPD BALI</span>
+                    <div style="width: 32px; height: 22px; background: linear-gradient(135deg, #f3e5ab, #d4af37); border-radius: 4px;"></div>
+                </div>
+                <p style="margin: 0; font-size: 0.6rem; color: #a5c3a2; font-weight: 700;">NOMOR REKENING</p>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin: 4px 0 12px 0;">
+                    <span class="teks-timbul-atm" style="font-size: 1.05rem;">057 0205 00004 1</span>
+                    <button onclick="salinRekening()" style="background: rgba(212,175,55,0.25); border: 1px solid var(--gold-primary); color: #fff; padding: 4px 10px; font-size: 0.7rem; border-radius: 6px; cursor: pointer;">Salin</button>
+                </div>
+                <p style="margin: 0; font-size: 0.6rem; color: #a5c3a2; font-weight: 700;">NAMA PENERIMA</p>
+                <p class="teks-timbul-atm" style="margin-top: 2px; font-size: 0.85rem; text-transform: uppercase;">GEDE ARDY PUTRAWAN</p>
+            </div>
+
+            <hr class="pembatas">
+
+            <h3 class="section-title">Konfirmasi Kehadiran</h3>
+            <form class="rsvp-form-group" onsubmit="submitRSVP(event)">
+                <input type="text" id="rsvp-input-nama" placeholder="Nama Lengkap Anda" required>
+                <select id="rsvp-input-status" required>
+                    <option value="">-- Konfirmasi Kehadiran --</option>
+                    <option value="Pasti Hadir">Pasti Hadir</option>
+                    <option value="Berhalangan Hadir">Berhalangan Hadir</option>
                 </select>
-                <textarea id="rsvp-ucapan" placeholder="Tulis ucapan/doa di sini..." rows="3"></textarea>
-                <button type="submit" class="btn-submit">Kirim Konfirmasi</button>
-            </div>
-        </form>
-        <div id="form-status" style="margin-top: 15px; font-weight: 600; color: #d4af37;"></div>
+                <textarea id="rsvp-input-doa" placeholder="Tuliskan ucapan / doa restu..." rows="3" required></textarea>
+                <button type="submit" class="btn-kirim-rsvp">Kirim Surat Restu ✉️</button>
+            </form>
+        </div>
+
     </div>
 
-</div>
+    <!-- 3D NAVIGATION ARROWS DI BAWAH -->
+    <div class="bottom-3d-controller" id="bottomNav3D">
+        <button class="btn-arrow-3d" onclick="geserStasiunRelatif(-1)">❮</button>
+        <div class="indicator-dots">
+            <span class="dot-3d active" onclick="pindahStasiun3D(0)"></span>
+            <span class="dot-3d" onclick="pindahStasiun3D(1)"></span>
+            <span class="dot-3d" onclick="pindahStasiun3D(2)"></span>
+            <span class="dot-3d" onclick="pindahStasiun3D(3)"></span>
+            <span class="dot-3d" onclick="pindahStasiun3D(4)"></span>
+        </div>
+        <button class="btn-arrow-3d" onclick="geserStasiunRelatif(1)">❯</button>
+    </div>
+
+    <!-- LIGHTBOX OVERLAY FOTO -->
+    <div id="lightbox-overlay" onclick="tutupLightboxLuar(event)">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="tutupLightbox()">&times;</button>
+            <img id="lightbox-img" src="" alt="Detail Foto">
+        </div>
+    </div>
+
+<script>
+    /* ==========================================================
+       1. DUNIA THREE.JS LENGKAP: GERBANG BALI, PELAMINAN & KAMERA
+       ========================================================== */
+    let scene, camera, renderer;
+    let gateLeft, gateRight, goldRingsGroup, particleSystem;
+    let stationIndex = 0;
+    let isNavigating = false;
+    let mouseX = 0, mouseY = 0;
+
+    const stasiunKamera = [
+        { x: 0,   y: 1.6, z: 12.0, rotY: 0 },       // Stasiun 0: Sambutan Utama
+        { x: -1.2, y: 1.9, z: 4.8,  rotY: 0.15 },    // Stasiun 1: Mempelai
+        { x: 1.2,  y: 1.7, z: -2.0, rotY: -0.15 },   // Stasiun 2: Pawiwahan & Acara
+        { x: 0,   y: 1.6, z: -8.5, rotY: 0 },       // Stasiun 3: Galeri 3D
+        { x: 0,   y: 1.4, z: -15.0, rotY: 0 }       // Stasiun 4: Kado & RSVP
+    ];
+
+    function init3DWorld() {
+        const canvas = document.getElementById('webgl-canvas');
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0d0603);
+        scene.fog = new THREE.FogExp2(0x0d0603, 0.055);
+
+        camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 1.8, 19.5);
+
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const amb = new THREE.AmbientLight(0xffecd6, 0.9);
+        scene.add(amb);
+
+        const mainSpot = new THREE.SpotLight(0xffd700, 2.5);
+        mainSpot.position.set(0, 12, 10);
+        scene.add(mainSpot);
+
+        buatGerbangCandiBentar();
+        buatLorongPanggung3D();
+        buatPartikelEmas();
+        setupNavigationEvents();
+
+        window.addEventListener('resize', onResize);
+        renderLoop();
+    }
+
+    function buatGerbangCandiBentar() {
+        const gateMat = new THREE.MeshStandardMaterial({ color: 0x3d2112, roughness: 0.5, metalness: 0.2 });
+        const goldTrimMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.85, roughness: 0.2 });
+
+        gateLeft = new THREE.Group();
+        const baseLeft = new THREE.Mesh(new THREE.BoxGeometry(1.8, 6, 0.8), gateMat);
+        baseLeft.position.set(-1.4, 2.5, 0);
+        const trimLeft = new THREE.Mesh(new THREE.BoxGeometry(0.2, 5.8, 0.9), goldTrimMat);
+        trimLeft.position.set(-0.5, 2.5, 0);
+        gateLeft.add(baseLeft);
+        gateLeft.add(trimLeft);
+        gateLeft.position.set(-0.6, 0, 15);
+        scene.add(gateLeft);
+
+        gateRight = new THREE.Group();
+        const baseRight = new THREE.Mesh(new THREE.BoxGeometry(1.8, 6, 0.8), gateMat);
+        baseRight.position.set(1.4, 2.5, 0);
+        const trimRight = new THREE.Mesh(new THREE.BoxGeometry(0.2, 5.8, 0.9), goldTrimMat);
+        trimRight.position.set(0.5, 2.5, 0);
+        gateRight.add(baseRight);
+        gateRight.add(trimRight);
+        gateRight.position.set(0.6, 0, 15);
+        scene.add(gateRight);
+    }
+
+    function buatLorongPanggung3D() {
+        const floorGeo = new THREE.BoxGeometry(9, 0.3, 42);
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x24130a, roughness: 0.4 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.position.set(0, -0.15, -2);
+        scene.add(floor);
+
+        goldRingsGroup = new THREE.Group();
+        const rGeo = new THREE.TorusGeometry(1.8, 0.08, 16, 90);
+        const rMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.9, roughness: 0.15 });
+
+        const r1 = new THREE.Mesh(rGeo, rMat);
+        r1.position.set(-0.8, 2.3, 0);
+        r1.rotation.y = 0.4;
+        goldRingsGroup.add(r1);
+
+        const r2 = new THREE.Mesh(rGeo, rMat);
+        r2.position.set(0.8, 2.3, 0);
+        r2.rotation.y = -0.4;
+        goldRingsGroup.add(r2);
+
+        goldRingsGroup.position.set(0, 0, 3.5);
+        scene.add(goldRingsGroup);
+
+        for (let z = 10; z >= -18; z -= 7) {
+            buatTedungBali(-3.8, z);
+            buatTedungBali(3.8, z);
+        }
+    }
+
+    function buatTedungBali(x, z) {
+        const group = new THREE.Group();
+        const pole = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.06, 0.06, 4, 16),
+            new THREE.MeshStandardMaterial({ color: 0x5c3514 })
+        );
+        pole.position.y = 2;
+        group.add(pole);
+
+        const umbrella = new THREE.Mesh(
+            new THREE.ConeGeometry(0.9, 0.6, 20),
+            new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.3 })
+        );
+        umbrella.position.y = 3.8;
+        group.add(umbrella);
+
+        group.position.set(x, 0, z);
+        scene.add(group);
+    }
+
+    function buatPartikelEmas() {
+        const count = 120;
+        const geo = new THREE.BufferGeometry();
+        const pos = new Float32Array(count * 3);
+        for(let i=0; i<count*3; i+=3) {
+            pos[i] = (Math.random() - 0.5) * 16;
+            pos[i+1] = Math.random() * 6;
+            pos[i+2] = (Math.random() - 0.5) * 45;
+        }
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        const mat = new THREE.PointsMaterial({ color: 0xfcecd7, size: 0.075, transparent: true, opacity: 0.85 });
+        particleSystem = new THREE.Points(geo, mat);
+        scene.add(particleSystem);
+    }
+
+    function renderLoop() {
+        requestAnimationFrame(renderLoop);
+
+        if (goldRingsGroup) {
+            goldRingsGroup.rotation.y += 0.003;
+        }
+
+        if (particleSystem) {
+            const arr = particleSystem.geometry.attributes.position.array;
+            for(let i=1; i<arr.length; i+=3) {
+                arr[i] -= 0.004;
+                if(arr[i] < 0) arr[i] = 6;
+            }
+            particleSystem.geometry.attributes.position.needsUpdate = true;
+        }
+
+        if (!isNavigating) {
+            camera.position.x += ((stasiunKamera[stationIndex].x + (mouseX * 0.4)) - camera.position.x) * 0.05;
+            camera.position.y += ((stasiunKamera[stationIndex].y + (mouseY * 0.3)) - camera.position.y) * 0.05;
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    function onResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    /* ==========================================================
+       2. INTERAKSI BUKA GERBANG 3D SINEMATIK
+       ========================================================== */
+    function bukaDunia3D() {
+        const cover = document.getElementById('cover-screen');
+        cover.classList.add('opened');
+
+        gsap.to(gateLeft.position, { x: -3.8, duration: 2.2, ease: "power2.inOut" });
+        gsap.to(gateRight.position, { x: 3.8, duration: 2.2, ease: "power2.inOut" });
+
+        isNavigating = true;
+        gsap.to(camera.position, {
+            x: stasiunKamera[0].x,
+            y: stasiunKamera[0].y,
+            z: stasiunKamera[0].z,
+            duration: 2.4,
+            ease: "power2.out",
+            onComplete: () => {
+                isNavigating = false;
+                document.getElementById('topNav3D').classList.add('active');
+                document.getElementById('bottomNav3D').classList.add('active');
+            }
+        });
+
+        putarAudioOtomatis();
+
+        setTimeout(() => {
+            cover.style.display = 'none';
+        }, 1200);
+    }
+
+    /* ==========================================================
+       3. SISTEM NAVIGASI KAMERA 3D
+       ========================================================== */
+    function pindahStasiun3D(index) {
+        if (index < 0 || index >= stasiunKamera.length || isNavigating) return;
+        stationIndex = index;
+        isNavigating = true;
+
+        document.querySelectorAll('.nav-btn-3d').forEach((b, i) => b.classList.toggle('active', i === index));
+        document.querySelectorAll('.dot-3d').forEach((d, i) => d.classList.toggle('active', i === index));
+
+        document.querySelectorAll('.hud-station').forEach((p, i) => {
+            p.classList.toggle('active', i === index);
+        });
+
+        const target = stasiunKamera[index];
+        gsap.to(camera.position, {
+            x: target.x,
+            y: target.y,
+            z: target.z,
+            duration: 1.4,
+            ease: "power2.inOut",
+            onComplete: () => {
+                isNavigating = false;
+            }
+        });
+
+        gsap.to(camera.rotation, {
+            y: target.rotY,
+            duration: 1.4,
+            ease: "power2.inOut"
+        });
+    }
+
+    function geserStasiunRelatif(delta) {
+        pindahStasiun3D(stationIndex + delta);
+    }
+
+    function setupNavigationEvents() {
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        let wheelTimeout;
+        window.addEventListener('wheel', (e) => {
+            clearTimeout(wheelTimeout);
+            wheelTimeout = setTimeout(() => {
+                if (e.deltaY > 40) geserStasiunRelatif(1);
+                else if (e.deltaY < -40) geserStasiunRelatif(-1);
+            }, 50);
+        }, { passive: true });
+
+        let touchStartY = 0;
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        window.addEventListener('touchend', (e) => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const selisih = touchStartY - touchEndY;
+            if (selisih > 60) {
+                geserStasiunRelatif(1);
+            } else if (selisih < -60) {
+                geserStasiunRelatif(-1);
+            }
+        }, { passive: true });
+    }
+
+    /* ==========================================================
+       4. AUDIO, COUNTDOWN, LIGHTBOX, SALIN & SURAT RSVP
+       ========================================================== */
+    function putarAudioOtomatis() {
+        const audio = document.getElementById('audio-wedding');
+        const pill = document.getElementById('music-pill');
+        if (!audio) return;
+        audio.muted = false;
+        audio.play().then(() => {
+            pill.style.animationPlayState = 'running';
+        }).catch(() => {
+            console.log("Autoplay musik butuh interaksi.");
+        });
+    }
+
+    function toggleAudio() {
+        const audio = document.getElementById('audio-wedding');
+        const pill = document.getElementById('music-pill');
+        if (!audio) return;
+
+        if (audio.paused) {
+            audio.play();
+            pill.style.animationPlayState = 'running';
+            pill.innerText = "🎵";
+        } else {
+            audio.pause();
+            pill.style.animationPlayState = 'paused';
+            pill.innerText = "🔇";
+        }
+    }
+
+    function hitungMundur() {
+        const target = new Date('December 31, 2026 09:00:00 GMT+0800').getTime();
+        const now = new Date().getTime();
+        const sisa = target - now;
+
+        if (sisa <= 0) return;
+
+        const h = Math.floor(sisa / (1000 * 60 * 60 * 24));
+        const j = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
+        const d = Math.floor((sisa % (1000 * 60)) / 1000);
+
+        document.getElementById('t-days').innerText = h < 10 ? '0' + h : h;
+        document.getElementById('t-hours').innerText = j < 10 ? '0' + j : j;
+        document.getElementById('t-minutes').innerText = m < 10 ? '0' + m : m;
+        document.getElementById('t-seconds').innerText = d < 10 ? '0' + d : d;
+    }
+    setInterval(hitungMundur, 1000);
+
+    const slider = document.getElementById('gallerySlider');
+    function geserSlider(dir) {
+        const w = slider.querySelector('.gallery-card').clientWidth + 12;
+        slider.scrollBy({ left: dir * w, behavior: 'smooth' });
+    }
+
+    function bukaModalFoto(src) {
+        const overlay = document.getElementById('lightbox-overlay');
+        const img = document.getElementById('lightbox-img');
+        img.src = src;
+        overlay.classList.add('active');
+    }
+
+    function tutupLightbox() {
+        document.getElementById('lightbox-overlay').classList.remove('active');
+    }
+
+    function tutupLightboxLuar(e) {
+        if (e.target.id === 'lightbox-overlay') tutupLightbox();
+    }
+
+    function salinRekening() {
+        const noRek = "0570205000041";
+        const temp = document.createElement("input");
+        temp.value = noRek;
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+            document.execCommand('copy');
+        } catch(e) {
+            if (navigator.clipboard) navigator.clipboard.writeText(noRek);
+        }
+        document.body.removeChild(temp);
+
+        const toast = document.getElementById('toast-box');
+        toast.innerText = "✅ Nomor Rekening BPD Bali Disalin!";
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function submitRSVP(e) {
+        e.preventDefault();
+        const nama = document.getElementById('rsvp-input-nama').value;
+        const status = document.getElementById('rsvp-input-status').value;
+        const doa = document.getElementById('rsvp-input-doa').value;
+
+        // Munculkan Efek Surat Pengiriman / Kartu Amplop Surat Restu
+        document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
+        document.getElementById('letter-content-text').innerText = `"${doa}"`;
+        document.getElementById('envelope-overlay').classList.add('active');
+
+        e.target.reset();
+    }
+
+    function tutupAmplopSurat(e) {
+        if (!e || e.target.id === 'envelope-overlay' || e.target.tagName === 'BUTTON') {
+            document.getElementById('envelope-overlay').classList.remove('active');
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const to = params.get('to');
+        if (to) {
+            document.getElementById('guest-name').innerText = decodeURIComponent(to);
+        }
+
+        hitungMundur();
+        init3DWorld();
+    });
+</script>
+</body>
+</html>
