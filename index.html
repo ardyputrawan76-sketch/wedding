@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Wedding Of Ardy & Ana (3D Cinematic)</title>
     
-    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="favicon.png?v=2">
     <link rel="apple-touch-icon" href="favicon.png?v=2">
     
-    <!-- META TAGS PREVIEW WHATSAPP -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="The Wedding Of Ardy & Ana" />
     <meta property="og:description" content="Pawiwahan Ardy & Ana - Kamis, 31 Desember 2026, Tabanan, Bali" />
@@ -19,12 +17,10 @@
     <meta property="og:image:width" content="600" />
     <meta property="og:image:height" content="400" />
 
-    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- THREE.JS & GSAP ANIMATION LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
@@ -320,6 +316,54 @@
             width: 100%; padding: 12px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
         }
 
+        /* WADAH RIWAYAT KOMENTAR MODEL GESER (SCROLLABLE CARDS) */
+        .riwayat-container {
+            margin-top: 16px;
+            background: rgba(18, 9, 4, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 14px;
+            padding: 12px;
+            text-align: left;
+            max-height: 160px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .riwayat-container::-webkit-scrollbar { width: 4px; }
+        .riwayat-container::-webkit-scrollbar-thumb { background: var(--gold-primary); border-radius: 4px; }
+
+        .riwayat-item {
+            background: rgba(43, 24, 13, 0.85);
+            border-left: 3px solid var(--gold-primary);
+            padding: 10px 12px;
+            border-radius: 8px;
+        }
+        .riwayat-nama {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--gold-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .riwayat-status {
+            font-size: 0.68rem;
+            padding: 2px 6px;
+            background: rgba(212, 175, 55, 0.2);
+            color: #fcecd7;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .riwayat-doa {
+            font-size: 0.8rem;
+            color: #ded0c1;
+            font-style: italic;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
         /* EFEK SURAT / AMPLOP PENGIRIMAN (ENVELOPE / LETTER POPUP) */
         #envelope-overlay {
             position: fixed;
@@ -452,10 +496,8 @@
 </head>
 <body>
 
-    <!-- 3D WEBGL ENGINE -->
     <canvas id="webgl-canvas"></canvas>
 
-    <!-- ORNAMEN BALI SUDUT -->
     <svg class="corner-ornament co-top-left" viewBox="0 0 220 220" fill="none">
         <path d="M10 10 C60 10 120 40 140 90 C160 140 120 180 70 190 C30 195 10 170 25 145 C40 120 80 130 75 100 C70 70 30 50 10 10 Z" fill="#6d421d"/>
         <path d="M10 10 Q50 60 90 40 Q130 20 150 70 Q170 120 120 130 Q70 140 40 100 Z" fill="#d4af37" opacity="0.85"/>
@@ -469,14 +511,11 @@
         <circle cx="75" cy="75" r="8" fill="#f3e5ab"/>
     </svg>
 
-    <!-- PEMUTAR MUSIK -->
     <audio id="audio-wedding" src="musik-pernikahan.mp3" loop preload="auto"></audio>
     <div id="music-pill" onclick="toggleAudio()">🎵</div>
 
-    <!-- TOAST NOTIFIKASI -->
     <div id="toast-box">Pesan Disalin!</div>
 
-    <!-- EFEK AMPLOP SURAT PENGIRIMAN (POPUP SURAT RESTU DENGAN BALASAN OTOMATIS) -->
     <div id="envelope-overlay" onclick="tutupAmplopSurat(event)">
         <div class="letter-envelope-card" onclick="event.stopPropagation()">
             <div class="seal-wax">📜</div>
@@ -488,7 +527,6 @@
                 <p id="letter-content-text" style="font-style: italic; color: #422818; font-size: 0.88rem; line-height: 1.5;"></p>
             </div>
 
-            <!-- Balasan Otomatis dari Ardy & Ana -->
             <p style="font-size: 0.82rem; color: #5c3514; line-height: 1.5; margin-bottom: 18px;">
                 💌 <em>"Surat kebahagiaan dan konfirmasi kehadiran Anda telah resmi kami terima. Kehadiran serta doa restu Anda adalah anugerah terindah di hari bahagia kami."</em><br>
                 <strong style="display: block; margin-top: 6px; color: #8b5a2b;">— Gede Ardy & Komang Ana</strong>
@@ -498,7 +536,6 @@
         </div>
     </div>
 
-    <!-- COVER SCREEN AWAL -->
     <div id="cover-screen">
         <span class="royal-badge">PAWIWAHAN BALI</span>
         <h1 class="cover-title">Ardy & Ana</h1>
@@ -509,11 +546,10 @@
         </div>
 
         <button class="btn-open-3d" onclick="bukaDunia3D()">
-            <span>Buka Undangan </span> 🌺
+            <span>Buka Undangan</span> 🌺
         </button>
     </div>
 
-    <!-- FLOATING 3D TOP NAVBAR (6 STASIUN) -->
     <div class="top-3d-nav" id="topNav3D">
         <button class="nav-btn-3d active" onclick="pindahStasiun3D(0)">✨ Sambutan</button>
         <button class="nav-btn-3d" onclick="pindahStasiun3D(1)">👩‍❤️‍👨 Mempelai</button>
@@ -523,21 +559,18 @@
         <button class="nav-btn-3d" onclick="pindahStasiun3D(5)">💌 RSVP & Doa</button>
     </div>
 
-    <!-- HUD PANELS TERTEMPEL DI PERSPEKTIF 3D -->
     <div id="hud-container">
         
-        <!-- STASIUN 0: SALAM PEMBUKA -->
         <div class="hud-station active" id="stasiun-0">
             <p class="salam-arab">Om Swastyastu</p>
             <p class="salam-teks">
                 Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa / Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) putra-putri kami:
             </p>
             <div style="margin-top: 20px;">
-                <p style="font-size: 0.28rem; color: var(--gold-glow); letter-spacing: 2px;">GANTI HALAMAN VIA TOMBOL PANAH DI BAWAH ATAU KLIK MENU ATAS</p>
+                <p style="font-size: 0.8rem; color: var(--gold-glow); letter-spacing: 2px;">GANTI HALAMAN VIA TOMBOL PANAH DI BAWAH ATAU KLIK MENU ATAS</p>
             </div>
         </div>
 
-        <!-- STASIUN 1: MEMPELAI -->
         <div class="hud-station" id="stasiun-1">
             <h3 class="section-title">Pasangan Mempelai</h3>
             <div class="mempelai-grid">
@@ -559,7 +592,6 @@
             </div>
         </div>
 
-        <!-- STASIUN 2: ACARA & COUNTDOWN -->
         <div class="hud-station" id="stasiun-2">
             <p style="font-size: 0.8rem; letter-spacing: 3px; color: var(--gold-primary); font-weight: 700;">MENUJU HARI BAHAGIA</p>
             <div class="timer-flex">
@@ -586,7 +618,6 @@
             </a>
         </div>
 
-        <!-- STASIUN 3: GALERI KEBERSAMAAN -->
         <div class="hud-station" id="stasiun-3">
             <h3 class="section-title">Galeri Kebersamaan</h3>
             <p style="font-size: 0.82rem; color: #cbbba9; margin-bottom: 10px;">Potret langkah kasih menuju pelaminan suci</p>
@@ -598,31 +629,17 @@
                     <div class="gallery-card" onclick="bukaModalFoto('galeri2.jpg')"><img src="galeri2.jpg" alt="Galeri 2" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
                     <div class="gallery-card" onclick="bukaModalFoto('galeri3.jpg')"><img src="galeri3.jpg" alt="Galeri 3" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
                     <div class="gallery-card" onclick="bukaModalFoto('galeri4.jpg')"><img src="galeri4.jpg" alt="Galeri 4" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri5.jpg')"><img src="galeri1.jpg" alt="Galeri 5" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri6.jpg')"><img src="galeri2.jpg" alt="Galeri 6" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri7.jpg')"><img src="galeri3.jpg" alt="Galeri 7" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri8.jpg')"><img src="galeri4.jpg" alt="Galeri 8" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri9.jpg')"><img src="galeri1.jpg" alt="Galeri 9" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri10.jpg')"><img src="galeri2.jpg" alt="Galeri 10" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri11.jpg')"><img src="galeri3.jpg" alt="Galeri 11" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri12.jpg')"><img src="galeri4.jpg" alt="Galeri 12" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri13.jpg')"><img src="galeri1.jpg" alt="Galeri 13" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri14.jpg')"><img src="galeri2.jpg" alt="Galeri 14" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri15.jpg')"><img src="galeri3.jpg" alt="Galeri 15" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
-                    <div class="gallery-card" onclick="bukaModalFoto('galeri16.jpg')"><img src="galeri4.jpg" alt="Galeri 16" onerror="this.onerror=null; this.src='bg-cover.jpg';"></div>
                 </div>
                 <button class="gallery-btn g-btn-right" onclick="geserSlider(1)">❯</button>
             </div>
         </div>
 
-        <!-- STASIUN 4: KADO DIGITAL -->
         <div class="hud-station" id="stasiun-4">
             <h3 class="section-title">Kado Digital</h3>
             <p style="font-size: 0.85rem; color: #ded0c1; line-height: 1.6;">
                 Doa restu Anda merupakan karunia terindah bagi kami. Jika hendak memberikan tanda kasih:
             </p>
 
-            <!-- KARTU BPD BALI -->
             <div class="atm-bpd-wrapper">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <span style="font-weight: 800; font-size: 0.95rem; color: #fff;">BPD BALI</span>
@@ -638,7 +655,6 @@
             </div>
         </div>
 
-        <!-- STASIUN 5: KONFIRMASI KEHADIRAN (RSVP) & UCAPAN TERIMA KASIH (OM SHANTI) -->
         <div class="hud-station" id="stasiun-5">
             <h3 class="section-title">Konfirmasi Kehadiran</h3>
             <p style="font-size: 0.82rem; color: #cbbba9; margin-bottom: 5px;">Sampaikan konfirmasi kehadiran dan doa restu Anda</p>
@@ -654,19 +670,30 @@
                 <button type="submit" class="btn-kirim-rsvp" id="btn-submit-rsvp">Kirim Surat Restu ✉️</button>
             </form>
 
+            <div style="margin-top: 15px; text-align: left;">
+                <p style="font-size: 0.78rem; font-weight: 700; color: var(--gold-primary); margin-bottom: 6px;">✨ Ucapan & Doa Tamu Lain:</p>
+                <div class="riwayat-container" id="riwayatUcapanContainer">
+                    <div class="riwayat-item">
+                        <div class="riwayat-nama">
+                            <span>Keluarga Besar Sugiarta</span>
+                            <span class="riwayat-status">Pasti Hadir</span>
+                        </div>
+                        <p class="riwayat-doa">"Selamat berbahagia Ardy & Ana, semoga menjadi keluarga yang harmonis dan sejahtera."</p>
+                    </div>
+                </div>
+            </div>
+
             <hr class="pembatas">
 
-            <!-- GIF & UCAPAN PENUTUP OM SHANTI -->
-            <div style="text-align: center; margin-top: 10px;">
-                <div style="width: 70px; height: 70px; margin: 0 auto 10px auto; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold-primary); background: rgba(212,175,55,0.1); display: flex; justify-content: center; align-items: center;">
-                    <!-- GIF/Animasi Bunga atau Simbol Suci -->
-                    <span style="font-size: 2rem;">🌸</span>
+            <div style="text-align: center; margin-top: 5px;">
+                <div style="width: 60px; height: 60px; margin: 0 auto 8px auto; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold-primary); background: rgba(212,175,55,0.1); display: flex; justify-content: center; align-items: center;">
+                    <span style="font-size: 1.8rem;">🌸</span>
                 </div>
-                <h3 class="salam-arab" style="font-size: 1.2rem; margin-bottom: 2px;">Om Shanti, Shanti, Shanti Om</h3>
-                <p style="font-size: 0.82rem; color: #ded0c1; line-height: 1.6; margin-top: 5px;">
+                <h3 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--gold-glow); margin-bottom: 4px; letter-spacing: 1px;">Om Shanti, Shanti, Shanti Om</h3>
+                <p style="font-size: 0.8rem; color: #ded0c1; line-height: 1.5; margin-top: 4px;">
                     Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kedua mempelai.
                 </p>
-                <p style="font-family: var(--font-script); font-size: 1.2rem; color: var(--gold-glow); margin-top: 15px;">
+                <p style="font-family: var(--font-script); font-size: 1.8rem; color: var(--gold-glow); margin-top: 10px;">
                     Gede Ardy & Komang Ana
                 </p>
             </div>
@@ -674,7 +701,6 @@
 
     </div>
 
-    <!-- 3D NAVIGATION ARROWS DI BAWAH -->
     <div class="bottom-3d-controller" id="bottomNav3D">
         <button class="btn-arrow-3d" onclick="geserStasiunRelatif(-1)">❮</button>
         <div class="indicator-dots" id="indicatorDotsContainer">
@@ -688,7 +714,6 @@
         <button class="btn-arrow-3d" onclick="geserStasiunRelatif(1)">❯</button>
     </div>
 
-    <!-- LIGHTBOX OVERLAY FOTO -->
     <div id="lightbox-overlay" onclick="tutupLightboxLuar(event)">
         <div class="lightbox-content">
             <button class="lightbox-close" onclick="tutupLightbox()">&times;</button>
@@ -697,23 +722,19 @@
     </div>
 
 <script>
-    /* ==========================================================
-       1. DUNIA THREE.JS LENGKAP: GERBANG BALI, PELAMINAN & KAMERA
-       ========================================================== */
     let scene, camera, renderer;
     let gateLeft, gateRight, goldRingsGroup, particleSystem;
     let stationIndex = 0;
     let isNavigating = false;
     let mouseX = 0, mouseY = 0;
 
-    // Diperbarui menjadi 6 Stasiun Kamera (0 sampai 5)
     const stasiunKamera = [
-        { x: 0,   y: 1.6, z: 12.0, rotY: 0 },       // Stasiun 0: Sambutan Utama
-        { x: -1.2, y: 1.9, z: 4.8,  rotY: 0.15 },    // Stasiun 1: Mempelai
-        { x: 1.2,  y: 1.7, z: -2.0, rotY: -0.15 },   // Stasiun 2: Pawiwahan & Acara
-        { x: 0,   y: 1.6, z: -8.5, rotY: 0 },       // Stasiun 3: Galeri 3D
-        { x: -1.0, y: 1.4, z: -14.0, rotY: 0.1 },   // Stasiun 4: Kado Digital
-        { x: 1.0,  y: 1.4, z: -20.0, rotY: -0.1 }   // Stasiun 5: RSVP & Om Shanti
+        { x: 0,   y: 1.6, z: 12.0, rotY: 0 },       
+        { x: -1.2, y: 1.9, z: 4.8,  rotY: 0.15 },    
+        { x: 1.2,  y: 1.7, z: -2.0, rotY: -0.15 },   
+        { x: 0,   y: 1.6, z: -8.5, rotY: 0 },       
+        { x: -1.0, y: 1.4, z: -14.0, rotY: 0.1 },   
+        { x: 1.0,  y: 1.4, z: -20.0, rotY: -0.1 }   
     ];
 
     function init3DWorld() {
@@ -865,9 +886,6 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    /* ==========================================================
-       2. INTERAKSI BUKA GERBANG 3D SINEMATIK
-       ========================================================== */
     function bukaDunia3D() {
         const cover = document.getElementById('cover-screen');
         cover.classList.add('opened');
@@ -896,9 +914,6 @@
         }, 1200);
     }
 
-    /* ==========================================================
-       3. SISTEM NAVIGASI KAMERA 3D (6 STASIUN)
-       ========================================================== */
     function pindahStasiun3D(index) {
         if (index < 0 || index >= stasiunKamera.length || isNavigating) return;
         stationIndex = index;
@@ -942,9 +957,6 @@
         });
     }
 
-    /* ==========================================================
-       4. AUDIO, COUNTDOWN, LIGHTBOX, SALIN & PENGIRIMAN KE GOOGLE SHEETS
-       ========================================================== */
     function putarAudioOtomatis() {
         const audio = document.getElementById('audio-wedding');
         const pill = document.getElementById('music-pill');
@@ -1032,6 +1044,7 @@
         setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
+    // Fungsi Submit RSVP dan Menampilkan Riwayat Komentar Secara Lokal (Model Geser)
     function submitRSVP(e) {
         e.preventDefault();
         
@@ -1046,14 +1059,14 @@
         submitBtn.disabled = true;
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyo0Jv7gNqmCAjrVTcNnWyaAU50AuTuDPTrxJG6pqQaU05LPFzvaUTuy7IG1QQCimqyCA/exec';
-    
-        // Mengirim data dalam bentuk JSON agar terbaca melewati batasan CORS
+        
         const dataPayload = {
             nama: nama,
             status: status,
             doa: doa
         };
 
+        // Kirim data ke Google Sheets di background
         fetch(scriptURL, { 
             method: 'POST', 
             body: JSON.stringify(dataPayload), 
@@ -1061,26 +1074,33 @@
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        .then(() => {
-            document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
-            document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
-            document.getElementById('envelope-overlay').classList.add('active');
+        }).catch(err => console.log(err));
 
-            submitBtn.innerText = "Kirim Surat Restu ✉️";
-            submitBtn.disabled = false;
-            document.getElementById('form-rsvp').reset();
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
-            document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
-            document.getElementById('envelope-overlay').classList.add('active');
+        // Tampilkan langsung secara instan di kotak riwayat geser di bawah komentar
+        const container = document.getElementById('riwayatUcapanContainer');
+        const newItem = document.createElement('div');
+        newItem.className = 'riwayat-item';
+        newItem.innerHTML = `
+            <div class="riwayat-nama">
+                <span>${escapeHtml(nama)}</span>
+                <span class="riwayat-status">${escapeHtml(status)}</span>
+            </div>
+            <p class="riwayat-doa">"${escapeHtml(doa || 'Doa restu terbaik.')}"</p>
+        `;
+        container.prepend(newItem);
 
-            submitBtn.innerText = "Kirim Surat Restu ✉️";
-            submitBtn.disabled = false;
-            document.getElementById('form-rsvp').reset();
-        });
+        // Tampilkan Popup Surat Balasan Otomatis
+        document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
+        document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
+        document.getElementById('envelope-overlay').classList.add('active');
+
+        submitBtn.innerText = "Kirim Surat Restu ✉️";
+        submitBtn.disabled = false;
+        document.getElementById('form-rsvp').reset();
+    }
+
+    function escapeHtml(text) {
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
 
     function tutupAmplopSurat(e) {
@@ -1089,7 +1109,6 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-        // Dinamis membuat dot indicator sebanyak stasiun kamera (6 buah)
         const dotContainer = document.getElementById('indicatorDotsContainer');
         dotContainer.innerHTML = '';
         stasiunKamera.forEach((_, idx) => {
