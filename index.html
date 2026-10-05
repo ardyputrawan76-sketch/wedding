@@ -149,7 +149,7 @@
         }
         .btn-open-3d:active { transform: scale(0.95); }
 
-        /* FLOATING 3D NAVIGATION HEADER (ADAPTIF LANDSCAPE/PORTRAIT) */
+        /* FLOATING 3D NAVIGATION HEADER */
         .top-3d-nav {
             position: fixed;
             top: 18px; left: 50%;
@@ -231,16 +231,24 @@
             pointer-events: auto;
         }
 
-        /* KHUSUS TAMPILAN LANDSCAPE / LAYAR LEBAR */
+        /* PENYESUAIAN KHUSUS MODE LANDSCAPE AGAR RAPI DAN TIDAK KEPOTONG */
         @media screen and (orientation: landscape) {
             .hud-station {
-                max-width: 620px;
-                max-height: 78vh;
-                padding: 25px 30px;
+                max-width: 580px;
+                max-height: 72vh;
+                padding: 18px 24px;
             }
             .top-3d-nav {
-                top: 12px;
-                padding: 4px 12px;
+                top: 10px;
+                padding: 4px 8px;
+            }
+            .section-title {
+                font-size: 2rem !important;
+                margin-bottom: 8px !important;
+            }
+            .hud-station.card-mahya-style {
+                height: 72vh !important;
+                min-height: 280px !important;
             }
         }
 
@@ -601,7 +609,7 @@
 
     <div class="top-3d-nav" id="topNav3D">
         <button class="nav-btn-3d active" onclick="pindahStasiun3D(0)">✨ Sambutan</button>
-        <button class="nav-btn-3d" onclick="pindahStasiun3D(1)">👩‍❤️‍‍👨 Mempelai</button>
+        <button class="nav-btn-3d" onclick="pindahStasiun3D(1)">👩‍❤️‍👨 Mempelai</button>
         <button class="nav-btn-3d" onclick="pindahStasiun3D(2)">📅 Acara</button>
         <button class="nav-btn-3d" onclick="pindahStasiun3D(3)">🖼️ Galeri</button>
         <button class="nav-btn-3d" onclick="pindahStasiun3D(4)">🎁 Kado</button>
@@ -728,7 +736,7 @@
                     <option value="Berhalangan Hadir">Berhalangan Hadir</option>
                 </select>
                 <textarea id="rsvp-input-doa" placeholder="Tuliskan ucapan / doa restu..." rows="3" required></textarea>
-                <button type="submit" class="btn-kirim-rsvp" id="btn-submit-rsvp">Kirim Surat Restu ✉️️</button>
+                <button type="submit" class="btn-kirim-rsvp" id="btn-submit-rsvp">Kirim Surat Restu ✉</button>
             </form>
 
             <div style="margin-top: 15px; text-align: left;">
