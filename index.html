@@ -61,43 +61,6 @@
             display: block;
         }
 
-        /* WADAH EFEK BUNGA JATUH 2D OVERLAY */
-        #flower-falling-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 5;
-            overflow: hidden;
-        }
-
-        .falling-petal {
-            position: absolute;
-            background: linear-gradient(135deg, #ffb7c5, #ffe4e1);
-            border-radius: 150% 0 150% 0;
-            opacity: 0.8;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
-            animation: flowerFall linear infinite;
-        }
-
-        @keyframes flowerFall {
-            0% {
-                opacity: 0;
-                top: -10%;
-                transform: translateX(0) rotate(0deg);
-            }
-            15% {
-                opacity: 0.85;
-            }
-            100% {
-                opacity: 0;
-                top: 105%;
-                transform: translateX(80px) rotate(540deg);
-            }
-        }
-
         /* ORNAMEN SUDUT UKIRAN BALI */
         .corner-ornament {
             position: fixed;
@@ -571,9 +534,6 @@
 
     <canvas id="webgl-canvas"></canvas>
 
-    <!-- WADAH EFEK BUNGA JATUH -->
-    <div id="flower-falling-container"></div>
-
     <svg class="corner-ornament co-top-left" viewBox="0 0 220 220" fill="none">
         <path d="M10 10 C60 10 120 40 140 90 C160 140 120 180 70 190 C30 195 10 170 25 145 C40 120 80 130 75 100 C70 70 30 50 10 10 Z" fill="#6d421d"/>
         <path d="M10 10 Q50 60 90 40 Q130 20 150 70 Q170 120 120 130 Q70 140 40 100 Z" fill="#d4af37" opacity="0.85"/>
@@ -821,44 +781,6 @@
         { x: 1.0,  y: 1.4, z: -20.0, rotY: -0.1 }   
     ];
 
-    /* PEMBUATAN EFEK BUNGA JATUH */
-    function buatKelopakBunga() {
-        const container = document.getElementById('flower-falling-container');
-        if (!container) return;
-
-        const petal = document.createElement('div');
-        petal.classList.add('falling-petal');
-
-        // Ukuran kelopak
-        const size = Math.random() * 12 + 10; // 10px - 22px
-        petal.style.width = `${size}px`;
-        petal.style.height = `${size * 1.4}px`;
-
-        // Posisi horizontal
-        petal.style.left = Math.random() * 100 + 'vw';
-
-        // Durasi & delay jatuh
-        const duration = Math.random() * 5 + 6; // 6s - 11s
-        petal.style.animationDuration = duration + 's';
-        petal.style.animationDelay = Math.random() * 2 + 's';
-
-        // Variasi warna kelopak (Nuansa Pink, Kamboja Kuning-Putih, Merah Muda)
-        const colors = [
-            'linear-gradient(135deg, #ffb7c5, #ffe4e1)',
-            'linear-gradient(135deg, #fff0f5, #ffd1dc)',
-            'linear-gradient(135deg, #fffabb, #ffffff)', // Sentuhan Kamboja Bali
-            'linear-gradient(135deg, #fcecd7, #f7d6a3)'
-        ];
-        petal.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-        container.appendChild(petal);
-
-        // Hapus elemen yang telah selesai meluncur
-        setTimeout(() => {
-            petal.remove();
-        }, (duration + 2) * 1000);
-    }
-
     function init3DWorld() {
         const canvas = document.getElementById('webgl-canvas');
         scene = new THREE.Scene();
@@ -881,11 +803,8 @@
 
         buatGerbangCandiBentar();
         buatLorongPanggung3D();
-        buatPartikelEmas();
+        buatPartikelEmasCinematic();
         setupMouseParallax();
-
-        // Jalankan pembuat bunga secara berkala
-        setInterval(buatKelopakBunga, 350);
 
         window.addEventListener('resize', onResize);
         renderLoop();
@@ -966,17 +885,47 @@
         scene.add(group);
     }
 
-    function buatPartikelEmas() {
-        const count = 120;
+    /* EFEK PARTIKEL KILAU EMAS CINEMATIC 3D */
+    function buatPartikelEmasCinematic() {
+        const count = 280;
         const geo = new THREE.BufferGeometry();
         const pos = new Float32Array(count * 3);
-        for(let i=0; i<count*3; i+=3) {
-            pos[i] = (Math.random() - 0.5) * 16;
-            pos[i+1] = Math.random() * 6;
+        const speeds = new Float32Array(count);
+
+        for(let i = 0; i < count * 3; i += 3) {
+            pos[i] = (Math.random() - 0.5) * 18;
+            pos[i+1] = Math.random() * 8;
             pos[i+2] = (Math.random() - 0.5) * 50;
+            speeds[i/3] = Math.random() * 0.006 + 0.002;
         }
+
         geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-        const mat = new THREE.PointsMaterial({ color: 0xfcecd7, size: 0.075, transparent: true, opacity: 0.85 });
+        geo.userData = { speeds: speeds };
+
+        // Tekstur Glowing Soft Radial
+        const canvas = document.createElement('canvas');
+        canvas.width = 32; canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        grad.addColorStop(0, 'rgba(255, 240, 200, 1)');
+        grad.addColorStop(0.3, 'rgba(212, 175, 55, 0.8)');
+        grad.addColorStop(0.7, 'rgba(180, 120, 30, 0.3)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 32, 32);
+
+        const pTexture = new THREE.CanvasTexture(canvas);
+
+        const mat = new THREE.PointsMaterial({
+            color: 0xffe8b3,
+            size: 0.22,
+            map: pTexture,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            opacity: 0.85
+        });
+
         particleSystem = new THREE.Points(geo, mat);
         scene.add(particleSystem);
     }
@@ -989,10 +938,17 @@
         }
 
         if (particleSystem) {
-            const arr = particleSystem.geometry.attributes.position.array;
-            for(let i=1; i<arr.length; i+=3) {
-                arr[i] -= 0.004;
-                if(arr[i] < 0) arr[i] = 6;
+            const pos = particleSystem.geometry.attributes.position.array;
+            const speeds = particleSystem.geometry.userData.speeds;
+            
+            for(let i = 0; i < pos.length / 3; i++) {
+                const idx = i * 3;
+                pos[idx + 1] -= speeds[i]; // Bergerak turun pelan
+                pos[idx] += Math.sin(Date.now() * 0.001 + i) * 0.0015; // Melayang berayun
+
+                if(pos[idx + 1] < 0) {
+                    pos[idx + 1] = 8; // Reset ke atas saat sampai bawah
+                }
             }
             particleSystem.geometry.attributes.position.needsUpdate = true;
         }
@@ -1215,7 +1171,7 @@
         document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
         document.getElementById('envelope-overlay').classList.add('active');
 
-        submitBtn.innerText = "Kirim Surat Restu ✉️";
+        submitBtn.innerText = "Kirim Surat Restu ✉️️";
         submitBtn.disabled = false;
         document.getElementById('form-rsvp').reset();
     }
