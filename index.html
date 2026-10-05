@@ -739,4 +739,471 @@
             <hr class="pembatas">
 
             <div style="text-align: center; margin-top: 5px;">
-                <div style="width:
+                <div style="width: 60px; height: 60px; margin: 0 auto 8px auto; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold-primary); background: rgba(212,175,55,0.1); display: flex; justify-content: center; align-items: center;">
+                    <span style="font-size: 1.8rem;">🌸</span>
+                </div>
+                <h3 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--gold-glow); margin-bottom: 4px; letter-spacing: 1px;">Om Shanti, Shanti, Shanti Om</h3>
+                <p style="font-size: 0.8rem; color: #ded0c1; line-height: 1.5; margin-top: 4px;">
+                    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kedua mempelai.
+                </p>
+                <p style="font-family: var(--font-script); font-size: 1.8rem; color: var(--gold-glow); margin-top: 10px;">
+                    Gede Ardy & Komang Ana
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-3d-controller" id="bottomNav3D">
+        <button class="btn-arrow-3d" onclick="geserStasiunRelatif(-1)">❮</button>
+        <div class="indicator-dots" id="indicatorDotsContainer"></div>
+        <button class="btn-arrow-3d" onclick="geserStasiunRelatif(1)">❯</button>
+    </div>
+
+    <div id="lightbox-overlay" onclick="tutupLightboxLuar(event)">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="tutupLightbox()">&times;</button>
+            <img id="lightbox-img" src="" alt="Detail Foto">
+        </div>
+    </div>
+
+<script>
+    let scene, camera, renderer;
+    let gateLeft, gateRight, goldRingsGroup, particleSystem;
+    let stationIndex = 0;
+    let isNavigating = false;
+    let mouseX = 0, mouseY = 0;
+
+    const stasiunKamera = [
+        { x: 0,   y: 1.6, z: 12.0, rotY: 0 },        
+        { x: -1.2, y: 1.9, z: 4.8,  rotY: 0.15 },    
+        { x: 1.2,  y: 1.7, z: -2.0, rotY: -0.15 },   
+        { x: 0,   y: 1.6, z: -8.5, rotY: 0 },        
+        { x: -1.0, y: 1.4, z: -14.0, rotY: 0.1 },    
+        { x: 1.0,  y: 1.4, z: -20.0, rotY: -0.1 }    
+    ];
+
+    function init3DWorld() {
+        const canvas = document.getElementById('webgl-canvas');
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0d0603);
+        scene.fog = new THREE.FogExp2(0x0d0603, 0.045);
+
+        camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 1.8, 19.5);
+
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const amb = new THREE.AmbientLight(0xffecd6, 0.9);
+        scene.add(amb);
+
+        const mainSpot = new THREE.SpotLight(0xffd700, 2.5);
+        mainSpot.position.set(0, 12, 10);
+        scene.add(mainSpot);
+
+        buatGerbangCandiBentar();
+        buatLorongPanggung3D();
+        buatPartikelEmasCinematic();
+        setupMouseParallax();
+
+        window.addEventListener('resize', onResize);
+        renderLoop();
+    }
+
+    function buatGerbangCandiBentar() {
+        const gateMat = new THREE.MeshStandardMaterial({ color: 0x3d2112, roughness: 0.5, metalness: 0.2 });
+        const goldTrimMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.85, roughness: 0.2 });
+
+        gateLeft = new THREE.Group();
+        const baseLeft = new THREE.Mesh(new THREE.BoxGeometry(1.8, 6, 0.8), gateMat);
+        baseLeft.position.set(-1.4, 2.5, 0);
+        const trimLeft = new THREE.Mesh(new THREE.BoxGeometry(0.2, 5.8, 0.9), goldTrimMat);
+        trimLeft.position.set(-0.5, 2.5, 0);
+        gateLeft.add(baseLeft);
+        gateLeft.add(trimLeft);
+        gateLeft.position.set(-0.6, 0, 15);
+        scene.add(gateLeft);
+
+        gateRight = new THREE.Group();
+        const baseRight = new THREE.Mesh(new THREE.BoxGeometry(1.8, 6, 0.8), gateMat);
+        baseRight.position.set(1.4, 2.5, 0);
+        const trimRight = new THREE.Mesh(new THREE.BoxGeometry(0.2, 5.8, 0.9), goldTrimMat);
+        trimRight.position.set(0.5, 2.5, 0);
+        gateRight.add(baseRight);
+        gateRight.add(trimRight);
+        gateRight.position.set(0.6, 0, 15);
+        scene.add(gateRight);
+    }
+
+    function buatLorongPanggung3D() {
+        const floorGeo = new THREE.BoxGeometry(9, 0.3, 50);
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x24130a, roughness: 0.4 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.position.set(0, -0.15, -4);
+        scene.add(floor);
+
+        goldRingsGroup = new THREE.Group();
+        const rGeo = new THREE.TorusGeometry(1.8, 0.08, 16, 90);
+        const rMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.9, roughness: 0.15 });
+
+        const r1 = new THREE.Mesh(rGeo, rMat);
+        r1.position.set(-0.8, 2.3, 0);
+        r1.rotation.y = 0.4;
+        goldRingsGroup.add(r1);
+
+        const r2 = new THREE.Mesh(rGeo, rMat);
+        r2.position.set(0.8, 2.3, 0);
+        r2.rotation.y = -0.4;
+        goldRingsGroup.add(r2);
+
+        goldRingsGroup.position.set(0, 0, 3.5);
+        scene.add(goldRingsGroup);
+
+        for (let z = 10; z >= -22; z -= 7) {
+            buatTedungBali(-3.8, z);
+            buatTedungBali(3.8, z);
+        }
+    }
+
+    function buatTedungBali(x, z) {
+        const group = new THREE.Group();
+        const pole = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.06, 0.06, 4, 16),
+            new THREE.MeshStandardMaterial({ color: 0x5c3514 })
+        );
+        pole.position.y = 2;
+        group.add(pole);
+
+        const umbrella = new THREE.Mesh(
+            new THREE.ConeGeometry(0.9, 0.6, 20),
+            new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.3 })
+        );
+        umbrella.position.y = 3.8;
+        group.add(umbrella);
+
+        group.position.set(x, 0, z);
+        scene.add(group);
+    }
+
+    function buatPartikelEmasCinematic() {
+        const count = 280;
+        const geo = new THREE.BufferGeometry();
+        const pos = new Float32Array(count * 3);
+        const speeds = new Float32Array(count);
+
+        for(let i = 0; i < count * 3; i += 3) {
+            pos[i] = (Math.random() - 0.5) * 18;
+            pos[i+1] = Math.random() * 8;
+            pos[i+2] = (Math.random() - 0.5) * 50;
+            speeds[i/3] = Math.random() * 0.006 + 0.002;
+        }
+
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        geo.userData = { speeds: speeds };
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 32; canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        grad.addColorStop(0, 'rgba(255, 240, 200, 1)');
+        grad.addColorStop(0.3, 'rgba(212, 175, 55, 0.8)');
+        grad.addColorStop(0.7, 'rgba(180, 120, 30, 0.3)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 32, 32);
+
+        const pTexture = new THREE.CanvasTexture(canvas);
+
+        const mat = new THREE.PointsMaterial({
+            color: 0xffe8b3,
+            size: 0.22,
+            map: pTexture,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            opacity: 0.85
+        });
+
+        particleSystem = new THREE.Points(geo, mat);
+        scene.add(particleSystem);
+    }
+
+    function renderLoop() {
+        requestAnimationFrame(renderLoop);
+
+        if (goldRingsGroup) {
+            goldRingsGroup.rotation.y += 0.003;
+        }
+
+        if (particleSystem) {
+            const pos = particleSystem.geometry.attributes.position.array;
+            const speeds = particleSystem.geometry.userData.speeds;
+            
+            for(let i = 0; i < pos.length / 3; i++) {
+                const idx = i * 3;
+                pos[idx + 1] -= speeds[i];
+                pos[idx] += Math.sin(Date.now() * 0.001 + i) * 0.0015;
+
+                if(pos[idx + 1] < 0) {
+                    pos[idx + 1] = 8;
+                }
+            }
+            particleSystem.geometry.attributes.position.needsUpdate = true;
+        }
+
+        if (!isNavigating) {
+            camera.position.x += ((stasiunKamera[stationIndex].x + (mouseX * 0.4)) - camera.position.x) * 0.05;
+            camera.position.y += ((stasiunKamera[stationIndex].y + (mouseY * 0.3)) - camera.position.y) * 0.05;
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    function onResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function bukaDunia3D() {
+        const cover = document.getElementById('cover-screen');
+        cover.classList.add('opened');
+
+        gsap.to(gateLeft.position, { x: -3.8, duration: 2.2, ease: "power2.inOut" });
+        gsap.to(gateRight.position, { x: 3.8, duration: 2.2, ease: "power2.inOut" });
+
+        isNavigating = true;
+        gsap.to(camera.position, {
+            x: stasiunKamera[0].x,
+            y: stasiunKamera[0].y,
+            z: stasiunKamera[0].z,
+            duration: 2.4,
+            ease: "power2.out",
+            onComplete: () => {
+                isNavigating = false;
+                document.getElementById('topNav3D').classList.add('active');
+                document.getElementById('bottomNav3D').classList.add('active');
+            }
+        });
+
+        putarAudioOtomatis();
+
+        setTimeout(() => {
+            cover.style.display = 'none';
+        }, 1200);
+    }
+
+    function pindahStasiun3D(index) {
+        if (index < 0 || index >= stasiunKamera.length || isNavigating) return;
+        stationIndex = index;
+        isNavigating = true;
+
+        document.querySelectorAll('.nav-btn-3d').forEach((b, i) => b.classList.toggle('active', i === index));
+        document.querySelectorAll('.dot-3d').forEach((d, i) => d.classList.toggle('active', i === index));
+
+        document.querySelectorAll('.hud-station').forEach((p, i) => {
+            p.classList.toggle('active', i === index);
+            if (i === index) p.scrollTop = 0;
+        });
+
+        const target = stasiunKamera[index];
+        gsap.to(camera.position, {
+            x: target.x,
+            y: target.y,
+            z: target.z,
+            duration: 1.4,
+            ease: "power2.inOut",
+            onComplete: () => {
+                isNavigating = false;
+            }
+        });
+
+        gsap.to(camera.rotation, {
+            y: target.rotY,
+            duration: 1.4,
+            ease: "power2.inOut"
+        });
+    }
+
+    function geserStasiunRelatif(delta) {
+        pindahStasiun3D(stationIndex + delta);
+    }
+
+    function setupMouseParallax() {
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+    }
+
+    function putarAudioOtomatis() {
+        const audio = document.getElementById('audio-wedding');
+        const pill = document.getElementById('music-pill');
+        if (!audio) return;
+        audio.muted = false;
+        audio.play().then(() => {
+            pill.style.animationPlayState = 'running';
+        }).catch(() => {
+            console.log("Autoplay musik butuh interaksi.");
+        });
+    }
+
+    function toggleAudio() {
+        const audio = document.getElementById('audio-wedding');
+        const pill = document.getElementById('music-pill');
+        if (!audio) return;
+
+        if (audio.paused) {
+            audio.play();
+            pill.style.animationPlayState = 'running';
+            pill.innerText = "🎵";
+        } else {
+            audio.pause();
+            pill.style.animationPlayState = 'paused';
+            pill.innerText = "🔇";
+        }
+    }
+
+    function hitungMundur() {
+        const target = new Date('December 31, 2026 09:00:00 GMT+0800').getTime();
+        const now = new Date().getTime();
+        const sisa = target - now;
+
+        if (sisa <= 0) return;
+
+        const h = Math.floor(sisa / (1000 * 60 * 60 * 24));
+        const j = Math.floor((sisa % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
+        const d = Math.floor((sisa % (1000 * 60)) / 1000);
+
+        document.getElementById('t-days').innerText = h < 10 ? '0' + h : h;
+        document.getElementById('t-hours').innerText = j < 10 ? '0' + j : j;
+        document.getElementById('t-minutes').innerText = m < 10 ? '0' + m : m;
+        document.getElementById('t-seconds').innerText = d < 10 ? '0' + d : d;
+    }
+    setInterval(hitungMundur, 1000);
+
+    const slider = document.getElementById('gallerySlider');
+    function geserSlider(dir) {
+        const w = slider.querySelector('.gallery-card').clientWidth + 12;
+        slider.scrollBy({ left: dir * w, behavior: 'smooth' });
+    }
+
+    function bukaModalFoto(src) {
+        const overlay = document.getElementById('lightbox-overlay');
+        const img = document.getElementById('lightbox-img');
+        img.src = src;
+        overlay.classList.add('active');
+    }
+
+    function tutupLightbox() {
+        document.getElementById('lightbox-overlay').classList.remove('active');
+    }
+
+    function tutupLightboxLuar(e) {
+        if (e.target.id === 'lightbox-overlay') tutupLightbox();
+    }
+
+    function salinRekening() {
+        const noRek = "0570205000041";
+        const temp = document.createElement("input");
+        temp.value = noRek;
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+            document.execCommand('copy');
+        } catch(e) {
+            if (navigator.clipboard) navigator.clipboard.writeText(noRek);
+        }
+        document.body.removeChild(temp);
+
+        const toast = document.getElementById('toast-box');
+        toast.innerText = "✅ Nomor Rekening BPD Bali Disalin!";
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function submitRSVP(e) {
+        e.preventDefault();
+        
+        const nama = document.getElementById('rsvp-input-nama').value;
+        const status = document.getElementById('rsvp-input-status').value;
+        const doa = document.getElementById('rsvp-input-doa').value;
+        const submitBtn = document.getElementById('btn-submit-rsvp');
+
+        if (!nama || !status) return;
+
+        submitBtn.innerText = "Mengirim...";
+        submitBtn.disabled = true;
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyo0Jv7gNqmCAjrVTcNnWyaAU50AuTuDPTrxJG6pqQaU05LPFzvaUTuy7IG1QQCimqyCA/exec';
+        
+        const dataPayload = {
+            nama: nama,
+            status: status,
+            doa: doa
+        };
+
+        fetch(scriptURL, { 
+            method: 'POST', 
+            body: JSON.stringify(dataPayload), 
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).catch(err => console.log(err));
+
+        const container = document.getElementById('riwayatUcapanContainer');
+        const newItem = document.createElement('div');
+        newItem.className = 'riwayat-item';
+        newItem.innerHTML = `
+            <div class="riwayat-nama">
+                <span>${escapeHtml(nama)}</span>
+                <span class="riwayat-status">${escapeHtml(status)}</span>
+            </div>
+            <p class="riwayat-doa">"${escapeHtml(doa || 'Doa restu terbaik.')}"</p>
+        `;
+        container.prepend(newItem);
+
+        document.getElementById('letter-sender-name').innerText = `Dari: ${nama} (${status})`;
+        document.getElementById('letter-content-text').innerText = `"${doa || 'Doa restu terbaik untuk kedua mempelai.'}"`;
+        document.getElementById('envelope-overlay').classList.add('active');
+
+        submitBtn.innerText = "Kirim Surat Restu ✉";
+        submitBtn.disabled = false;
+        document.getElementById('form-rsvp').reset();
+    }
+
+    function escapeHtml(text) {
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function tutupAmplopSurat(e) {
+        const overlay = document.getElementById('envelope-overlay');
+        overlay.classList.remove('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const dotContainer = document.getElementById('indicatorDotsContainer');
+        dotContainer.innerHTML = '';
+        stasiunKamera.forEach((_, idx) => {
+            const span = document.createElement('span');
+            span.className = `dot-3d ${idx === 0 ? 'active' : ''}`;
+            span.onclick = () => pindahStasiun3D(idx);
+            dotContainer.appendChild(span);
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const to = params.get('to');
+        if (to) {
+            document.getElementById('guest-name').innerText = decodeURIComponent(to);
+        }
+
+        hitungMundur();
+        init3DWorld();
+    });
+</script>
+</body>
+</html>
