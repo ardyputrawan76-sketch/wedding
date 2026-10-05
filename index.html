@@ -61,6 +61,43 @@
             display: block;
         }
 
+        /* WADAH EFEK BUNGA JATUH 2D OVERLAY */
+        #flower-falling-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .falling-petal {
+            position: absolute;
+            background: linear-gradient(135deg, #ffb7c5, #ffe4e1);
+            border-radius: 150% 0 150% 0;
+            opacity: 0.8;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+            animation: flowerFall linear infinite;
+        }
+
+        @keyframes flowerFall {
+            0% {
+                opacity: 0;
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+            }
+            15% {
+                opacity: 0.85;
+            }
+            100% {
+                opacity: 0;
+                top: 105%;
+                transform: translateX(80px) rotate(540deg);
+            }
+        }
+
         /* ORNAMEN SUDUT UKIRAN BALI */
         .corner-ornament {
             position: fixed;
@@ -534,6 +571,9 @@
 
     <canvas id="webgl-canvas"></canvas>
 
+    <!-- WADAH EFEK BUNGA JATUH -->
+    <div id="flower-falling-container"></div>
+
     <svg class="corner-ornament co-top-left" viewBox="0 0 220 220" fill="none">
         <path d="M10 10 C60 10 120 40 140 90 C160 140 120 180 70 190 C30 195 10 170 25 145 C40 120 80 130 75 100 C70 70 30 50 10 10 Z" fill="#6d421d"/>
         <path d="M10 10 Q50 60 90 40 Q130 20 150 70 Q170 120 120 130 Q70 140 40 100 Z" fill="#d4af37" opacity="0.85"/>
@@ -773,13 +813,51 @@
     let mouseX = 0, mouseY = 0;
 
     const stasiunKamera = [
-        { x: 0,   y: 1.6, z: 12.0, rotY: 0 },       
+        { x: 0,    y: 1.6, z: 12.0, rotY: 0 },        
         { x: -1.2, y: 1.9, z: 4.8,  rotY: 0.15 },    
         { x: 1.2,  y: 1.7, z: -2.0, rotY: -0.15 },   
-        { x: 0,   y: 1.6, z: -8.5, rotY: 0 },       
+        { x: 0,    y: 1.6, z: -8.5, rotY: 0 },        
         { x: -1.0, y: 1.4, z: -14.0, rotY: 0.1 },   
         { x: 1.0,  y: 1.4, z: -20.0, rotY: -0.1 }   
     ];
+
+    /* PEMBUATAN EFEK BUNGA JATUH */
+    function buatKelopakBunga() {
+        const container = document.getElementById('flower-falling-container');
+        if (!container) return;
+
+        const petal = document.createElement('div');
+        petal.classList.add('falling-petal');
+
+        // Ukuran kelopak
+        const size = Math.random() * 12 + 10; // 10px - 22px
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size * 1.4}px`;
+
+        // Posisi horizontal
+        petal.style.left = Math.random() * 100 + 'vw';
+
+        // Durasi & delay jatuh
+        const duration = Math.random() * 5 + 6; // 6s - 11s
+        petal.style.animationDuration = duration + 's';
+        petal.style.animationDelay = Math.random() * 2 + 's';
+
+        // Variasi warna kelopak (Nuansa Pink, Kamboja Kuning-Putih, Merah Muda)
+        const colors = [
+            'linear-gradient(135deg, #ffb7c5, #ffe4e1)',
+            'linear-gradient(135deg, #fff0f5, #ffd1dc)',
+            'linear-gradient(135deg, #fffabb, #ffffff)', // Sentuhan Kamboja Bali
+            'linear-gradient(135deg, #fcecd7, #f7d6a3)'
+        ];
+        petal.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+        container.appendChild(petal);
+
+        // Hapus elemen yang telah selesai meluncur
+        setTimeout(() => {
+            petal.remove();
+        }, (duration + 2) * 1000);
+    }
 
     function init3DWorld() {
         const canvas = document.getElementById('webgl-canvas');
@@ -805,6 +883,9 @@
         buatLorongPanggung3D();
         buatPartikelEmas();
         setupMouseParallax();
+
+        // Jalankan pembuat bunga secara berkala
+        setInterval(buatKelopakBunga, 350);
 
         window.addEventListener('resize', onResize);
         renderLoop();
