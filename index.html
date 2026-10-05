@@ -30,26 +30,27 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
+        html, body {
+            width: 100%;
+            height: 100%;
             background-color: var(--dark-bg);
             color: #e6dfd5;
             font-family: var(--font-sans);
             overflow-x: hidden;
+        }
+
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
 
         /* DESKTOP LANDSCAPE WRAPPER (SPLIT SCREEN DENGAN SIDE PANEL) */
         .desktop-wrapper {
             display: flex;
             width: 100%;
-            min-height: 100vh;
+            height: 100vh;
+            height: 100dvh;
             justify-content: center;
             align-items: center;
         }
@@ -58,6 +59,7 @@
             display: none;
             flex: 1;
             height: 100vh;
+            height: 100dvh;
             position: relative;
             background: linear-gradient(rgba(11,7,5,0.7), rgba(11,7,5,0.85)), url('gambar12.jpg') no-repeat center center/cover;
             padding: 60px;
@@ -76,19 +78,20 @@
         .envitto-container {
             width: 100%;
             max-width: 480px;
+            height: 100vh;
+            height: 100dvh;
             background-color: var(--card-bg);
-            min-height: 100vh;
             position: relative;
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
             border-left: 1px solid rgba(197, 160, 89, 0.25);
             border-right: 1px solid rgba(197, 160, 89, 0.25);
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         @media screen and (min-width: 1024px) and (orientation: landscape) {
             .envitto-container {
                 max-width: 450px;
-                height: 100vh;
                 box-shadow: -10px 0 30px rgba(0,0,0,0.8);
             }
         }
@@ -105,7 +108,7 @@
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
-            padding: 50px 24px;
+            padding: 40px 20px;
             text-align: center;
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
@@ -126,9 +129,9 @@
 
         .cover-title {
             font-family: var(--font-script);
-            font-size: 4rem;
+            font-size: 3.8rem;
             color: var(--gold-light);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             line-height: 1;
         }
 
@@ -136,17 +139,17 @@
             background: rgba(20, 13, 10, 0.75);
             border: 1px solid rgba(197, 160, 89, 0.35);
             backdrop-filter: blur(8px);
-            padding: 14px 20px;
+            padding: 12px 18px;
             border-radius: 12px;
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .btn-buka {
             background: linear-gradient(135deg, #c5a059, #997531);
             color: #fff;
             border: none;
-            padding: 12px 32px;
+            padding: 12px 30px;
             border-radius: 30px;
             font-weight: 600;
             font-size: 0.85rem;
@@ -157,7 +160,7 @@
 
         /* SECTION UMUM */
         section {
-            padding: 60px 24px;
+            padding: 50px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(197, 160, 89, 0.1);
             position: relative;
@@ -174,7 +177,7 @@
 
         .section-title {
             font-family: var(--font-serif);
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             color: var(--gold-light);
             margin-bottom: 15px;
             font-weight: 400;
@@ -183,19 +186,20 @@
         /* HERO SECTION */
         .hero-section {
             min-height: 100vh;
+            min-height: 100dvh;
             background: linear-gradient(rgba(11,7,5,0.4), rgba(20,13,10,0.95)), url('gambar12.jpg') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding-top: 80px;
+            padding-top: 60px;
         }
 
-        /* COUPLE SECTION (FULL IMAGE, NO BORDER CIRCLE) */
+        /* COUPLE SECTION */
         .couple-container {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px;
             margin-top: 20px;
         }
         .couple-item {
@@ -207,35 +211,78 @@
         }
         .couple-photo {
             width: 100%;
-            height: 320px;
+            height: 300px;
             object-fit: cover;
             cursor: pointer;
             border-bottom: 2px solid var(--gold);
             margin-bottom: 15px;
         }
 
+        /* STORY / TIMELINE RIWAYAT */
+        .timeline {
+            position: relative;
+            margin-top: 25px;
+            padding-left: 20px;
+            text-align: left;
+            border-left: 2px solid rgba(197, 160, 89, 0.3);
+        }
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 2px solid var(--dark-bg);
+        }
+        .timeline-date {
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .timeline-title {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            margin-bottom: 4px;
+        }
+        .timeline-desc {
+            font-size: 0.78rem;
+            color: #b0a494;
+            line-height: 1.5;
+        }
+
         /* TIMER / COUNTDOWN */
         .countdown-grid {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             margin: 25px 0;
         }
         .count-box {
             background: rgba(26, 18, 14, 0.8);
             border: 1px solid rgba(197, 160, 89, 0.3);
             border-radius: 10px;
-            padding: 12px 10px;
-            width: 65px;
+            padding: 10px 8px;
+            width: 60px;
         }
         .count-box span {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 600;
             color: var(--gold-light);
             display: block;
         }
         .count-box p {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
             color: #b0a494;
             margin-top: 2px;
@@ -249,7 +296,7 @@
             background: #25d366;
             color: white;
             text-decoration: none;
-            padding: 10px 24px;
+            padding: 10px 22px;
             border-radius: 25px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -262,14 +309,14 @@
             background: rgba(197, 160, 89, 0.08);
             border: 1px solid rgba(197, 160, 89, 0.3);
             border-radius: 12px;
-            padding: 22px 18px;
+            padding: 20px 16px;
             margin-bottom: 25px;
             text-align: center;
         }
         .vedic-sanskrit {
             font-family: var(--font-serif);
             font-style: italic;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--gold-light);
             line-height: 1.6;
             margin-bottom: 8px;
@@ -280,7 +327,7 @@
             line-height: 1.5;
         }
 
-        /* GALLERY GRID (12 FOTOMU) */
+        /* GALLERY GRID */
         .envitto-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -288,7 +335,7 @@
             margin-top: 15px;
         }
         .grid-item {
-            height: 180px;
+            height: 160px;
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid rgba(197, 160, 89, 0.3);
@@ -306,16 +353,16 @@
             background: linear-gradient(135deg, #063822, #0a5c37);
             border: 1px solid var(--gold);
             border-radius: 14px;
-            padding: 20px;
+            padding: 18px;
             text-align: left;
             margin: 15px auto;
-            max-width: 340px;
+            max-width: 320px;
             color: white;
             box-shadow: 0 8px 20px rgba(6,56,34,0.4);
         }
         .atm-number {
             font-family: monospace;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: bold;
             color: var(--gold-light);
             letter-spacing: 1.5px;
@@ -444,7 +491,7 @@
             <!-- 1. HERO SECTION -->
             <section class="hero-section">
                 <p class="section-tag" style="letter-spacing: 5px;">PAWIWAHAN BALI</p>
-                <h1 style="font-family: var(--font-script); font-size: 4.5rem; color: var(--gold-light); margin: 10px 0;">Ardy & Ana</h1>
+                <h1 style="font-family: var(--font-script); font-size: 4.2rem; color: var(--gold-light); margin: 10px 0;">Ardy & Ana</h1>
                 <p style="font-size: 0.9rem; font-weight: 500; letter-spacing: 2px;">31 . 12 . 2026</p>
             </section>
 
@@ -480,7 +527,36 @@
                 </div>
             </section>
 
-            <!-- 4. SAVE THE DATE & ACARA -->
+            <!-- 4. RIWAYAT / STORY TIMELINE -->
+            <section>
+                <p class="section-tag">Our Story</p>
+                <h2 class="section-title">Riwayat Perjalanan</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <p class="timeline-date">2023</p>
+                        <h3 class="timeline-title">Pertama Kali Bertemu</h3>
+                        <p class="timeline-desc">Takdir mempertemukan kami dalam satu momen yang penuh kehangatan di Tabanan, Bali.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="timeline-date">2024</p>
+                        <h3 class="timeline-title">Menjalin Kasih</h3>
+                        <p class="timeline-desc">Bersama-sama melewati berbagai suka dan duka, mengukir cerita indah hari demi hari.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="timeline-date">2025</p>
+                        <h3 class="timeline-title">Komitmen Bersama</h3>
+                        <p class="timeline-desc">Memantapkan niat suci untuk melangkah ke jenjang pernikahan atas restu kedua keluarga.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="timeline-date">31 Desember 2026</p>
+                        <h3 class="timeline-title">Hari Bahagia (Pawiwahan)</h3>
+                        <p class="timeline-desc">Puncak menyatunya cinta kami dalam ikatan suci pernikahan adat Bali.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. SAVE THE DATE & ACARA -->
             <section>
                 <p class="section-tag">Save The Date</p>
                 <h2 class="section-title">Waktu & Tempat</h2>
@@ -504,7 +580,7 @@
                 </div>
             </section>
 
-            <!-- 5. VEDIC BLESSING & GALERI FOTO -->
+            <!-- 6. VEDIC BLESSING & GALERI FOTO -->
             <section>
                 <div class="vedic-box">
                     <p class="vedic-sanskrit">“Ihāiva stam mā vi yaustam, Viśvām āyur vyaśnutam. Krīṇḍantau putrair naptrbhih, Modamānau sve gṛhe.”</p>
@@ -530,7 +606,7 @@
                 </div>
             </section>
 
-            <!-- 6. KADO DIGITAL -->
+            <!-- 7. KADO DIGITAL -->
             <section>
                 <p class="section-tag">Wedding Gift</p>
                 <h2 class="section-title">Kado Digital</h2>
@@ -550,7 +626,7 @@
                 </div>
             </section>
 
-            <!-- 7. RSVP & UCAPAN -->
+            <!-- 8. RSVP & UCAPAN -->
             <section>
                 <p class="section-tag">RSVP</p>
                 <h2 class="section-title">Konfirmasi Kehadiran</h2>
@@ -569,7 +645,7 @@
                 <div id="wadahKomentar" style="margin-top: 15px;"></div>
             </section>
 
-            <!-- 8. PENUTUP -->
+            <!-- 9. PENUTUP -->
             <section style="border-bottom: none;">
                 <h3 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--gold-light); margin-bottom: 10px;">Om Shanti, Shanti, Shanti Om</h3>
                 <p style="font-size: 0.8rem; color: #d0c5b4; line-height: 1.6; margin-bottom: 15px;">
