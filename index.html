@@ -809,56 +809,49 @@
                     <p style="font-size: 0.62rem; color: #a5c3a2; margin-top: 6px;">ATAS NAMA</p>
                     <p style="font-size: 0.78rem; font-weight: bold; text-transform: uppercase; color: #fff;">GEDE ARDY PUTRAWAN</p>
                 </div>
-            </section>
+        /* CONTAINER UTAMA (GAYA ENVITTO CARD) */
+        .envitto-container {
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            height: 100dvh;
+            background-color: var(--card-bg);
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
+            border-left: 1px solid rgba(197, 160, 89, 0.25);
+            border-right: 1px solid rgba(197, 160, 89, 0.25);
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-            <!-- 8. RSVP & UCAPAN -->
-            <section>
-                <p class="section-tag">RSVP</p>
-                <h2 class="section-title">Konfirmasi Kehadiran</h2>
+        .envitto-container::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        html::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
 
-                <form id="rsvp-form" class="rsvp-container" onsubmit="kirimRSVP(event)">
-                    <input type="text" id="inputNama" name="nama" placeholder="Nama Lengkap" required>
-                    <select id="inputStatus" name="status" required>
-                        <option value="">-- Konfirmasi Kehadiran --</option>
-                        <option value="Pasti Hadir">Pasti Hadir</option>
-                        <option value="Berhalangan Hadir">Berhalangan Hadir</option>
-                    </select>
-                    <textarea id="inputDoa" name="doa" placeholder="Tuliskan ucapan / doa restu..." rows="3" required></textarea>
-                    <button type="submit" id="btn-submit" class="btn-kirim">Kirim Surat Restu</button>
-                </form>
+        /* LOCK SCROLLING BEFORE INVITATION IS OPENED */
+        .envitto-container.no-scroll,
+        body.no-scroll {
+            overflow: hidden !important;
+            touch-action: none !important;
+            -ms-touch-action: none !important;
+        }
 
-                <!-- Riwayat RSVP Model Chat Gulir -->
-                <div id="wadahKomentar">
-                    <div class="comment-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: bold; color: var(--gold-light);">
-                            <span>Keluarga Besar</span>
-                            <span style="font-size: 0.65rem; background: rgba(197,160,89,0.2); padding: 2px 6px; border-radius: 4px; color: var(--gold-light);">Pasti Hadir</span>
-                        </div>
-                        <p style="font-size: 0.78rem; font-style: italic; color: #d0c5b4; margin-top: 6px; line-height: 1.5;">Selamat berbahagia Ardy & Ana, semoga upacara pawiwahan berjalan lancar dan langgeng selalu.</p>
-                    </div>
-                </div>
-            </section>
+        @media screen and (min-width: 1024px) and (orientation: landscape) {
+<!-- ... existing code -->
+        <!-- MAIN CONTAINER FOR INVITATION -->
+        <div class="envitto-container no-scroll" id="main-container">
 
-            <!-- 9. PENUTUP -->
-            <section style="border-bottom: none; padding-bottom: 80px;">
-                <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--gold-light); margin-bottom: 12px;">Om Shanti, Shanti, Shanti Om</h3>
-                <p style="font-size: 0.82rem; color: #d0c5b4; line-height: 1.7; margin-bottom: 18px;">
-                    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
-                </p>
-                <h2 style="font-family: var(--font-script); font-size: 3.2rem; color: var(--gold-light); margin-top: 10px;">Ardy & Ana</h2>
-            </section>
-
-        </div>
-    </div>
-
-    <!-- LIGHTBOX MODAL -->
-    <div id="lightbox-modal" onclick="tutupZoom()">
-        <img id="img-zoom" src="" alt="Zoom Photo">
-    </div>
-
-    <!-- CUSTOM TOAST NOTIFICATION CONTAINER -->
-    <div id="custom-toast">Pesan terkirim</div>
-
+            <!-- COVER PEMBUKA -->
+            <div id="cover-screen">
+<!-- ... existing code -->
     <script>
         const SCRIPT_URL = ""; 
 
@@ -873,6 +866,13 @@
         }
 
         function bukaUndangan() {
+            // Unlock scrolling on main container
+            const container = document.getElementById('main-container');
+            if (container) {
+                container.classList.remove('no-scroll');
+            }
+            document.body.classList.remove('no-scroll');
+
             document.getElementById('cover-screen').classList.add('hide');
             const audio = document.getElementById('bg-music');
             const btn = document.getElementById('music-toggle');
@@ -884,6 +884,16 @@
                     console.log('Autoplay prevented or audio source missing:', e);
                 });
             }
+        }
+
+        // Prevent swipe / scroll dragging on touch devices while cover is active
+        const coverScreen = document.getElementById('cover-screen');
+        if (coverScreen) {
+            coverScreen.addEventListener('touchmove', function(e) {
+                if (!this.classList.contains('hide')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
         }
 
         function toggleAudio() {
