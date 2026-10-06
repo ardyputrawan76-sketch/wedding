@@ -9,7 +9,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="The Wedding Of Ardy & Ana" />
     <meta property="og:description" content="Pawiwahan Ardy & Ana - Kamis, 31 Desember 2026, Tabanan, Bali" />
-    <meta property="og:image" content="bgt-cover.jpg" />
+    <meta property="og:image" content="gambar12.jpg" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23c5a059' d='M32 6L22 22L8 16L16 38H48L56 16L42 22L32 6Z'/><circle cx='32' cy='48' r='8' fill='%23f3e5ab'/></svg>">
@@ -117,7 +117,7 @@
             max-width: 480px;
             height: 100vh;
             height: 100dvh;
-            background-color: rgba(14, 9, 7, 0.65);
+            background-color: transparent;
             position: relative;
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
             border-left: 1px solid rgba(197, 160, 89, 0.25);
@@ -143,21 +143,26 @@
             }
         }
 
-        /* WEB VIDEO BACKGROUND LAYERS */
-        .video-bg-layer {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+        /* FIXED VIDEO BACKGROUND ACROSS ENTIRE SCROLLABLE CONTAINER */
+        .container-video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             z-index: 0;
-            filter: brightness(0.6) contrast(1.05) saturate(1.1);
+            filter: brightness(0.55) contrast(1.05) saturate(1.1);
             pointer-events: none;
         }
 
-        .video-overlay-tint {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(180deg, rgba(11,7,5,0.65) 0%, rgba(11,7,5,0.4) 50%, rgba(11,7,5,0.85) 100%);
+        .container-video-tint {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(11,7,5,0.7) 0%, rgba(11,7,5,0.5) 50%, rgba(11,7,5,0.85) 100%);
             z-index: 1;
             pointer-events: none;
         }
@@ -183,6 +188,7 @@
             text-align: center;
             transition: opacity 0.8s ease, transform 0.8s ease;
             overflow: hidden;
+            background: rgba(11, 7, 5, 0.4);
         }
 
         #cover-screen.hide {
@@ -246,7 +252,7 @@
         section {
             padding: clamp(40px, 8vh, 60px) 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
             position: relative;
         }
 
@@ -301,7 +307,7 @@
         }
 
         .couple-item {
-            background: rgba(18, 12, 9, 0.65);
+            background: rgba(18, 12, 9, 0.72);
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px) saturate(180%);
             border: 1px solid var(--glass-border);
@@ -341,9 +347,9 @@
         .timeline-item {
             margin-bottom: 24px;
             position: relative;
-            background: rgba(18, 12, 9, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(18, 12, 9, 0.7);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             padding: 14px 16px;
             border-radius: 12px;
             border: 1px solid rgba(197, 160, 89, 0.28);
@@ -398,7 +404,7 @@
         }
 
         .count-box {
-            background: rgba(18, 12, 9, 0.7);
+            background: rgba(18, 12, 9, 0.75);
             backdrop-filter: blur(14px) saturate(160%);
             -webkit-backdrop-filter: blur(14px) saturate(160%);
             border: 1px solid var(--glass-border);
@@ -451,7 +457,7 @@
 
         /* VEDIC BLESSING BOX */
         .vedic-box {
-            background: rgba(18, 12, 9, 0.7);
+            background: rgba(18, 12, 9, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
@@ -565,7 +571,7 @@
         .rsvp-container input, .rsvp-container select, .rsvp-container textarea {
             width: 100%;
             padding: 13px 16px;
-            background: rgba(11, 7, 5, 0.75);
+            background: rgba(11, 7, 5, 0.8);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
@@ -612,7 +618,7 @@
         }
 
         .comment-item {
-            background: rgba(18, 12, 9, 0.65);
+            background: rgba(18, 12, 9, 0.72);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-left: 3px solid var(--gold);
@@ -787,10 +793,11 @@
 
         <!-- SIDE PANEL FOR DESKTOP LANDSCAPE -->
         <div class="side-panel">
-            <video class="video-bg-layer" autoplay loop muted playsinline poster="gambar12.jpg">
+            <!-- SIDE PANEL VIDEO BACKGROUND -->
+            <video class="container-video-bg" autoplay loop muted playsinline poster="gambar12.jpg">
                 <source src="vpwd.mp4" type="video/mp4">
             </video>
-            <div class="video-overlay-tint"></div>
+            <div class="container-video-tint"></div>
 
             <div class="content-relative">
                 <p style="font-size: 0.8rem; letter-spacing: 5px; color: var(--gold); font-weight: 600;">PAWIWAHAN BALI</p>
@@ -811,18 +818,14 @@
         <!-- MAIN CONTAINER FOR INVITATION -->
         <div class="envitto-container no-scroll" id="main-container">
 
-            <video class="video-bg-layer" autoplay loop muted playsinline poster="gambar12.jpg">
+            <!-- FIXED CONTINUOUS VIDEO BACKGROUND FOR SCROLLING -->
+            <video class="container-video-bg" autoplay loop muted playsinline poster="gambar12.jpg">
                 <source src="vpwd.mp4" type="video/mp4">
             </video>
-            <div class="video-overlay-tint"></div>
+            <div class="container-video-tint"></div>
 
             <!-- COVER PEMBUKA -->
             <div id="cover-screen">
-                <video class="video-bg-layer" autoplay loop muted playsinline poster="gambar12.jpg">
-                    <source src="vpwd.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay-tint"></div>
-
                 <div class="content-relative" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                     <p class="cover-subtitle">THE WEDDING OF</p>
                     <h1 class="cover-title">Ardy & Ana</h1>
@@ -847,7 +850,7 @@
             <!-- 2. PEMBUKA / KATA PENGANTAR -->
             <section class="content-relative">
                 <div class="glass-panel" style="padding: 24px 18px; border-radius: 16px;">
-                    <p style="font-size: 0.88rem; line-height: 1.8; color: #e6dfd5;">
+                    <p style="font-size: 0.88rem; line-height: 1.8; color: #e6dfd5; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">
                         <em style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--gold-light);">Om Swastyastu</em><br><br>
                         Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) kami.
                     </p>
@@ -863,7 +866,7 @@
                     <div class="couple-item">
                         <img src="ardy.png" alt="Ardy" class="couple-photo" onclick="zoomFotoSrc(this.src)" onerror="this.onerror=null; this.src='gambar12.jpg';">
                         <div class="couple-info">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px;">Gede Ardy Putrawan</h3>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">Gede Ardy Putrawan</h3>
                             <p style="font-size: 0.78rem; color: #d0c5b4; line-height: 1.6;">
                                 Putra dari Pasangan:<br><strong style="color: #fff;">Bapak Ketut Sariana (Alm.)</strong><br>& <strong style="color: #fff;">Ibu Ketut Arsih</strong>
                             </p>
@@ -873,7 +876,7 @@
                     <div class="couple-item">
                         <img src="ana.png" alt="Ana" class="couple-photo" onclick="zoomFotoSrc(this.src)" onerror="this.onerror=null; this.src='gambar12.jpg';">
                         <div class="couple-info">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px;">Ni Komang Ana Oktaviani</h3>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">Ni Komang Ana Oktaviani</h3>
                             <p style="font-size: 0.78rem; color: #d0c5b4; line-height: 1.6;">
                                 Putri dari Pasangan:<br><strong style="color: #fff;">Bapak I Wayan Sugiantara</strong><br>& <strong style="color: #fff;">Ibu Ni Ketut Wartini</strong>
                             </p>
@@ -965,7 +968,7 @@
             <section class="content-relative">
                 <p class="section-tag">Wedding Gift</p>
                 <h2 class="section-title">Kado Digital</h2>
-                <p style="font-size: 0.82rem; color: #d0c5b4; margin-bottom: 15px;">Doa restu Anda merupakan karunia terindah bagi kami.</p>
+                <p style="font-size: 0.82rem; color: #d0c5b4; margin-bottom: 15px; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Doa restu Anda merupakan karunia terindah bagi kami.</p>
 
                 <div class="gift-card">
                     <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 0.9rem;">
@@ -1012,12 +1015,12 @@
             <!-- 9. PENUTUP -->
             <section class="content-relative" style="border-bottom: none; padding-bottom: 80px;">
                 <div class="glass-panel" style="padding: 24px 18px; border-radius: 18px;">
-                    <h3 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--gold-light); margin-bottom: 12px;">Om Shanti, Shanti, Shanti Om</h3>
+                    <h3 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--gold-light); margin-bottom: 12px; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">Om Shanti, Shanti, Shanti Om</h3>
                     <p style="font-size: 0.82rem; color: #d0c5b4; line-height: 1.7; margin-bottom: 18px;">
                         Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
                     </p>
                     <p style="font-size: 0.75rem; color: #c5a059; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;">Kami Yang Berbahagia</p>
-                    <h2 style="font-family: var(--font-script); font-size: 3.5rem; color: var(--gold-light); line-height: 1;">Ardy & Ana</h2>
+                    <h2 style="font-family: var(--font-script); font-size: 3.5rem; color: var(--gold-light); line-height: 1; text-shadow: 0 3px 12px rgba(0,0,0,0.9);">Ardy & Ana</h2>
                 </div>
             </section>
 
