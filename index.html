@@ -2,7 +2,7 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>The Wedding Of Ardy & Ana</title>
     
     <meta property="og:title" content="The Wedding Of Ardy & Ana" />
@@ -11,14 +11,16 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --gold: #c5a059;
             --gold-light: #f3e5ab;
+            --gold-dark: #8c6b2d;
             --dark-bg: #0b0705;
             --card-bg: #140d0a;
+            --card-surface: #1a120e;
             --font-script: 'Great Vibes', cursive;
             --font-serif: 'Cormorant Garamond', serif;
             --font-sans: 'Montserrat', sans-serif;
@@ -26,13 +28,14 @@
 
         * {
             box-sizing: border-box;
-            margin: 0; padding: 0;
+            margin: 0; 
+            padding: 0;
             -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             background-color: var(--dark-bg);
             color: #e6dfd5;
             font-family: var(--font-sans);
@@ -43,29 +46,34 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background: radial-gradient(circle at center, #1c130e 0%, #0b0705 100%);
         }
 
-        /* DESKTOP LANDSCAPE WRAPPER (SPLIT SCREEN DENGAN SIDE PANEL) */
+        /* DESKTOP & WRAPPER CONTAINMENT */
         .desktop-wrapper {
             display: flex;
             width: 100%;
             height: 100vh;
             height: 100dvh;
+            max-width: 1600px;
+            margin: 0 auto;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .side-panel {
             display: none;
             flex: 1;
-            height: 100vh;
-            height: 100dvh;
+            height: 100%;
             position: relative;
             background: linear-gradient(rgba(11,7,5,0.7), rgba(11,7,5,0.85)), url('gambar12.jpg') no-repeat center center/cover;
-            padding: 60px;
+            padding: clamp(30px, 5vw, 60px);
             flex-direction: column;
             justify-content: space-between;
             border-right: 1px solid rgba(197, 160, 89, 0.3);
+            z-index: 10;
         }
 
         @media screen and (min-width: 1024px) and (orientation: landscape) {
@@ -74,7 +82,7 @@
             }
         }
 
-        /* CONTAINER UTAMA (GAYA ENVITTO CARD) */
+        /* MAIN INVITATION CARD CONTAINER */
         .envitto-container {
             width: 100%;
             max-width: 480px;
@@ -86,31 +94,35 @@
             border-left: 1px solid rgba(197, 160, 89, 0.25);
             border-right: 1px solid rgba(197, 160, 89, 0.25);
             overflow-y: auto;
+            overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
 
         @media screen and (min-width: 1024px) and (orientation: landscape) {
             .envitto-container {
-                max-width: 450px;
+                max-width: 460px;
                 box-shadow: -10px 0 30px rgba(0,0,0,0.8);
             }
         }
 
-        /* WELCOME / COVER SCREEN */
+        /* COVER / WELCOME SCREEN */
         #cover-screen {
             position: absolute;
             top: 0; left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
+            height: 100dvh;
             background: linear-gradient(rgba(11,7,5,0.65), rgba(11,7,5,0.92)), url('gambar12.jpg') no-repeat center center/cover;
-            z-index: 99999;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
-            padding: 40px 20px;
+            padding: clamp(20px, 6vh, 40px) 20px;
             text-align: center;
             transition: opacity 0.8s ease, transform 0.8s ease;
+            overflow-y: auto;
         }
 
         #cover-screen.hide {
@@ -120,49 +132,59 @@
         }
 
         .cover-subtitle {
-            font-size: 0.75rem;
+            font-size: clamp(0.65rem, 2vw, 0.8rem);
             letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--gold);
             margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .cover-title {
             font-family: var(--font-script);
-            font-size: 3.8rem;
+            font-size: clamp(3rem, 10vw, 4.2rem);
             color: var(--gold-light);
-            margin-bottom: 12px;
-            line-height: 1;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
         .guest-card {
-            background: rgba(20, 13, 10, 0.75);
-            border: 1px solid rgba(197, 160, 89, 0.35);
+            background: rgba(20, 13, 10, 0.82);
+            border: 1px solid rgba(197, 160, 89, 0.4);
             backdrop-filter: blur(8px);
-            padding: 12px 18px;
-            border-radius: 12px;
+            -webkit-backdrop-filter: blur(8px);
+            padding: 14px 20px;
+            border-radius: 14px;
             width: 100%;
+            max-width: 360px;
             margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
         }
 
         .btn-buka {
             background: linear-gradient(135deg, #c5a059, #997531);
             color: #fff;
             border: none;
-            padding: 12px 30px;
+            padding: 12px 32px;
             border-radius: 30px;
             font-weight: 600;
             font-size: 0.85rem;
             letter-spacing: 1.5px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+            box-shadow: 0 4px 18px rgba(197, 160, 89, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        /* SECTION UMUM */
+        .btn-buka:active {
+            transform: scale(0.96);
+        }
+
+        /* SECTION BASE STYLES */
         section {
-            padding: 50px 20px;
+            padding: clamp(40px, 8vh, 60px) 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
             position: relative;
         }
 
@@ -177,155 +199,199 @@
 
         .section-title {
             font-family: var(--font-serif);
-            font-size: 2.2rem;
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
             color: var(--gold-light);
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             font-weight: 400;
+            line-height: 1.2;
         }
 
         /* HERO SECTION */
         .hero-section {
             min-height: 100vh;
             min-height: 100dvh;
-            background: linear-gradient(rgba(11,7,5,0.4), rgba(20,13,10,0.95)), url('gambar12.jpg') no-repeat center center/cover;
+            background: linear-gradient(rgba(11,7,5,0.45), rgba(20,13,10,0.96)), url('gambar12.jpg') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding-top: 60px;
+            padding: 40px 20px;
+        }
+
+        .hero-title {
+            font-family: var(--font-script);
+            font-size: clamp(3.5rem, 12vw, 4.8rem);
+            color: var(--gold-light);
+            margin: 12px 0;
+            line-height: 1;
         }
 
         /* COUPLE SECTION */
         .couple-container {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 24px;
             margin-top: 20px;
         }
+
         .couple-item {
-            background: rgba(26, 18, 14, 0.6);
-            border: 1px solid rgba(197, 160, 89, 0.25);
+            background: var(--card-surface);
+            border: 1px solid rgba(197, 160, 89, 0.3);
             border-radius: 16px;
             overflow: hidden;
-            padding-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
         }
+
         .couple-photo {
             width: 100%;
-            height: 340px;
+            height: clamp(280px, 45vh, 360px);
             object-fit: cover;
             cursor: pointer;
             display: block;
+            transition: transform 0.5s ease;
         }
+
+        .couple-photo:hover {
+            transform: scale(1.03);
+        }
+
         .couple-info {
-            padding: 18px 15px 5px 15px;
+            padding: 18px 16px 20px 16px;
             text-align: center;
         }
 
-        /* STORY / TIMELINE RIWAYAT */
+        /* STORY TIMELINE */
         .timeline {
             position: relative;
             margin-top: 25px;
-            padding-left: 20px;
+            padding-left: 22px;
             text-align: left;
-            border-left: 2px solid rgba(197, 160, 89, 0.3);
+            border-left: 2px solid rgba(197, 160, 89, 0.35);
         }
+
         .timeline-item {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             position: relative;
         }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -26px;
+            left: -28px;
             top: 4px;
             width: 10px;
             height: 10px;
             border-radius: 50%;
             background: var(--gold);
             border: 2px solid var(--dark-bg);
+            box-shadow: 0 0 8px var(--gold);
         }
+
         .timeline-date {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             color: var(--gold);
             letter-spacing: 1px;
             text-transform: uppercase;
             font-weight: 600;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
+
         .timeline-title {
             font-family: var(--font-serif);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--gold-light);
             margin-bottom: 4px;
         }
+
         .timeline-desc {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             color: #b0a494;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        /* TIMER / COUNTDOWN */
+        /* COUNTDOWN TIMER */
         .countdown-grid {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: clamp(6px, 2vw, 12px);
             margin: 25px 0;
+            flex-wrap: wrap;
         }
+
         .count-box {
-            background: rgba(26, 18, 14, 0.8);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: 10px;
-            padding: 10px 8px;
-            width: 60px;
+            background: var(--card-surface);
+            border: 1px solid rgba(197, 160, 89, 0.35);
+            border-radius: 12px;
+            padding: 12px 8px;
+            flex: 1;
+            min-width: 65px;
+            max-width: 80px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
+
         .count-box span {
-            font-size: 1.15rem;
-            font-weight: 600;
+            font-size: clamp(1.1rem, 4vw, 1.35rem);
+            font-weight: 700;
             color: var(--gold-light);
             display: block;
         }
+
         .count-box p {
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             color: #b0a494;
-            margin-top: 2px;
+            margin-top: 4px;
+            letter-spacing: 1px;
         }
 
-        /* MAPS BUTTON */
+        /* BUTTON MAPS */
         .btn-maps {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            background: #25d366;
+            background: linear-gradient(135deg, #1fa855, #128c7e);
             color: white;
             text-decoration: none;
-            padding: 10px 22px;
-            border-radius: 25px;
-            font-size: 0.8rem;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.82rem;
             font-weight: 600;
-            margin-top: 15px;
-            box-shadow: 0 4px 12px rgba(37,211,102,0.3);
+            margin-top: 18px;
+            box-shadow: 0 4px 15px rgba(31,168,85,0.35);
+            transition: transform 0.2s ease;
         }
 
-        /* VEDIC BLESSING QUOTE BOX */
+        .btn-maps:active {
+            transform: scale(0.96);
+        }
+
+        /* VEDIC BLESSING BOX */
         .vedic-box {
             background: rgba(197, 160, 89, 0.08);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: 12px;
-            padding: 20px 16px;
+            border: 1px solid rgba(197, 160, 89, 0.35);
+            border-radius: 14px;
+            padding: 22px 18px;
             margin-bottom: 25px;
             text-align: center;
         }
+
         .vedic-sanskrit {
             font-family: var(--font-serif);
             font-style: italic;
-            font-size: 1.05rem;
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
             color: var(--gold-light);
             line-height: 1.6;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
+
         .vedic-translation {
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: #b0a494;
             line-height: 1.5;
         }
@@ -337,107 +403,138 @@
             gap: 10px;
             margin-top: 15px;
         }
+
         .grid-item {
-            height: 160px;
-            border-radius: 8px;
+            height: clamp(130px, 20vh, 170px);
+            border-radius: 10px;
             overflow: hidden;
             border: 1px solid rgba(197, 160, 89, 0.3);
             cursor: pointer;
+            position: relative;
         }
-        .grid-item img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: 0.3s;
-        }
-        .grid-item img:hover { transform: scale(1.05); }
 
-        /* ATM / GIFT */
-        .gift-card {
-            background: linear-gradient(135deg, #063822, #0a5c37);
-            border: 1px solid var(--gold);
-            border-radius: 14px;
-            padding: 18px;
-            text-align: left;
-            margin: 15px auto;
-            max-width: 320px;
-            color: white;
-            box-shadow: 0 8px 20px rgba(6,56,34,0.4);
+        .grid-item img {
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
         }
+
+        .grid-item img:hover { 
+            transform: scale(1.08); 
+        }
+
+        /* ATM / GIFT CARD */
+        .gift-card {
+            background: linear-gradient(135deg, #073822, #0d5232);
+            border: 1px solid var(--gold);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: left;
+            margin: 18px auto;
+            width: 100%;
+            max-width: 340px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(6,56,34,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
         .atm-number {
             font-family: monospace;
-            font-size: 1.05rem;
+            font-size: clamp(1rem, 3.5vw, 1.15rem);
             font-weight: bold;
             color: var(--gold-light);
             letter-spacing: 1.5px;
-            margin: 6px 0;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
         .btn-salin {
-            background: rgba(197, 160, 89, 0.3);
+            background: rgba(197, 160, 89, 0.25);
             border: 1px solid var(--gold);
             color: white;
-            padding: 4px 10px;
-            font-size: 0.7rem;
-            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 0.72rem;
+            border-radius: 8px;
             cursor: pointer;
-            float: right;
+            transition: background 0.2s ease;
+        }
+
+        .btn-salin:hover {
+            background: rgba(197, 160, 89, 0.45);
         }
 
         /* RSVP FORM */
         .rsvp-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             text-align: left;
-            margin-top: 15px;
+            margin-top: 18px;
         }
+
         .rsvp-container input, .rsvp-container select, .rsvp-container textarea {
             width: 100%;
-            padding: 12px;
-            background: rgba(11, 7, 5, 0.9);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: 8px;
+            padding: 12px 14px;
+            background: rgba(11, 7, 5, 0.85);
+            border: 1px solid rgba(197, 160, 89, 0.35);
+            border-radius: 10px;
             color: white;
             font-family: inherit;
             font-size: 0.85rem;
-        }
-        .btn-kirim {
-            background: var(--gold);
-            color: #0b0705;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s ease;
         }
 
-        /* CHAT/WISHES SCROLL CONTAINER */
+        .rsvp-container input:focus, .rsvp-container select:focus, .rsvp-container textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .btn-kirim {
+            background: linear-gradient(135deg, #c5a059, #a37c35);
+            color: #0b0705;
+            border: none;
+            padding: 13px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-kirim:active {
+            transform: scale(0.98);
+        }
+
+        /* COMMENTS CONTAINER */
         #wadahKomentar {
-            max-height: 250px;
+            max-height: 260px;
             overflow-y: auto;
-            margin-top: 15px;
+            margin-top: 18px;
             padding-right: 4px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             scroll-behavior: smooth;
         }
+
         #wadahKomentar::-webkit-scrollbar {
-            width: 5px;
+            width: 4px;
         }
-        #wadahKomentar::-webkit-scrollbar-track {
-            background: rgba(11, 7, 5, 0.5);
-            border-radius: 4px;
-        }
+
         #wadahKomentar::-webkit-scrollbar-thumb {
             background: var(--gold);
             border-radius: 4px;
         }
 
         .comment-item {
-            background: rgba(26, 18, 14, 0.85);
-            border-left: 2px solid var(--gold);
-            padding: 10px 12px;
-            border-radius: 6px;
+            background: var(--card-surface);
+            border-left: 3px solid var(--gold);
+            padding: 12px 14px;
+            border-radius: 8px;
             text-align: left;
             border: 1px solid rgba(197, 160, 89, 0.2);
         }
@@ -445,70 +542,125 @@
         /* FLOATING MUSIC BUTTON */
         #music-toggle {
             position: fixed;
-            bottom: 20px; right: 20px;
-            width: 40px; height: 40px;
-            background: rgba(197, 160, 89, 0.9);
+            bottom: clamp(15px, 4vw, 25px);
+            right: clamp(15px, 4vw, 25px);
+            width: 44px; 
+            height: 44px;
+            background: rgba(197, 160, 89, 0.95);
+            color: #0b0705;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 999;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
             animation: spinMusic 4s linear infinite;
             animation-play-state: paused;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
+            border: 1px solid var(--gold-light);
         }
-        @keyframes spinMusic { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        @keyframes spinMusic { 
+            from { transform: rotate(0deg); } 
+            to { transform: rotate(360deg); } 
+        }
 
         /* LIGHTBOX MODAL */
         #lightbox-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
             z-index: 100000;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: 0.3s;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            opacity: 0; 
+            pointer-events: none; 
+            transition: opacity 0.3s ease;
+            padding: 20px;
         }
-        #lightbox-modal.active { opacity: 1; pointer-events: auto; }
-        #lightbox-modal img { max-width: 90%; max-height: 80vh; border-radius: 8px; border: 1px solid var(--gold); }
+
+        #lightbox-modal.active { 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+
+        #lightbox-modal img { 
+            max-width: 95%; 
+            max-height: 85vh; 
+            border-radius: 12px; 
+            border: 1px solid var(--gold); 
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
+        }
+
+        /* CUSTOM TOAST NOTIFICATION (Replacing native alert) */
+        #custom-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(26, 18, 14, 0.95);
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            z-index: 100001;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            pointer-events: none;
+            text-align: center;
+            max-width: 90vw;
+        }
+
+        #custom-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" src="musik-pwd.mp3" loop></audio>
-    <div id="music-toggle" onclick="toggleAudio()">🎵</div>
+    <audio id="bg-music" src="musik-pwd.mp3" loop preload="auto"></audio>
+    <div id="music-toggle" onclick="toggleAudio()" title="Musik">🎵</div>
 
     <!-- DESKTOP SPLIT LANDSCAPE WRAPPER -->
     <div class="desktop-wrapper">
 
-        <!-- SIDE PANEL UNTUK DESKTOP LANDSCAPE -->
+        <!-- SIDE PANEL FOR DESKTOP LANDSCAPE -->
         <div class="side-panel">
             <div>
-                <p style="font-size: 0.8rem; letter-spacing: 5px; color: var(--gold);">PAWIWAHAN BALI</p>
-                <h1 style="font-family: var(--font-script); font-size: 5rem; color: var(--gold-light); margin-top: 10px;">Ardy & Ana</h1>
-                <p style="font-size: 0.95rem; color: #d0c5b4; margin-top: 10px;">Kamis, 31 Desember 2026</p>
+                <p style="font-size: 0.8rem; letter-spacing: 5px; color: var(--gold); font-weight: 600;">PAWIWAHAN BALI</p>
+                <h1 style="font-family: var(--font-script); font-size: clamp(3.5rem, 6vw, 5.5rem); color: var(--gold-light); margin-top: 10px; line-height: 1;">Ardy & Ana</h1>
+                <p style="font-size: 1rem; color: #d0c5b4; margin-top: 14px; letter-spacing: 1px;">Kamis, 31 Desember 2026</p>
             </div>
-            <div style="background: rgba(20,13,10,0.7); border: 1px solid rgba(197,160,89,0.3); padding: 25px; border-radius: 12px; backdrop-filter: blur(5px);">
-                <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; color: var(--gold-light); margin-bottom: 8px;">
+
+            <div style="background: rgba(20,13,10,0.75); border: 1px solid rgba(197,160,89,0.35); padding: 25px; border-radius: 14px; backdrop-filter: blur(8px);">
+                <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.15rem; color: var(--gold-light); margin-bottom: 10px; line-height: 1.6;">
                     “Ihāiva stam mā vi yaustam, Viśvām āyur vyaśnutam. Krīṇḍantau putrair naptrbhih, Modamānau sve gṛhe.”
                 </p>
-                <p style="font-size: 0.75rem; color: #b0a494;">Tetaplah berada di sini, jangan berpisah. Nikmati seluruh masa hidupmu dengan bergembira bersama anak dan cucu di rumahmu.</p>
+                <p style="font-size: 0.78rem; color: #b0a494; line-height: 1.6;">Tetaplah berada di sini, jangan berpisah. Nikmati seluruh masa hidupmu dengan bergembira bersama anak dan cucu di rumahmu.</p>
             </div>
-            <p style="font-size: 0.75rem; color: #887a68; letter-spacing: 2px;">THE WEDDING INVITATION</p>
+
+            <p style="font-size: 0.75rem; color: #887a68; letter-spacing: 2.5px; text-transform: uppercase;">The Wedding Invitation</p>
         </div>
 
-        <!-- CONTAINER UTAMA UNDANGAN -->
+        <!-- MAIN CONTAINER FOR INVITATION -->
         <div class="envitto-container">
 
             <!-- COVER PEMBUKA -->
             <div id="cover-screen">
                 <p class="cover-subtitle">THE WEDDING OF</p>
                 <h1 class="cover-title">Ardy & Ana</h1>
-                <p style="font-size: 0.8rem; color: #d0c5b4; margin-bottom: 20px;">Kamis, 31 Desember 2026</p>
+                <p style="font-size: 0.85rem; color: #d0c5b4; margin-bottom: 24px; letter-spacing: 1px;">Kamis, 31 Desember 2026</p>
                 
                 <div class="guest-card">
                     <p style="font-size: 0.7rem; color: #b0a494; font-style: italic;">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
-                    <h3 id="guest-name" style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-top: 3px;">Tamu Undangan</h3>
+                    <h3 id="guest-name" style="font-size: 1.15rem; font-weight: 600; color: #fff; margin-top: 4px;">Tamu Undangan</h3>
                 </div>
 
                 <button class="btn-buka" onclick="bukaUndangan()">Buka Undangan</button>
@@ -517,14 +669,14 @@
             <!-- 1. HERO SECTION -->
             <section class="hero-section">
                 <p class="section-tag" style="letter-spacing: 5px;">PAWIWAHAN BALI</p>
-                <h1 style="font-family: var(--font-script); font-size: 4.2rem; color: var(--gold-light); margin: 10px 0;">Ardy & Ana</h1>
-                <p style="font-size: 0.9rem; font-weight: 500; letter-spacing: 2px;">31 . 12 . 2026</p>
+                <h1 class="hero-title">Ardy & Ana</h1>
+                <p style="font-size: 0.9rem; font-weight: 600; letter-spacing: 3px; color: var(--gold-light);">31 . 12 . 2026</p>
             </section>
 
             <!-- 2. PEMBUKA / KATA PENGANTAR -->
             <section>
-                <p style="font-size: 0.85rem; line-height: 1.7; color: #d0c5b4;">
-                    <em>Om Swastyastu</em><br><br>
+                <p style="font-size: 0.88rem; line-height: 1.8; color: #d0c5b4;">
+                    <em style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--gold-light);">Om Swastyastu</em><br><br>
                     Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa, kami bermaksud menyelenggarakan Upacara Pawiwahan (Pernikahan) kami.
                 </p>
             </section>
@@ -537,22 +689,22 @@
                 <div class="couple-container">
                     <!-- Mempelai Pria -->
                     <div class="couple-item">
-                        <img src="ardy.png" alt="Ardy" class="couple-photo" onclick="zoomFoto(this.src)" onerror="this.src='gambar12.jpg'">
+                        <img src="ardy.png" alt="Ardy" class="couple-photo" onclick="zoomFoto(this.src)" onerror="this.onerror=null; this.src='gambar12.jpg';">
                         <div class="couple-info">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--gold-light); margin-bottom: 5px;">Gede Ardy Putrawan</h3>
-                            <p style="font-size: 0.75rem; color: #b0a494; line-height: 1.5;">
-                                Putra dari Pasangan:<br><strong>Bapak Ketut Sariana (Alm.)</strong><br>& <strong>Ibu Ketut Arsih</strong>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px;">Gede Ardy Putrawan</h3>
+                            <p style="font-size: 0.78rem; color: #b0a494; line-height: 1.6;">
+                                Putra dari Pasangan:<br><strong style="color: #d0c5b4;">Bapak Ketut Sariana (Alm.)</strong><br>& <strong style="color: #d0c5b4;">Ibu Ketut Arsih</strong>
                             </p>
                         </div>
                     </div>
 
                     <!-- Mempelai Wanita -->
                     <div class="couple-item">
-                        <img src="ana.png" alt="Ana" class="couple-photo" onclick="zoomFoto(this.src)" onerror="this.src='gambar12.jpg'">
+                        <img src="ana.png" alt="Ana" class="couple-photo" onclick="zoomFoto(this.src)" onerror="this.onerror=null; this.src='gambar12.jpg';">
                         <div class="couple-info">
-                            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--gold-light); margin-bottom: 5px;">Ni Komang Ana Oktaviani</h3>
-                            <p style="font-size: 0.75rem; color: #b0a494; line-height: 1.5;">
-                                Putri dari Pasangan:<br><strong>Bapak I Wayan Sugiantara</strong><br>& <strong>Ibu Ni Ketut Wartini</strong>
+                            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px;">Ni Komang Ana Oktaviani</h3>
+                            <p style="font-size: 0.78rem; color: #b0a494; line-height: 1.6;">
+                                Putri dari Pasangan:<br><strong style="color: #d0c5b4;">Bapak I Wayan Sugiantara</strong><br>& <strong style="color: #d0c5b4;">Ibu Ni Ketut Wartini</strong>
                             </p>
                         </div>
                     </div>
@@ -600,13 +752,13 @@
                     <div class="count-box"><span id="d-sec">00</span><p>Detik</p></div>
                 </div>
 
-                <div style="margin-top: 30px;">
-                    <h3 style="font-size: 1rem; color: var(--gold); margin-bottom: 4px;">Pawiwahan / Acara</h3>
-                    <p style="font-size: 0.85rem; font-weight: 500;">Kamis, 31 Desember 2026</p>
-                    <p style="font-size: 0.8rem; color: #b0a494; margin-top: 3px;">Pukul 09.00 WITA - Selesai</p>
-                    <p style="font-size: 0.8rem; color: #d0c5b4; margin-top: 10px;"><strong>Kediaman Mempelai Pria</strong><br>Tabanan, Bali</p>
+                <div style="margin-top: 28px; background: var(--card-surface); padding: 20px; border-radius: 14px; border: 1px solid rgba(197,160,89,0.25);">
+                    <h3 style="font-size: 1.05rem; color: var(--gold); margin-bottom: 6px;">Pawiwahan / Acara</h3>
+                    <p style="font-size: 0.88rem; font-weight: 600; color: #fff;">Kamis, 31 Desember 2026</p>
+                    <p style="font-size: 0.8rem; color: #b0a494; margin-top: 4px;">Pukul 09.00 WITA - Selesai</p>
+                    <p style="font-size: 0.82rem; color: #d0c5b4; margin-top: 12px; line-height: 1.5;"><strong>Kediaman Mempelai Pria</strong><br>Tabanan, Bali</p>
 
-                    <a href="https://goo.gl/maps/bz8HRTQSsVTxnEum9" target="_blank" class="btn-maps">
+                    <a href="https://goo.gl/maps/bz8HRTQSsVTxnEum9" target="_blank" rel="noopener noreferrer" class="btn-maps">
                         <span>📍 Google Maps Lokasi</span>
                     </a>
                 </div>
@@ -623,18 +775,18 @@
                 <h2 class="section-title">Galeri Kebersamaan</h2>
 
                 <div class="envitto-grid">
-                    <div class="grid-item" onclick="zoomFoto('gambar1.jpg')"><img src="gambar1.jpg" alt="1" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar2.jpg')"><img src="gambar2.jpg" alt="2" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar3.jpg')"><img src="gambar3.jpg" alt="3" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar4.jpg')"><img src="gambar4.jpg" alt="4" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar5.jpg')"><img src="gambar5.jpg" alt="5" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar6.jpg')"><img src="gambar6.jpg" alt="6" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar7.jpg')"><img src="gambar7.jpg" alt="7" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar8.jpg')"><img src="gambar8.jpg" alt="8" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar9.jpg')"><img src="gambar9.jpg" alt="9" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar10.jpg')"><img src="gambar10.jpg" alt="10" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar11.jpg')"><img src="gambar11.jpg" alt="11" onerror="this.src='gambar12.jpg'"></div>
-                    <div class="grid-item" onclick="zoomFoto('gambar12.jpg')"><img src="gambar12.jpg" alt="12" onerror="this.src='gambar12.jpg'"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar1.jpg')"><img src="gambar1.jpg" alt="Gallery 1" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar2.jpg')"><img src="gambar2.jpg" alt="Gallery 2" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar3.jpg')"><img src="gambar3.jpg" alt="Gallery 3" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar4.jpg')"><img src="gambar4.jpg" alt="Gallery 4" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar5.jpg')"><img src="gambar5.jpg" alt="Gallery 5" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar6.jpg')"><img src="gambar6.jpg" alt="Gallery 6" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar7.jpg')"><img src="gambar7.jpg" alt="Gallery 7" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar8.jpg')"><img src="gambar8.jpg" alt="Gallery 8" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar9.jpg')"><img src="gambar9.jpg" alt="Gallery 9" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar10.jpg')"><img src="gambar10.jpg" alt="Gallery 10" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar11.jpg')"><img src="gambar11.jpg" alt="Gallery 11" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
+                    <div class="grid-item" onclick="zoomFoto('gambar12.jpg')"><img src="gambar12.jpg" alt="Gallery 12" onerror="this.onerror=null; this.src='gambar12.jpg';"></div>
                 </div>
             </section>
 
@@ -642,19 +794,20 @@
             <section>
                 <p class="section-tag">Wedding Gift</p>
                 <h2 class="section-title">Kado Digital</h2>
-                <p style="font-size: 0.8rem; color: #d0c5b4; margin-bottom: 15px;">Doa restu Anda merupakan karunia terindah bagi kami.</p>
+                <p style="font-size: 0.82rem; color: #d0c5b4; margin-bottom: 15px;">Doa restu Anda merupakan karunia terindah bagi kami.</p>
 
                 <div class="gift-card">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 0.9rem;">
                         <span>BPD BALI</span>
+                        <span style="font-size: 0.65rem; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 4px;">BANK</span>
                     </div>
-                    <p style="font-size: 0.6rem; color: #a5c3a2; margin-top: 8px;">NOMOR REKENING</p>
+                    <p style="font-size: 0.62rem; color: #a5c3a2; margin-top: 10px;">NOMOR REKENING</p>
                     <div class="atm-number">
                         <span>0570205000041</span>
                         <button class="btn-salin" onclick="salinRekening('0570205000041')">Salin</button>
                     </div>
-                    <p style="font-size: 0.6rem; color: #a5c3a2; margin-top: 6px;">ATAS NAMA</p>
-                    <p style="font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">GEDE ARDY PUTRAWAN</p>
+                    <p style="font-size: 0.62rem; color: #a5c3a2; margin-top: 6px;">ATAS NAMA</p>
+                    <p style="font-size: 0.78rem; font-weight: bold; text-transform: uppercase; color: #fff;">GEDE ARDY PUTRAWAN</p>
                 </div>
             </section>
 
@@ -677,138 +830,205 @@
                 <!-- Riwayat RSVP Model Chat Gulir -->
                 <div id="wadahKomentar">
                     <div class="comment-item">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; color: var(--gold-light);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: bold; color: var(--gold-light);">
                             <span>Keluarga Besar</span>
-                            <span style="font-size: 0.65rem; background: rgba(197,160,89,0.2); padding: 2px 6px; border-radius: 4px;">Pasti Hadir</span>
+                            <span style="font-size: 0.65rem; background: rgba(197,160,89,0.2); padding: 2px 6px; border-radius: 4px; color: var(--gold-light);">Pasti Hadir</span>
                         </div>
-                        <p style="font-size: 0.75rem; font-style: italic; color: #d0c5b4; margin-top: 4px;">Selamat berbahagia Ardy & Ana, semoga upacara pawiwahan berjalan lancar dan langgeng selalu.</p>
+                        <p style="font-size: 0.78rem; font-style: italic; color: #d0c5b4; margin-top: 6px; line-height: 1.5;">Selamat berbahagia Ardy & Ana, semoga upacara pawiwahan berjalan lancar dan langgeng selalu.</p>
                     </div>
                 </div>
             </section>
 
             <!-- 9. PENUTUP -->
-            <section style="border-bottom: none;">
-                <h3 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--gold-light); margin-bottom: 10px;">Om Shanti, Shanti, Shanti Om</h3>
-                <p style="font-size: 0.8rem; color: #d0c5b4; line-height: 1.6; margin-bottom: 15px;">
+            <section style="border-bottom: none; padding-bottom: 80px;">
+                <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--gold-light); margin-bottom: 12px;">Om Shanti, Shanti, Shanti Om</h3>
+                <p style="font-size: 0.82rem; color: #d0c5b4; line-height: 1.7; margin-bottom: 18px;">
                     Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
                 </p>
-                <h2 style="font-family: var(--font-script); font-size: 3rem; color: var(--gold-light); margin-top: 10px;">Ardy & Ana</h2>
+                <h2 style="font-family: var(--font-script); font-size: 3.2rem; color: var(--gold-light); margin-top: 10px;">Ardy & Ana</h2>
             </section>
 
         </div>
     </div>
 
-    <!-- MODAL ZOOM FOTO -->
+    <!-- LIGHTBOX MODAL -->
     <div id="lightbox-modal" onclick="tutupZoom()">
-        <img id="img-zoom" src="" alt="Zoom">
+        <img id="img-zoom" src="" alt="Zoom Photo">
     </div>
 
-<script>
-    const SCRIPT_URL = ""; 
+    <!-- CUSTOM TOAST NOTIFICATION CONTAINER -->
+    <div id="custom-toast">Pesan terkirim</div>
 
-    function bukaUndangan() {
-        document.getElementById('cover-screen').classList.add('hide');
-        const audio = document.getElementById('bg-music');
-        const btn = document.getElementById('music-toggle');
-        audio.play().then(() => {
-            btn.style.animationPlayState = 'running';
-        }).catch(e => console.log(e));
-    }
+    <script>
+        const SCRIPT_URL = ""; 
 
-    function toggleAudio() {
-        const audio = document.getElementById('bg-music');
-        const btn = document.getElementById('music-toggle');
-        if (audio.paused) {
-            audio.play();
-            btn.style.animationPlayState = 'running';
-            btn.innerText = "🎵";
-        } else {
-            audio.pause();
-            btn.style.animationPlayState = 'paused';
-            btn.innerText = "🔇";
+        // CUSTOM TOAST NOTIFICATION (Replaces native alert)
+        function showToast(message) {
+            const toast = document.getElementById('custom-toast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3200);
         }
-    }
 
-    function zoomFoto(src) {
-        const modal = document.getElementById('lightbox-modal');
-        const img = document.getElementById('img-zoom');
-        img.src = src;
-        modal.classList.add('active');
-    }
-
-    function tutupZoom() {
-        document.getElementById('lightbox-modal').classList.remove('active');
-    }
-
-    function salinRekening(no) {
-        navigator.clipboard.writeText(no);
-        alert("Nomor rekening berhasil disalin: " + no);
-    }
-
-    function updateWaktu() {
-        const target = new Date('December 31, 2026 09:00:00').getTime();
-        const now = new Date().getTime();
-        const selisih = target - now;
-
-        if (selisih > 0) {
-            document.getElementById('d-day').innerText = Math.floor(selisih / (1000 * 60 * 60 * 24));
-            document.getElementById('d-hour').innerText = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('d-min').innerText = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById('d-sec').innerText = Math.floor((selisih % (1000 * 60)) / 1000);
+        function bukaUndangan() {
+            document.getElementById('cover-screen').classList.add('hide');
+            const audio = document.getElementById('bg-music');
+            const btn = document.getElementById('music-toggle');
+            
+            if (audio) {
+                audio.play().then(() => {
+                    btn.style.animationPlayState = 'running';
+                }).catch(e => {
+                    console.log('Autoplay prevented or audio source missing:', e);
+                });
+            }
         }
-    }
-    setInterval(updateWaktu, 1000);
 
-    function muatKomentarLokal(nama, status, doa) {
-        const wadah = document.getElementById('wadahKomentar');
-        const item = document.createElement('div');
-        item.className = 'comment-item';
-        item.innerHTML = `
-            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; color: var(--gold-light);">
-                <span>${nama}</span>
-                <span style="font-size: 0.65rem; background: rgba(197,160,89,0.2); padding: 2px 6px; border-radius: 4px;">${status}</span>
-            </div>
-            <p style="font-size: 0.75rem; font-style: italic; color: #d0c5b4; margin-top: 4px;">${doa}</p>
-        `;
-        wadah.prepend(item);
-        wadah.scrollTop = 0;
-    }
+        function toggleAudio() {
+            const audio = document.getElementById('bg-music');
+            const btn = document.getElementById('music-toggle');
+            
+            if (!audio) return;
 
-    function kirimRSVP(e) {
-        e.preventDefault();
-        const nama = document.getElementById('inputNama').value;
-        const status = document.getElementById('inputStatus').value;
-        const doa = document.getElementById('inputDoa').value;
-        const btn = document.getElementById('btn-submit');
-
-        btn.disabled = true;
-        btn.innerText = "Mengirim...";
-
-        muatKomentarLokal(nama, status, doa);
-        e.target.reset();
-        btn.disabled = false;
-        btn.innerText = "Kirim Surat Restu";
-        alert("Terima kasih, ucapan dan konfirmasi kehadiran Anda berhasil dikirim!");
-
-        if (SCRIPT_URL) {
-            const formData = new FormData();
-            formData.append('nama', nama);
-            formData.append('status', status);
-            formData.append('doa', doa);
-
-            fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' })
-            .catch(err => console.log('Sync to spreadsheet note:', err));
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.style.animationPlayState = 'running';
+                    btn.innerText = "🎵";
+                    showToast("Musik diputar");
+                }).catch(err => {
+                    showToast("Gagal memutar musik");
+                });
+            } else {
+                audio.pause();
+                btn.style.animationPlayState = 'paused';
+                btn.innerText = "🔇";
+                showToast("Musik dihentikan");
+            }
         }
-    }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        const params = new URLSearchParams(window.location.search);
-        const to = params.get('to');
-        if (to) {
-            document.getElementById('guest-name').innerText = decodeURIComponent(to);
+        function zoomFoto(src) {
+            const modal = document.getElementById('lightbox-modal');
+            const img = document.getElementById('img-zoom');
+            img.src = src;
+            modal.classList.add('active');
         }
-        updateWaktu();
-    });
-</script>
+
+        function tutupZoom() {
+            document.getElementById('lightbox-modal').classList.remove('active');
+        }
+
+        function salinRekening(no) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(no).then(() => {
+                    showToast("✓ Nomor rekening berhasil disalin!");
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(no);
+                });
+            } else {
+                fallbackCopyTextToClipboard(no);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast("✓ Nomor rekening berhasil disalin!");
+            } catch (err) {
+                showToast("Gagal menyalin nomor rekening");
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function updateWaktu() {
+            const target = new Date('December 31, 2026 09:00:00 WITA').getTime();
+            const now = new Date().getTime();
+            const selisih = target - now;
+
+            if (selisih > 0) {
+                document.getElementById('d-day').innerText = String(Math.floor(selisih / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById('d-hour').innerText = String(Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById('d-min').innerText = String(Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById('d-sec').innerText = String(Math.floor((selisih % (1000 * 60)) / 1000)).padStart(2, '0');
+            } else {
+                document.getElementById('d-day').innerText = "00";
+                document.getElementById('d-hour').innerText = "00";
+                document.getElementById('d-min').innerText = "00";
+                document.getElementById('d-sec').innerText = "00";
+            }
+        }
+        setInterval(updateWaktu, 1000);
+
+        function muatKomentarLokal(nama, status, doa) {
+            const wadah = document.getElementById('wadahKomentar');
+            const item = document.createElement('div');
+            item.className = 'comment-item';
+            
+            // Clean content against script injection
+            const cleanNama = document.createTextNode(nama).textContent;
+            const cleanStatus = document.createTextNode(status).textContent;
+            const cleanDoa = document.createTextNode(doa).textContent;
+
+            item.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: bold; color: var(--gold-light);">
+                    <span>${cleanNama}</span>
+                    <span style="font-size: 0.65rem; background: rgba(197,160,89,0.2); padding: 2px 6px; border-radius: 4px; color: var(--gold-light);">${cleanStatus}</span>
+                </div>
+                <p style="font-size: 0.78rem; font-style: italic; color: #d0c5b4; margin-top: 6px; line-height: 1.5;">${cleanDoa}</p>
+            `;
+            wadah.prepend(item);
+            wadah.scrollTop = 0;
+        }
+
+        function kirimRSVP(e) {
+            e.preventDefault();
+            const nama = document.getElementById('inputNama').value.trim();
+            const status = document.getElementById('inputStatus').value;
+            const doa = document.getElementById('inputDoa').value.trim();
+            const btn = document.getElementById('btn-submit');
+
+            if (!nama || !status || !doa) {
+                showToast("Mohon lengkapi semua isian form");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Mengirim...";
+
+            muatKomentarLokal(nama, status, doa);
+            e.target.reset();
+            
+            btn.disabled = false;
+            btn.innerText = "Kirim Surat Restu";
+            showToast("✨ Terima kasih! Ucapan & kehadiran berhasil dikirim.");
+
+            if (SCRIPT_URL) {
+                const formData = new FormData();
+                formData.append('nama', nama);
+                formData.append('status', status);
+                formData.append('doa', doa);
+
+                fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' })
+                .catch(err => console.log('Sync note:', err));
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const to = params.get('to');
+            if (to) {
+                document.getElementById('guest-name').innerText = decodeURIComponent(to);
+            }
+            updateWaktu();
+        });
+    </script>
 </body>
 </html>
