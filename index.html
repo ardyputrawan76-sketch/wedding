@@ -49,7 +49,7 @@
             align-items: center;
         }
 
-        /* VIDEO BACKGROUND DI BELAKANG KONTENER */
+        /* VIDEO BACKGROUND UTAMA */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -73,7 +73,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(11, 7, 5, 0.75); /* Gelap transparan agar teks sangat kontras */
+            background: rgba(11, 7, 5, 0.55); /* Tingkat kegelapan overlay transparan agar video tetap terang namun teks terbaca */
         }
 
         /* DESKTOP LANDSCAPE WRAPPER */
@@ -107,7 +107,7 @@
             }
         }
 
-        /* CONTAINER UTAMA UNDANGAN (TRANSPARAN AGAR VIDEO KELIHATAN) */
+        /* CONTAINER UTAMA UNDANGAN */
         .envitto-container {
             width: 100%;
             max-width: 480px;
@@ -121,7 +121,6 @@
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-            /* Scroll Lock kelas awal */
         }
 
         .envitto-container.no-scroll {
@@ -129,7 +128,7 @@
             touch-action: none;
         }
 
-        /* SEMBUNYIKAN SCROLLBAR DI SEMUA BROWSER */
+        /* SEMBUNYIKAN SCROLLBAR */
         .envitto-container::-webkit-scrollbar {
             display: none;
         }
@@ -207,16 +206,18 @@
             box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
         }
 
-        /* SECTION UMUM DENGAN EFEK KACA (GLASSMORPHISM) */
+        /* SECTION DENGAN EFEK KACA (GLASSMORPHISM) */
         section {
             padding: 50px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(197, 160, 89, 0.15);
             position: relative;
-            background: rgba(15, 10, 8, 0.45);
-            backdrop-filter: blur(6px);
-            margin: 10px;
+            background: rgba(15, 10, 8, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            margin: 12px;
             border-radius: 16px;
+            border: 1px solid rgba(197, 160, 89, 0.2);
         }
 
         .section-tag {
@@ -240,7 +241,7 @@
         .hero-section {
             min-height: 100vh;
             min-height: 100dvh;
-            background: rgba(11, 7, 5, 0.3);
+            background: rgba(11, 7, 5, 0.2);
             backdrop-filter: blur(4px);
             display: flex;
             flex-direction: column;
@@ -250,6 +251,7 @@
             border-radius: 0;
             margin: 0;
             border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+            border: none;
         }
 
         /* COUPLE SECTION */
@@ -260,12 +262,12 @@
             margin-top: 20px;
         }
         .couple-item {
-            background: rgba(26, 18, 14, 0.7);
+            background: rgba(26, 18, 14, 0.65);
             border: 1px solid rgba(197, 160, 89, 0.3);
             border-radius: 16px;
             overflow: hidden;
             padding-bottom: 20px;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(6px);
         }
         .couple-photo {
             width: 100%;
@@ -330,7 +332,7 @@
             margin: 25px 0;
         }
         .count-box {
-            background: rgba(26, 18, 14, 0.85);
+            background: rgba(26, 18, 14, 0.75);
             border: 1px solid rgba(197, 160, 89, 0.4);
             border-radius: 10px;
             padding: 10px 8px;
@@ -368,13 +370,13 @@
 
         /* VEDIC BLESSING */
         .vedic-box {
-            background: rgba(197, 160, 89, 0.12);
+            background: rgba(197, 160, 89, 0.1);
             border: 1px solid rgba(197, 160, 89, 0.35);
             border-radius: 12px;
             padding: 20px 16px;
             margin-bottom: 25px;
             text-align: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(6px);
         }
         .vedic-sanskrit {
             font-family: var(--font-serif);
@@ -413,7 +415,7 @@
 
         /* ATM / GIFT */
         .gift-card {
-            background: linear-gradient(135deg, rgba(6,56,34,0.85), rgba(10,92,55,0.85));
+            background: linear-gradient(135deg, rgba(6,56,34,0.8), rgba(10,92,55,0.8));
             border: 1px solid var(--gold);
             border-radius: 14px;
             padding: 18px;
@@ -422,7 +424,7 @@
             max-width: 320px;
             color: white;
             box-shadow: 0 8px 20px rgba(6,56,34,0.4);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(6px);
         }
         .atm-number {
             font-family: monospace;
@@ -454,7 +456,7 @@
         .rsvp-container input, .rsvp-container select, .rsvp-container textarea {
             width: 100%;
             padding: 12px;
-            background: rgba(11, 7, 5, 0.85);
+            background: rgba(11, 7, 5, 0.75);
             border: 1px solid rgba(197, 160, 89, 0.35);
             border-radius: 8px;
             color: white;
@@ -484,7 +486,7 @@
             scroll-behavior: smooth;
         }
         .comment-item {
-            background: rgba(26, 18, 14, 0.85);
+            background: rgba(26, 18, 14, 0.75);
             border-left: 2px solid var(--gold);
             padding: 10px 12px;
             border-radius: 6px;
@@ -526,11 +528,10 @@
 </head>
 <body ontouchmove="interceptTouch(event)">
 
-    <!-- VIDEO BACKGROUND -->
+    <!-- VIDEO BACKGROUND (PASTI TAMPIL DI BELAKANG SAAT SCROLL) -->
     <div class="bg-video-container">
         <video autoplay muted loop playsinline poster="gambar12.jpg">
             <source src="vpwd.mp4" type="video/mp4">
-            Browser Anda tidak mendukung video background.
         </video>
         <div class="bg-video-overlay"></div>
     </div>
@@ -557,7 +558,7 @@
             <p style="font-size: 0.75rem; color: #b0a494; letter-spacing: 2px;">THE WEDDING INVITATION</p>
         </div>
 
-        <!-- CONTAINER UTAMA UNDANGAN (DIKUNCI SCROLL NYA SEBELUM DIBUKA) -->
+        <!-- CONTAINER UTAMA -->
         <div class="envitto-container no-scroll" id="mainContainer">
 
             <!-- COVER PEMBUKA -->
