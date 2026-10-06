@@ -38,6 +38,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* HIDE SCROLLBARS GLOBALLY FOR CLEAN FULL-SCREEN UI */
         html, body, div, section {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -110,13 +111,12 @@
             }
         }
 
+        /* MAIN INVITATION CONTAINER WITH BACKGROUND VIDEO */
         .envitto-container {
             width: 100%;
             max-width: 480px;
             height: 100vh;
             height: 100dvh;
-            background: linear-gradient(180deg, rgba(11,7,5,0.7) 0%, rgba(11,7,5,0.5) 50%, rgba(11,7,5,0.85) 100%), url('bg-cover.png') no-repeat center center/cover;
-            background-attachment: fixed;
             position: relative;
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
             border-left: 1px solid rgba(197, 160, 89, 0.25);
@@ -125,6 +125,30 @@
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
+            background-color: #0b0705;
+        }
+
+        /* BACKGROUND VIDEO STYLING */
+        .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(11,7,5,0.65) 0%, rgba(11,7,5,0.5) 50%, rgba(11,7,5,0.85) 100%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         /* LOCK SCROLLING BEFORE INVITATION IS OPENED */
@@ -147,6 +171,7 @@
             z-index: 2;
         }
 
+        /* COVER SCREEN USING STATIC bg-cover.png */
         #cover-screen {
             position: absolute;
             top: 0; left: 0;
@@ -222,7 +247,6 @@
             transform: scale(0.96);
         }
 
-        /* SECTION BASE STYLES */
         section {
             padding: clamp(40px, 8vh, 60px) 20px;
             text-align: center;
@@ -601,7 +625,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* FLOATING MUSIC BUTTON */
         #music-toggle {
             position: fixed;
             bottom: clamp(15px, 4vw, 25px);
@@ -754,7 +777,7 @@
         }
     </style>
 </head>
-<body>
+<body class="no-scroll">
 
     <audio id="bg-music" src="musik-pwd.mp3" loop preload="auto"></audio>
     <div id="music-toggle" onclick="toggleAudio()" title="Musik">🎵</div>
@@ -781,10 +804,16 @@
             <p class="content-relative" style="font-size: 0.75rem; color: #a89a88; letter-spacing: 2.5px; text-transform: uppercase;">The Wedding Invitation</p>
         </div>
 
-        <!-- MAIN CONTAINER FOR INVITATION -->
+        <!-- MAIN CONTAINER WITH BACKGROUND VIDEO vpwd.mp4 -->
         <div class="envitto-container no-scroll" id="main-container">
 
-            <!-- COVER PEMBUKA -->
+            <!-- BACKGROUND VIDEO & OVERLAY -->
+            <video autoplay muted loop playsinline class="bg-video" poster="bg-cover.png">
+                <source src="vpwd.mp4" type="video/mp4">
+            </video>
+            <div class="bg-video-overlay"></div>
+
+            <!-- COVER PEMBUKA MENGGUNAKAN bg-cover.png -->
             <div id="cover-screen">
                 <div class="content-relative" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                     <p class="cover-subtitle">THE WEDDING OF</p>
