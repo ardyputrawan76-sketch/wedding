@@ -7,9 +7,16 @@
     
     <!-- Open Graph Meta Tags untuk WhatsApp & Medsos -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Wedding Of Ardy & Ana" />
     <meta property="og:title" content="The Wedding Of Ardy & Ana" />
     <meta property="og:description" content="Pawiwahan Ardy & Ana - Senin, 23 November 2026, Buleleng, Bali" />
-    <meta property="og:image" content="bgt-cover.jpg" />
+    <meta property="og:url" content="https://ardyputrawan76-sketch.github.io/wedding/" />
+    
+    <meta property="og:image" content="https://ardyputrawan76-sketch.github.io/wedding/bgt-cover.jpg" />
+    <meta property="og:image:secure_url" content="https://ardyputrawan76-sketch.github.io/wedding/bgt-cover.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="600" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23c5a059' d='M32 6L22 22L8 16L16 38H48L56 16L42 22L32 6Z'/><circle cx='32' cy='48' r='8' fill='%23f3e5ab'/></svg>">
@@ -102,7 +109,7 @@
             border-right: 1px solid rgba(197, 160, 89, 0.3);
             z-index: 10;
             overflow: hidden;
-            background: linear-gradient(180deg, rgba(11,7,5,0.08) 0%, rgba(11,7,5,0.3) 45%, rgba(11,7,5,0.88) 100%), url('bg-cover.png') no-repeat center center/cover;
+            background: linear-gradient(180deg, rgba(11,7,5,0.08) 0%, rgba(11,7,5,0.3) 45%, rgba(11,7,5,0.88) 100%), url('bgt-cover.jpg') no-repeat center center/cover;
         }
 
         @media screen and (min-width: 1024px) and (orientation: landscape) {
@@ -194,7 +201,7 @@
             text-align: center;
             transition: opacity 0.8s ease, transform 0.8s ease;
             overflow: hidden;
-            background: linear-gradient(rgba(11,7,5,0.5), rgba(11,7,5,0.85)), url('bg-cover.png') no-repeat center center/cover;
+            background: linear-gradient(rgba(11,7,5,0.5), rgba(11,7,5,0.85)), url('bgt-cover.jpg') no-repeat center center/cover;
         }
 
         #cover-screen.hide {
@@ -616,7 +623,7 @@
 
         /* ENVELOPE SUCCESS ANIMATION CSS */
         .envelope-wrapper {
-            display: none; /* hidden initially */
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -647,7 +654,6 @@
             transition: transform 0.6s ease-in-out;
         }
 
-        /* Classes to trigger animation */
         .envelope-svg.open .env-flap {
             transform: rotateX(180deg);
         }
@@ -915,13 +921,13 @@
 
             <!-- STICKY BACKGROUND VIDEO -->
             <div class="video-sticky-wrapper">
-                <video autoplay muted loop playsinline class="bg-video" poster="bg-cover.png">
+                <video autoplay muted loop playsinline class="bg-video" poster="bgt-cover.jpg">
                     <source src="vpwd.mp4" type="video/mp4">
                 </video>
                 <div class="bg-video-overlay"></div>
             </div>
 
-            <!-- COVER PEMBUKA MENGGUNAKAN STATIC bg-cover.png -->
+            <!-- COVER PEMBUKA MENGGUNAKAN STATIC bgt-cover.jpg -->
             <div id="cover-screen">
                 <div class="content-relative" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                     <p class="cover-subtitle">THE WEDDING OF</p>
@@ -961,7 +967,7 @@
 
                 <div class="couple-container">
                     <div class="couple-item">
-                        <img src="ardy.png" alt="Ardy" class="couple-photo" onclick="zoomFotoSrc(this.src)" onerror="this.onerror=null; this.src='bg-cover.png';">
+                        <img src="ardy.png" alt="Ardy" class="couple-photo" onclick="zoomFotoSrc(this.src)" onerror="this.onerror=null; this.src='bgt-cover.jpg';">
                         <div class="couple-info">
                             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">Gede Ardy Putrawan</h3>
                             <p style="font-size: 0.78rem; color: #d0c5b4; line-height: 1.6;">
@@ -971,7 +977,7 @@
                     </div>
 
                     <div class="couple-item">
-                        <img src="ana.png" alt="Ana" class="couple-photo" onclick="zoomFotoSrc(this.src)" onerror="this.onerror=null; this.src='bg-cover.png';">
+                        <img src="ana.png" alt="Ana" class="couple-photo" onclick="zoomFotoSrc(this.src)" onerror="this.onerror=null; this.src='bgt-cover.jpg';">
                         <div class="couple-info">
                             <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.8);">Ni Komang Ana Oktaviani</h3>
                             <p style="font-size: 0.78rem; color: #d0c5b4; line-height: 1.6;">
@@ -991,7 +997,7 @@
                     <div class="timeline-item">
                         <p class="timeline-date">23 Desember 2024</p>
                         <h3 class="timeline-title">Pertama Kali Bertemu</h3>
-                        <p class="timeline-desc">Takdir mempertemukan kami dalam satu momen  di Tabanan, Bali.</p>
+                        <p class="timeline-desc">Takdir mempertemukan kami dalam satu momen di Tabanan, Bali.</p>
                     </div>
                     <div class="timeline-item">
                         <p class="timeline-date">2025</p>
@@ -1046,18 +1052,18 @@
                 <h2 class="section-title">Galeri Kebersamaan</h2>
 
                 <div class="envitto-grid">
-                    <div class="grid-item" onclick="bukaGaleriModal(0)"><img src="gambar1.jpg" alt="Gallery 1" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(1)"><img src="gambar2.jpg" alt="Gallery 2" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(2)"><img src="gambar3.jpg" alt="Gallery 3" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(3)"><img src="gambar4.jpg" alt="Gallery 4" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(4)"><img src="gambar5.jpg" alt="Gallery 5" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(5)"><img src="gambar6.jpg" alt="Gallery 6" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(6)"><img src="gambar7.jpg" alt="Gallery 7" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(7)"><img src="gambar8.jpg" alt="Gallery 8" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(8)"><img src="gambar9.jpg" alt="Gallery 9" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(9)"><img src="gambar10.jpg" alt="Gallery 10" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(10)"><img src="gambar11.jpg" alt="Gallery 11" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
-                    <div class="grid-item" onclick="bukaGaleriModal(11)"><img src="bg-cover.png" alt="Gallery 12" onerror="this.onerror=null; this.src='bg-cover.png';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(0)"><img src="gambar1.jpg" alt="Gallery 1" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(1)"><img src="gambar2.jpg" alt="Gallery 2" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(2)"><img src="gambar3.jpg" alt="Gallery 3" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(3)"><img src="gambar4.jpg" alt="Gallery 4" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(4)"><img src="gambar5.jpg" alt="Gallery 5" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(5)"><img src="gambar6.jpg" alt="Gallery 6" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(6)"><img src="gambar7.jpg" alt="Gallery 7" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(7)"><img src="gambar8.jpg" alt="Gallery 8" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(8)"><img src="gambar9.jpg" alt="Gallery 9" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(9)"><img src="gambar10.jpg" alt="Gallery 10" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(10)"><img src="gambar11.jpg" alt="Gallery 11" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
+                    <div class="grid-item" onclick="bukaGaleriModal(11)"><img src="bgt-cover.jpg" alt="Gallery 12" onerror="this.onerror=null; this.src='bgt-cover.jpg';"></div>
                 </div>
             </section>
 
@@ -1131,7 +1137,6 @@
 
                 <!-- Wadah komentar kosong, siap diisi secara dinamis -->
                 <div id="wadahKomentar">
-                    <!-- Komentar contoh telah dihapus sesuai permintaan -->
                 </div>
             </section>
 
@@ -1155,20 +1160,20 @@
         <button class="lightbox-close" onclick="tutupZoom()">✕</button>
         <div id="lightbox-content">
             <button class="lightbox-btn lightbox-btn-prev" onclick="galeriPrev(event)">❮</button>
-            <img id="img-zoom" src="" alt="Zoom Photo" onerror="this.onerror=null; this.src='bg-cover.png';">
+            <img id="img-zoom" src="" alt="Zoom Photo" onerror="this.onerror=null; this.src='bgt-cover.jpg';">
             <button class="lightbox-btn lightbox-btn-next" onclick="galeriNext(event)">❯</button>
         </div>
         <div class="lightbox-counter" id="galeri-counter">1 / 12</div>
     </div>
 
     <script>
-        // URL Google Apps Script yang diminta
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2ZHyeclThhxuI6hrNvYTWckNBdu1GuuVfz3sao2HN7_ezOV_Kg_T5mRHjO56mpp9ihA/exec"; 
+        // URL Google Apps Script yang digunakan
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzegKw3RHhH9fiz5F0WhWr-hZ0ORAoqzISk8SQj285A8xPtjiMNjf6p9HXwTb1PkZ0Dqg/exec"; 
 
         const galeriFoto = [
             'gambar1.jpg', 'gambar2.jpg', 'gambar3.jpg', 'gambar4.jpg',
             'gambar5.jpg', 'gambar6.jpg', 'gambar7.jpg', 'gambar8.jpg',
-            'gambar9.jpg', 'gambar10.jpg', 'gambar11.jpg', 'bg-cover.png'
+            'gambar9.jpg', 'gambar10.jpg', 'gambar11.jpg', 'bgt-cover.jpg'
         ];
         let indeksFotoAktif = 0;
 
@@ -1344,7 +1349,6 @@
         function muatKomentarLokal(nama, status, doa) {
             const wadah = document.getElementById('wadahKomentar');
             
-            // Hapus teks "Belum ada ucapan" / "Memuat" jika ada
             if(wadah.innerHTML.includes('Belum ada ucapan') || wadah.innerHTML.includes('Memuat doa')) {
                 wadah.innerHTML = '';
             }
@@ -1367,7 +1371,6 @@
             wadah.scrollTop = 0;
         }
 
-        // FUNGSI BARU: Mengambil data dari Google Sheet saat halaman dimuat
         function ambilDataKomentar() {
             const wadah = document.getElementById('wadahKomentar');
             wadah.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#d0c5b4; margin-top:10px;">Memuat doa & restu...</p>';
@@ -1376,11 +1379,9 @@
                 .then(response => response.json())
                 .then(data => {
                     wadah.innerHTML = ''; 
-                    // Mengambil array data dari Google Sheet
                     let listKomentar = data.data || data; 
                     
                     if (Array.isArray(listKomentar) && listKomentar.length > 0) {
-                        // Dibalik (reverse) agar komentar terbaru/baris paling bawah sheet muncul di atas
                         listKomentar.reverse().forEach(item => {
                             const namaVal = item.nama || item.Nama;
                             const statusVal = item.status || item.Status || 'Pasti Hadir';
@@ -1431,35 +1432,28 @@
                 return;
             }
 
-            // Ubah state tombol menjadi loading
             btn.disabled = true;
             btn.innerText = "Mengirim...";
 
-            // Menggunakan URLSearchParams agar terbaca sempurna oleh Google Apps Script
             const formData = new URLSearchParams();
             formData.append('nama', nama);
             formData.append('status', status);
             formData.append('doa', doa);
 
-            // Kirim data ke Apps Script URL
             fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' })
             .then(() => {
-                // Proses Sukses
                 btn.disabled = false;
                 btn.innerText = "Kirim Surat Restu";
-                e.target.reset(); // Kosongkan form
+                e.target.reset();
 
-                // Sembunyikan Form, Tampilkan Amplop
                 document.getElementById('form-wrapper').style.display = 'none';
                 const envWrapper = document.getElementById('envelope-wrapper');
                 envWrapper.style.display = 'flex';
 
-                // Jalankan animasi buka amplop dengan jeda sedikit
                 setTimeout(() => {
                     document.getElementById('animated-envelope').classList.add('open');
                 }, 100);
 
-                // Tambahkan komentar ke layar pengguna
                 muatKomentarLokal(nama, status, doa);
                 showToast("✨ Pesan & Doa berhasil dikirim!");
             })
@@ -1471,7 +1465,6 @@
             });
         }
         
-        // Fungsi untuk mengembalikan tampilan form jika pengguna ingin kirim lagi
         function tampilkanFormLagi() {
             document.getElementById('animated-envelope').classList.remove('open');
             document.getElementById('envelope-wrapper').style.display = 'none';
@@ -1485,7 +1478,6 @@
                 document.getElementById('guest-name').innerText = decodeURIComponent(to);
             }
             updateWaktu();
-            // Eksekusi pengambilan data komentar saat web pertama kali dibuka
             ambilDataKomentar();
         });
     </script>
