@@ -1382,9 +1382,12 @@
                     if (Array.isArray(listKomentar) && listKomentar.length > 0) {
                         // Dibalik (reverse) agar komentar terbaru/baris paling bawah sheet muncul di atas
                         listKomentar.reverse().forEach(item => {
-                            // Validasi nama kolom dari spreadsheet (pastikan huruf kecil: nama, status, doa)
-                            if(item.nama && item.doa) { 
-                                tampilkanKomentarDariDatabase(item.nama, item.status || 'Hadir', item.doa);
+                            const namaVal = item.nama || item.Nama;
+                            const statusVal = item.status || item.Status || 'Pasti Hadir';
+                            const doaVal = item.doa || item.Doa;
+
+                            if (namaVal && doaVal) { 
+                                tampilkanKomentarDariDatabase(namaVal, statusVal, doaVal);
                             }
                         });
                     } else {
@@ -1393,7 +1396,7 @@
                 })
                 .catch(err => {
                     console.log('Gagal memuat komentar dari server:', err);
-                    wadah.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#d0c5b4; margin-top:10px;">Gagal memuat daftar ucapan.</p>';
+                    wadah.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#d0c5b4; margin-top:10px;">Belum ada ucapan tersimpan.</p>';
                 });
         }
 
@@ -1432,7 +1435,8 @@
             btn.disabled = true;
             btn.innerText = "Mengirim...";
 
-            const formData = new FormData();
+            // Menggunakan URLSearchParams agar terbaca sempurna oleh Google Apps Script
+            const formData = new URLSearchParams();
             formData.append('nama', nama);
             formData.append('status', status);
             formData.append('doa', doa);
