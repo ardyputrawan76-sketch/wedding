@@ -1163,7 +1163,7 @@
 
     <script>
         // URL Google Apps Script yang diminta
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyo0Jv7gNqmCAjrVTcNnWyaAU50AuTuDPTrxJG6pqQaU05LPFzvaUTuy7IG1QQCimqyCA/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2ZHyeclThhxuI6hrNvYTWckNBdu1GuuVfz3sao2HN7_ezOV_Kg_T5mRHjO56mpp9ihA/exec"; 
 
         const galeriFoto = [
             'gambar1.jpg', 'gambar2.jpg', 'gambar3.jpg', 'gambar4.jpg',
@@ -1343,6 +1343,12 @@
 
         function muatKomentarLokal(nama, status, doa) {
             const wadah = document.getElementById('wadahKomentar');
+            
+            // Hapus teks "Belum ada ucapan" / "Memuat" jika ada
+            if(wadah.innerHTML.includes('Belum ada ucapan') || wadah.innerHTML.includes('Memuat doa')) {
+                wadah.innerHTML = '';
+            }
+            
             const item = document.createElement('div');
             item.className = 'comment-item';
             
@@ -1359,6 +1365,55 @@
             `;
             wadah.prepend(item);
             wadah.scrollTop = 0;
+        }
+
+        // FUNGSI BARU: Mengambil data dari Google Sheet saat halaman dimuat
+        function ambilDataKomentar() {
+            const wadah = document.getElementById('wadahKomentar');
+            wadah.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#d0c5b4; margin-top:10px;">Memuat doa & restu...</p>';
+
+            fetch(SCRIPT_URL)
+                .then(response => response.json())
+                .then(data => {
+                    wadah.innerHTML = ''; 
+                    // Mengambil array data dari Google Sheet
+                    let listKomentar = data.data || data; 
+                    
+                    if (Array.isArray(listKomentar) && listKomentar.length > 0) {
+                        // Dibalik (reverse) agar komentar terbaru/baris paling bawah sheet muncul di atas
+                        listKomentar.reverse().forEach(item => {
+                            // Validasi nama kolom dari spreadsheet (pastikan huruf kecil: nama, status, doa)
+                            if(item.nama && item.doa) { 
+                                tampilkanKomentarDariDatabase(item.nama, item.status || 'Hadir', item.doa);
+                            }
+                        });
+                    } else {
+                        wadah.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#d0c5b4; margin-top:10px;">Belum ada ucapan. Jadilah yang pertama!</p>';
+                    }
+                })
+                .catch(err => {
+                    console.log('Gagal memuat komentar dari server:', err);
+                    wadah.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#d0c5b4; margin-top:10px;">Gagal memuat daftar ucapan.</p>';
+                });
+        }
+
+        function tampilkanKomentarDariDatabase(nama, status, doa) {
+            const wadah = document.getElementById('wadahKomentar');
+            const item = document.createElement('div');
+            item.className = 'comment-item';
+            
+            const cleanNama = document.createTextNode(nama).textContent;
+            const cleanStatus = document.createTextNode(status).textContent;
+            const cleanDoa = document.createTextNode(doa).textContent;
+
+            item.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: bold; color: var(--gold-light);">
+                    <span>${cleanNama}</span>
+                    <span style="font-size: 0.65rem; background: rgba(197,160,89,0.25); padding: 2px 6px; border-radius: 4px; color: var(--gold-light);">${cleanStatus}</span>
+                </div>
+                <p style="font-size: 0.78rem; font-style: italic; color: #e6dfd5; margin-top: 6px; line-height: 1.5;">${cleanDoa}</p>
+            `;
+            wadah.appendChild(item); 
         }
 
         function kirimRSVP(e) {
@@ -1426,6 +1481,8 @@
                 document.getElementById('guest-name').innerText = decodeURIComponent(to);
             }
             updateWaktu();
+            // Eksekusi pengambilan data komentar saat web pertama kali dibuka
+            ambilDataKomentar();
         });
     </script>
 </body>
