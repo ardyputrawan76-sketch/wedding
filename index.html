@@ -128,7 +128,7 @@
             background-color: #0b0705;
         }
 
-        /* STICKY BACKGROUND VIDEO WRAPPER (MENEMPEL DI LAYAR SAAT DI-SCROLL) */
+        /* STICKY BACKGROUND VIDEO WRAPPER */
         .video-sticky-wrapper {
             position: sticky;
             top: 0;
@@ -178,7 +178,7 @@
             z-index: 2;
         }
 
-        /* COVER SCREEN USING STATIC bg-cover.png */
+        /* COVER SCREEN */
         #cover-screen {
             position: absolute;
             top: 0; left: 0;
@@ -563,6 +563,7 @@
             background: rgba(197, 160, 89, 0.55);
         }
 
+        /* RSVP & FORM */
         .rsvp-container {
             display: flex;
             flex-direction: column;
@@ -607,12 +608,107 @@
         .btn-kirim:active {
             transform: scale(0.98);
         }
+        
+        .btn-kirim:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* ENVELOPE SUCCESS ANIMATION CSS */
+        .envelope-wrapper {
+            display: none; /* hidden initially */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 30px 15px;
+            background: rgba(18, 12, 9, 0.75);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            animation: fadeIn 0.6s ease;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+        }
+        
+        .envelope-svg {
+            width: 140px;
+            height: 100px;
+            overflow: visible; 
+            margin-bottom: 20px;
+        }
+
+        .env-paper-group {
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+        }
+
+        .env-flap {
+            transform-origin: 50% 0%;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        /* Classes to trigger animation */
+        .envelope-svg.open .env-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-svg.open .env-paper-group {
+            transform: translateY(-40px);
+        }
+
+        .envelope-text-success {
+            color: var(--gold-light);
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            text-align: center;
+            line-height: 1.4;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease 1s;
+        }
+        
+        .envelope-desc {
+            color: #d0c5b4;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.5s ease 1.2s;
+        }
+
+        .envelope-svg.open ~ .envelope-text-success,
+        .envelope-svg.open ~ .envelope-desc,
+        .envelope-svg.open ~ .btn-reset-form {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .btn-reset-form {
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            color: #d0c5b4;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease, opacity 0.5s ease 1.4s;
+        }
+        
+        .btn-reset-form:hover {
+            border-color: var(--gold);
+            color: var(--gold-light);
+            background: rgba(197, 160, 89, 0.1);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* COMMENTS CONTAINER */
         #wadahKomentar {
             max-height: 270px;
             overflow-y: auto;
-            margin-top: 20px;
+            margin-top: 25px;
             padding-right: 4px;
             display: flex;
             flex-direction: column;
@@ -630,6 +726,7 @@
             text-align: left;
             border: 1px solid rgba(197, 160, 89, 0.28);
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            animation: fadeIn 0.5s ease;
         }
 
         #music-toggle {
@@ -816,7 +913,7 @@
         <!-- MAIN CONTAINER WITH BACKGROUND VIDEO vpwd.mp4 -->
         <div class="envitto-container no-scroll" id="main-container">
 
-            <!-- STICKY BACKGROUND VIDEO vpwd.mp4 (TETAP DIAM DIMAINKAN SAAT DI-SCROLL) -->
+            <!-- STICKY BACKGROUND VIDEO -->
             <div class="video-sticky-wrapper">
                 <video autoplay muted loop playsinline class="bg-video" poster="bg-cover.png">
                     <source src="vpwd.mp4" type="video/mp4">
@@ -990,24 +1087,51 @@
                 <p class="section-tag">RSVP</p>
                 <h2 class="section-title">Konfirmasi Kehadiran</h2>
 
-                <form id="rsvp-form" class="rsvp-container" onsubmit="kirimRSVP(event)">
-                    <input type="text" id="inputNama" name="nama" placeholder="Nama Lengkap" required>
-                    <select id="inputStatus" name="status" required>
-                        <option value="">-- Konfirmasi Kehadiran --</option>
-                        <option value="Pasti Hadir">Pasti Hadir</option>
-                        <option value="Berhalangan Hadir">Berhalangan Hadir</option>
-                    </select>
-                    <textarea id="inputDoa" name="doa" placeholder="Tuliskan ucapan / doa restu..." rows="3" required></textarea>
-                    <button type="submit" id="btn-submit" class="btn-kirim">Kirim Surat Restu</button>
-                </form>
+                <!-- Pembungkus Form -->
+                <div id="form-wrapper">
+                    <form id="rsvp-form" class="rsvp-container" onsubmit="kirimRSVP(event)">
+                        <input type="text" id="inputNama" name="nama" placeholder="Nama Lengkap" required>
+                        <select id="inputStatus" name="status" required>
+                            <option value="">-- Konfirmasi Kehadiran --</option>
+                            <option value="Pasti Hadir">Pasti Hadir</option>
+                            <option value="Berhalangan Hadir">Berhalangan Hadir</option>
+                        </select>
+                        <textarea id="inputDoa" name="doa" placeholder="Tuliskan ucapan / doa restu..." rows="3" required></textarea>
+                        <button type="submit" id="btn-submit" class="btn-kirim">Kirim Surat Restu</button>
+                    </form>
+                </div>
+
+                <!-- Animasi Amplop Sukses (Disembunyikan awalnya) -->
+                <div id="envelope-wrapper" class="envelope-wrapper">
+                    <svg class="envelope-svg" id="animated-envelope" viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Dalam amplop (Back) -->
+                        <polygon points="0,0 70,50 140,0 140,100 0,100" fill="rgba(197, 160, 89, 0.15)"/>
+                        
+                        <!-- Surat (Paper) -->
+                        <g class="env-paper-group">
+                            <rect x="20" y="25" width="100" height="60" rx="4" fill="#f8f4e6" />
+                            <path d="M35 45 h70 M35 60 h70 M35 75 h40" stroke="#c0b4a4" stroke-width="3" stroke-linecap="round"/>
+                            <!-- Stempel emas kecil -->
+                            <circle cx="100" cy="70" r="8" fill="var(--gold)"/>
+                            <path d="M96 70 l3 3 l5 -5" stroke="#fff" stroke-width="2" fill="none"/>
+                        </g>
+
+                        <!-- Sisi Kiri, Kanan, Bawah (Front) -->
+                        <polygon points="0,0 70,50 0,100" fill="rgba(25, 18, 13, 0.95)" stroke="var(--gold)" stroke-width="1"/>
+                        <polygon points="140,0 70,50 140,100" fill="rgba(25, 18, 13, 0.95)" stroke="var(--gold)" stroke-width="1"/>
+                        <polygon points="0,100 70,50 140,100" fill="rgba(18, 12, 9, 0.95)" stroke="var(--gold)" stroke-width="1.5"/>
+
+                        <!-- Penutup Atas (Top Flap) -->
+                        <polygon class="env-flap" points="0,0 70,55 140,0" fill="rgba(30, 22, 16, 0.95)" stroke="var(--gold)" stroke-width="1.5"/>
+                    </svg>
+                    <p class="envelope-text-success">Pesan Diterima!</p>
+                    <p class="envelope-desc">Terima kasih atas doa restu & konfirmasi kehadiran Anda.</p>
+                    <button class="btn-reset-form" onclick="tampilkanFormLagi()">Kirim Pesan Lain</button>
+                </div>
+
+                <!-- Wadah komentar kosong, siap diisi secara dinamis -->
                 <div id="wadahKomentar">
-                    <div class="comment-item">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; color: var(--gold-light);">
-                            <span>Keluarga Besar</span>
-                            <span style="font-size: 0.65rem; background: rgba(197,160,89,0.25); padding: 2px 6px; border-radius: 4px; color: var(--gold-light);">Pasti Hadir</span>
-                        </div>
-                        <p style="font-size: 0.78rem; font-style: italic; color: #e6dfd5; margin-top: 6px; line-height: 1.5;">Selamat berbahagia Ardy & Ana, semoga upacara pawiwahan berjalan lancar dan langgeng selalu.</p>
-                    </div>
+                    <!-- Komentar contoh telah dihapus sesuai permintaan -->
                 </div>
             </section>
 
@@ -1038,6 +1162,7 @@
     </div>
 
     <script>
+        // URL Google Apps Script yang diminta
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyo0Jv7gNqmCAjrVTcNnWyaAU50AuTuDPTrxJG6pqQaU05LPFzvaUTuy7IG1QQCimqyCA/exec"; 
 
         const galeriFoto = [
@@ -1248,25 +1373,50 @@
                 return;
             }
 
+            // Ubah state tombol menjadi loading
             btn.disabled = true;
             btn.innerText = "Mengirim...";
 
-            muatKomentarLokal(nama, status, doa);
-            e.target.reset();
-            
-            btn.disabled = false;
-            btn.innerText = "Kirim Surat Restu";
-            showToast("✨ Terima kasih! Ucapan & kehadiran berhasil dikirim.");
+            const formData = new FormData();
+            formData.append('nama', nama);
+            formData.append('status', status);
+            formData.append('doa', doa);
 
-            if (SCRIPT_URL) {
-                const formData = new FormData();
-                formData.append('nama', nama);
-                formData.append('status', status);
-                formData.append('doa', doa);
+            // Kirim data ke Apps Script URL
+            fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' })
+            .then(() => {
+                // Proses Sukses
+                btn.disabled = false;
+                btn.innerText = "Kirim Surat Restu";
+                e.target.reset(); // Kosongkan form
 
-                fetch(SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' })
-                .catch(err => console.log('Sync note:', err));
-            }
+                // Sembunyikan Form, Tampilkan Amplop
+                document.getElementById('form-wrapper').style.display = 'none';
+                const envWrapper = document.getElementById('envelope-wrapper');
+                envWrapper.style.display = 'flex';
+
+                // Jalankan animasi buka amplop dengan jeda sedikit
+                setTimeout(() => {
+                    document.getElementById('animated-envelope').classList.add('open');
+                }, 100);
+
+                // Tambahkan komentar ke layar pengguna
+                muatKomentarLokal(nama, status, doa);
+                showToast("✨ Pesan & Doa berhasil dikirim!");
+            })
+            .catch(err => {
+                console.log('Error:', err);
+                btn.disabled = false;
+                btn.innerText = "Kirim Surat Restu";
+                showToast("Gagal mengirim pesan. Silakan coba lagi.");
+            });
+        }
+        
+        // Fungsi untuk mengembalikan tampilan form jika pengguna ingin kirim lagi
+        function tampilkanFormLagi() {
+            document.getElementById('animated-envelope').classList.remove('open');
+            document.getElementById('envelope-wrapper').style.display = 'none';
+            document.getElementById('form-wrapper').style.display = 'block';
         }
 
         window.addEventListener('DOMContentLoaded', () => {
