@@ -542,11 +542,41 @@
             overflow: hidden;
         }
 
+        /* BCA SILVER CARD STYLE */
+        .gift-card-silver {
+            background: linear-gradient(135deg, rgba(70, 75, 85, 0.9), rgba(130, 135, 145, 0.9));
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid #c0c0c0;
+            border-radius: 18px;
+            padding: 22px;
+            text-align: left;
+            margin: 18px auto;
+            width: 100%;
+            max-width: 340px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
         .atm-number {
             font-family: monospace;
             font-size: clamp(1rem, 3.5vw, 1.15rem);
             font-weight: bold;
             color: var(--gold-light);
+            letter-spacing: 1.5px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .atm-number-silver {
+            font-family: monospace;
+            font-size: clamp(1rem, 3.5vw, 1.15rem);
+            font-weight: bold;
+            color: #ffffff;
             letter-spacing: 1.5px;
             margin: 8px 0;
             display: flex;
@@ -568,6 +598,22 @@
 
         .btn-salin:hover {
             background: rgba(197, 160, 89, 0.55);
+        }
+
+        .btn-salin-silver {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid #e0e0e0;
+            color: white;
+            padding: 6px 14px;
+            font-size: 0.72rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-salin-silver:hover {
+            background: rgba(255, 255, 255, 0.45);
         }
 
         /* RSVP & FORM */
@@ -1073,6 +1119,7 @@
                 <h2 class="section-title">Kado Digital</h2>
                 <p style="font-size: 0.82rem; color: #d0c5b4; margin-bottom: 15px; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Doa restu Anda merupakan karunia terindah bagi kami.</p>
 
+                <!-- KARTU BPD BALI -->
                 <div class="gift-card">
                     <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 0.9rem;">
                         <span>BPD BALI</span>
@@ -1084,6 +1131,21 @@
                         <button class="btn-salin" onclick="salinRekening('0570205000041')">Salin</button>
                     </div>
                     <p style="font-size: 0.62rem; color: #a5c3a2; margin-top: 6px;">ATAS NAMA</p>
+                    <p style="font-size: 0.78rem; font-weight: bold; text-transform: uppercase; color: #fff;">GEDE ARDY PUTRAWAN</p>
+                </div>
+
+                <!-- KARTU BCA SILVER -->
+                <div class="gift-card-silver">
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 0.9rem;">
+                        <span>BCA</span>
+                        <span style="font-size: 0.65rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;">BANK</span>
+                    </div>
+                    <p style="font-size: 0.62rem; color: #d1d5db; margin-top: 10px;">NOMOR REKENING</p>
+                    <div class="atm-number-silver">
+                        <span>1420807160</span>
+                        <button class="btn-salin-silver" onclick="salinRekening('1420807160')">Salin</button>
+                    </div>
+                    <p style="font-size: 0.62rem; color: #d1d5db; margin-top: 6px;">ATAS NAMA</p>
                     <p style="font-size: 0.78rem; font-weight: bold; text-transform: uppercase; color: #fff;">GEDE ARDY PUTRAWAN</p>
                 </div>
             </section>
